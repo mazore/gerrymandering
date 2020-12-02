@@ -3,9 +3,9 @@ from parties import *
 
 # size of the window
 WIDTH, HEIGHT = 480, 480
-# width (and height) of the grid of people
+# width (and height) of the grid of people, must be multiple of sqrt(DISTRICT_SIZE)
 GRID_WIDTH = 24
-# number of people contained in a district
+# number of people contained in a district, must be perfect square
 DISTRICT_SIZE = 16
 # number of districts in total
 NUM_DISTRICTS = (GRID_WIDTH ** 2) / DISTRICT_SIZE
@@ -22,15 +22,15 @@ MS_BETWEEN_DRAWS: int = 1
 # number of swaps of people between districts, for every draw which are done MS_BETWEEN_DRAWS ms apart.
 NUM_SWAPS_PER_DRAW = 1
 # the number of processes (windows) to run simultaneously using multiprocessing. Usually don't exceed 10
-NUM_PROCESSES = 5
+NUM_PROCESSES = 1
 # number of simulation repeats to run before quiting (per process) use None for don't exit, 1 for don't repeat
 NUM_SIMULATIONS = 10
 # whether or not to print the score of the advantaged party at the end of each simulation
-OUTPUT_SCORES = True
+OUTPUT_SCORES = False
 # whether or not to print line_profiler results (use @profile from misc module) on window close
 OUTPUT_PROFILER = False
 
-# districts are squares, DISTRICT_SIZE must be a perfect square
+# districts start as squares, DISTRICT_SIZE must be a perfect square
 assert sqrt(DISTRICT_SIZE).is_integer()
 # this ensures districts are able to fit into the grid without remainders
 assert sqrt(NUM_DISTRICTS).is_integer()

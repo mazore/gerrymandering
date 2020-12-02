@@ -20,8 +20,6 @@ class SwapManager:
         It also checks to make sure the districts are continuous (connected) after swapping, and that the swap did not
         hinder the party that we're supposed to be gerrymandering for.
         """
-        # before_score = dict(self.canvas.score)
-
         self.district1 = self.get_district1()
         self.person1 = self.get_person1()  # person1 is originally from district1
         self.district2 = self.get_district2()
@@ -41,7 +39,7 @@ class SwapManager:
         self.person2.change_districts(self.district1)
         self.update_district_score()
 
-        if not (self.person1.is_connected and self.person2.is_connected):
+        if not (self.person1.get_is_connected() and self.person2.get_is_connected()):
             self.person1.change_districts(self.district1)
             self.person2.change_districts(self.district2)
             self.do_swap()
@@ -61,15 +59,15 @@ class SwapManager:
         return choice(self.canvas.districts)
 
     def get_person1(self):
-        for person in sorted(self.district1.people, key=lambda _: random()):
-            if not person.adjacent_districts:  # if person is in the middle of district
+        for person in sorted(self.district1.people, key=lambda _: random()):  # more efficient than random.shuffle
+            if not person.get_adjacent_districts():  # if person is in the middle of district
                 continue
 
-            if person.removable:
+            if person.get_is_removable():
                 return person
 
     def get_district2(self):
-        return choice(self.person1.adjacent_districts)
+        return choice(self.person1.get_adjacent_districts())
 
     def get_person2(self):
         def key(p):  # put people of opposite parties first priority
@@ -78,10 +76,10 @@ class SwapManager:
             return random()
 
         for person in sorted(self.district2.people, key=key):
-            if self.district1 not in person.adjacent_districts:  # if not touching self.district1
+            if self.district1 not in person.get_adjacent_districts():  # if not touching self.district1
                 continue
 
-            if person.removable:
+            if person.get_is_removable():
                 return person
 
     def not_beneficial(self):

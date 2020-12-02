@@ -83,21 +83,18 @@ class Person:
     def __repr__(self):
         return f'{str(self.party).title()} person at {self.x, self.y}'
 
-    @property
-    def adjacent_districts(self):
+    def get_adjacent_districts(self):
         """Returns a list of districts neighboring this person, not including the district this is in"""
         return [person.district for person in self.adjacent_people if person.district is not self.district]
 
-    @property
-    def is_connected(self):
+    def get_is_connected(self):
         """Returns if this person is touching the any other part of their district"""
         for person in self.adjacent_people:
             if person.district is self.district:
                 return True
         return False
 
-    @property
-    def removable(self):
+    def get_is_removable(self):
         """Returns whether the person can be removed from their district without disconnecting district
 
         Method: get a boolean list of whether each of the surrounding 8 squares are in our district. If there are more

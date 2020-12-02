@@ -79,7 +79,7 @@ class Canvas(tk.Canvas):
         """Create grid of people with randomized parties"""
         # make sure people's parties are random but same number of people for each
         parties = [RED, BLUE] * ceil(GRID_WIDTH ** 2 / 2)
-        parties = sorted(parties, key=lambda _: random())
+        parties = sorted(parties, key=lambda _: random())  # more efficient than random.shuffle
 
         party_num_people_map = {BLUE: 0, RED: 0, TIE: 0}
         square_width = WIDTH / GRID_WIDTH

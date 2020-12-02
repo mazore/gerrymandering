@@ -18,10 +18,9 @@ class District:
         return f'District that contains a person at {self.people[0].x, self.people[0].y} ' \
                f'won by {self.winner} with +{abs(self.net_advantage)} people margin'
 
-    @property
-    def adjacent_districts(self):
+    def get_adjacent_districts(self):
         """Get all districts neighboring this district"""
-        return [district for person in self.people for district in person.adjacent_districts]
+        return [district for person in self.people for district in person.get_adjacent_districts()]
 
     @property
     def winner(self):
