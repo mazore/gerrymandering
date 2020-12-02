@@ -21,12 +21,13 @@ NUM_SWAPS = 1000
 MS_BETWEEN_DRAWS: int = 1
 # number of swaps of people between districts, for every draw which are done MS_BETWEEN_DRAWS ms apart.
 NUM_SWAPS_PER_DRAW = 1
+
 # the number of processes (windows) to run simultaneously using multiprocessing. Usually don't exceed 10
-NUM_PROCESSES = 1
+NUM_PROCESSES = 5
 # number of simulation repeats to run before quiting (per process) use None for don't exit, 1 for don't repeat
 NUM_SIMULATIONS = 10
 # whether or not to print the score of the advantaged party at the end of each simulation
-OUTPUT_SCORES = False
+OUTPUT_SCORES = True
 # whether or not to print line_profiler results (use @profile from misc module) on window close
 OUTPUT_PROFILER = False
 

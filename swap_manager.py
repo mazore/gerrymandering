@@ -37,7 +37,6 @@ class SwapManager:
 
         self.person1.change_districts(self.district2)
         self.person2.change_districts(self.district1)
-        self.update_district_score()
 
         if not (self.person1.get_is_connected() and self.person2.get_is_connected()):
             self.person1.change_districts(self.district1)
@@ -45,14 +44,14 @@ class SwapManager:
             self.do_swap()
             return
 
+        self.update_district_scores()
         if NUM_SWAPS_PER_DRAW == 1:
             self.district1.draw()
             self.district2.draw()
-
         self.valid_swaps += 1
         if self.valid_swaps == NUM_SWAPS:
             if OUTPUT_SCORES:
-                print(self.canvas.score[ADVANTAGE], end=',')
+                print(self.canvas.get_score()[ADVANTAGE], end=',')
             self.canvas.rerun_simulation()
 
     def get_district1(self):
@@ -83,6 +82,13 @@ class SwapManager:
                 return person
 
     def not_beneficial(self):
+        """Returns whether proceeding with the swap will cause a district to flip from ADVANTAGE to TIE, or TIE to
+        DISADVANTAGE
+
+        Method: if a district is getting rid of a person in the party we are trying to advantage, and taking in a person
+        from the party we are trying to disadvantage, we know the net_advantage of that district will decrease by 2. If
+        the districts net_advantage is <= 2, that will cause it to flip to either TIE or DISADVANTAGE.
+        """
         district1_at_risk = 0 <= self.district1.net_advantage <= 2
         district2_at_risk = 0 <= self.district2.net_advantage <= 2
         if district1_at_risk and self.person1.party is ADVANTAGE and self.person2.party is DISADVANTAGE:
@@ -91,8 +97,8 @@ class SwapManager:
             return True
         return False
 
-    def update_district_score(self):
-        self.district1.change_score(self.person1.party, -1)
-        self.district1.change_score(self.person2.party, 1)
-        self.district2.change_score(self.person2.party, -1)
-        self.district2.change_score(self.person1.party, 1)
+    def update_district_scores(self):
+        self.district1.net_advantage += -1 if self.person1.party is ADVANTAGE else 1
+        self.district1.net_advantage += 1 if self.person2.party is ADVANTAGE else -1
+        self.district2.net_advantage += -1 if self.person2.party is ADVANTAGE else 1
+        self.district2.net_advantage += 1 if self.person1.party is ADVANTAGE else -1

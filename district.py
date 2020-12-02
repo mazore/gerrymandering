@@ -16,27 +16,17 @@ class District:
 
     def __repr__(self):
         return f'District that contains a person at {self.people[0].x, self.people[0].y} ' \
-               f'won by {self.winner} with +{abs(self.net_advantage)} people margin'
+               f'won by {self.get_winner()} with +{abs(self.net_advantage)} people margin'
 
     def get_adjacent_districts(self):
         """Get all districts neighboring this district"""
         return [district for person in self.people for district in person.get_adjacent_districts()]
 
-    @property
-    def winner(self):
+    def get_winner(self):
         """Get whichever party has a majority of people, or a tie"""
         if self.net_advantage == 0:
             return TIE
         return ADVANTAGE if self.net_advantage > 0 else DISADVANTAGE
-
-    def change_score(self, party, amount):
-        """Change the score of the this district and update the canvas's score"""
-        before_winner = self.winner
-        self.net_advantage += amount if party is ADVANTAGE else -amount
-        after_winner = self.winner
-        if before_winner != after_winner:
-            self.canvas.score[before_winner] -= 1
-            self.canvas.score[after_winner] += 1
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""
@@ -65,7 +55,7 @@ class District:
                 self.canvas.line_id_state_map[line_id] = state
 
         # fill
-        color = self.winner.color
+        color = self.get_winner().color
         for person in self.people:
             if person.outer_color != color:
                 self.canvas.itemconfig(person.outer_id, fill=color)
