@@ -1,5 +1,6 @@
 from collections import defaultdict
-from parties import BLUE, RED, TIE
+from constants import ADVANTAGE, DISADVANTAGE
+from parties import TIE
 
 
 class District:
@@ -7,16 +8,15 @@ class District:
         self.canvas = canvas
 
         (self.x1, self.y1), (self.x2, self.y2) = p1, p2  # in grid coordinates
-        self.score = {BLUE: 0, RED: 0}
+        self.net_advantage = 0  # ADVANTAGE score - DISADVANTAGE score
         self.people = []
         self.get_people()
         # self.color = '#' + ''.join(choice(list('0123456789abcdef')) for _ in range(6))  # random color
         self.draw()
 
     def __repr__(self):
-        blue, red = self.score[BLUE], self.score[RED]
         return f'District that contains a person at {self.people[0].x, self.people[0].y} ' \
-               f'with score (blue: {blue}, red: {red})'
+               f'won by {self.winner} with +{abs(self.net_advantage)} people margin'
 
     @property
     def adjacent_districts(self):
@@ -26,14 +26,13 @@ class District:
     @property
     def winner(self):
         """Get whichever party has a majority of people, or a tie"""
-        blue, red = self.score[BLUE], self.score[RED]
-        if blue == red:
+        if self.net_advantage == 0:
             return TIE
-        return BLUE if blue > red else RED
+        return ADVANTAGE if self.net_advantage > 0 else DISADVANTAGE
 
     def change_score(self, party, amount):
         before_winner = self.winner
-        self.score[party] += amount
+        self.net_advantage += amount if party is ADVANTAGE else -amount
         after_winner = self.winner
         if before_winner != after_winner:
             self.canvas.score[before_winner] -= 1
@@ -47,7 +46,7 @@ class District:
 
                 self.people.append(person)
                 person.district = self
-                self.score[person.party] += 1
+                self.net_advantage += 1 if person.party is ADVANTAGE else -1
 
     def draw(self):
         """Draw the outline and shading of the district"""
