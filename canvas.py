@@ -100,7 +100,7 @@ class Canvas(tk.Canvas):
     def generate_districts(self):
         """Generate square districts, of size DISTRICT_SIZE.
 
-        We know this can fit work because of assertions in constants.py"""
+        We know this can fit because of assertions in constants.py"""
         district_width = sqrt(DISTRICT_SIZE)
         for grid_x in range(int(sqrt(NUM_DISTRICTS))):
             for grid_y in range(int(sqrt(NUM_DISTRICTS))):

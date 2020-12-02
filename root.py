@@ -4,14 +4,15 @@ import tkinter as tk
 
 """
 TODO:
-- optimize update_district_score(s?) method (district.net_advantage)
-- try to remove canvas.score from do_swap
+- make canvas.score a computed property?
+- optimize update_district_score(s?) method
 - pick district2 before person1?
 - prioritize swapping districts (and people) with different parties
 - change constants.py to parameters.py
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - make iterative/slow @properties into "get_[property]" methods to signify performance implications
 - recursion error when no possible moves (mostly small grids)
+- record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive
 - more profiling
 - make settings class

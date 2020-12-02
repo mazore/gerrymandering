@@ -20,34 +20,32 @@ class SwapManager:
         It also checks to make sure the districts are continuous (connected) after swapping, and that the swap did not
         hinder the party that we're supposed to be gerrymandering for.
         """
-        before_score = dict(self.canvas.score)
+        # before_score = dict(self.canvas.score)
 
         self.district1 = self.get_district1()
-        self.person1 = self.get_person1()
+        self.person1 = self.get_person1()  # person1 is originally from district1
         self.district2 = self.get_district2()
-        self.person2 = self.get_person2()
+        self.person2 = self.get_person2()  # person2 is originally from district2
 
         if self.person1 is None or self.person2 is None:
             self.do_swap()
-            return  # no choices issue
+            return
+
+        if self.not_beneficial():
+            self.person1.change_districts(self.district1)
+            self.person2.change_districts(self.district2)
+            self.do_swap()
+            return
 
         self.person1.change_districts(self.district2)
         self.person2.change_districts(self.district1)
+        self.update_district_score()
 
         if not (self.person1.is_connected and self.person2.is_connected):
             self.person1.change_districts(self.district1)
             self.person2.change_districts(self.district2)
             self.do_swap()
-            return  # not continuous issue
-
-        self.update_district_score()
-        score = self.canvas.score
-        if score[ADVANTAGE] < before_score[ADVANTAGE] or score[DISADVANTAGE] > before_score[DISADVANTAGE]:
-            self.update_district_score(reverse=True)
-            self.person1.change_districts(self.district1)
-            self.person2.change_districts(self.district2)
-            self.do_swap()
-            return  # not beneficial issue
+            return
 
         if NUM_SWAPS_PER_DRAW == 1:
             self.district1.draw()
@@ -86,9 +84,17 @@ class SwapManager:
             if person.removable:
                 return person
 
-    def update_district_score(self, reverse=False):
-        factor = -1 if reverse else 1
-        self.district1.change_score(self.person1.party, -1 * factor)
-        self.district1.change_score(self.person2.party, 1 * factor)
-        self.district2.change_score(self.person2.party, -1 * factor)
-        self.district2.change_score(self.person1.party, 1 * factor)
+    def not_beneficial(self):
+        district1_at_risk = 0 <= self.district1.net_advantage <= 2
+        district2_at_risk = 0 <= self.district2.net_advantage <= 2
+        if district1_at_risk and self.person1.party is ADVANTAGE and self.person2.party is DISADVANTAGE:
+            return True
+        if district2_at_risk and self.person2.party is ADVANTAGE and self.person1.party is DISADVANTAGE:
+            return True
+        return False
+
+    def update_district_score(self):
+        self.district1.change_score(self.person1.party, -1)
+        self.district1.change_score(self.person2.party, 1)
+        self.district2.change_score(self.person2.party, -1)
+        self.district2.change_score(self.person1.party, 1)

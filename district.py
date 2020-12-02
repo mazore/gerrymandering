@@ -31,6 +31,7 @@ class District:
         return ADVANTAGE if self.net_advantage > 0 else DISADVANTAGE
 
     def change_score(self, party, amount):
+        """Change the score of the this district and update the canvas's score"""
         before_winner = self.winner
         self.net_advantage += amount if party is ADVANTAGE else -amount
         after_winner = self.winner
