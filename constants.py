@@ -27,6 +27,8 @@ NUM_PROCESSES = 5
 NUM_SIMULATIONS = 10
 # whether or not to print the score of the advantaged party at the end of each simulation
 OUTPUT_SCORES = True
+# whether or not to print line_profiler results (use @profile from misc module) on window close
+OUTPUT_PROFILER = True
 
 # districts are squares, DISTRICT_SIZE must be a perfect square
 assert sqrt(DISTRICT_SIZE).is_integer()

@@ -1,4 +1,4 @@
-from constants import ADVANTAGE, DISADVANTAGE, NUM_SWAPS, NUM_SWAPS_PER_DRAW
+from constants import ADVANTAGE, DISADVANTAGE, NUM_SWAPS, NUM_SWAPS_PER_DRAW, OUTPUT_SCORES
 from misc import profile
 from random import choice, random
 
@@ -55,7 +55,8 @@ class SwapManager:
 
         self.valid_swaps += 1
         if self.valid_swaps == NUM_SWAPS:
-            print(self.canvas.score[ADVANTAGE], end=',')
+            if OUTPUT_SCORES:
+                print(self.canvas.score[ADVANTAGE], end=',')
             self.canvas.rerun_simulation()
 
     def get_district1(self):
