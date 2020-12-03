@@ -29,9 +29,7 @@ class SwapManager:
             self.do_swap()
             return
 
-        if self.not_beneficial():
-            self.person1.change_districts(self.district1)
-            self.person2.change_districts(self.district2)
+        if self.harmful():
             self.do_swap()
             return
 
@@ -81,7 +79,7 @@ class SwapManager:
             if person.get_is_removable():
                 return person
 
-    def not_beneficial(self):
+    def harmful(self):
         """Returns whether proceeding with the swap will cause a district to flip from ADVANTAGE to TIE, or TIE to
         DISADVANTAGE
 

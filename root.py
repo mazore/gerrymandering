@@ -4,7 +4,8 @@ import tkinter as tk
 
 """
 TODO:
-- prioritize swapping districts (and people) with different parties
+- add tests.py that outputs avg score and avg swap time (for certain parameters), with seed?
+- make a district use its net_advantage to determine what type of person it wants to get rid of/take in
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - recursion error when no possible moves (mostly small grids)
 - record swaps already done, don't undo an already done swap

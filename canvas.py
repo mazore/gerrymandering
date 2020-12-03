@@ -1,5 +1,5 @@
 from district import District
-from math import ceil, sqrt
+from math import ceil
 from parameters import *
 from parties import BLUE, RED, TIE
 from person import Person
