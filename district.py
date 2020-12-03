@@ -1,5 +1,5 @@
 from collections import defaultdict
-from constants import ADVANTAGE, DISADVANTAGE
+from constants import ADVANTAGE
 from parties import TIE
 
 
@@ -18,15 +18,11 @@ class District:
         return f'District that contains a person at {self.people[0].x, self.people[0].y} ' \
                f'won by {self.get_winner()} with +{abs(self.net_advantage)} people margin'
 
-    def get_adjacent_districts(self):
-        """Get all districts neighboring this district"""
-        return [district for person in self.people for district in person.get_adjacent_districts()]
-
     def get_winner(self):
         """Get whichever party has a majority of people, or a tie"""
         if self.net_advantage == 0:
             return TIE
-        return ADVANTAGE if self.net_advantage > 0 else DISADVANTAGE
+        return ADVANTAGE if self.net_advantage > 0 else ADVANTAGE.opponent
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""

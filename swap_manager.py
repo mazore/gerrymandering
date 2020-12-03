@@ -69,13 +69,13 @@ class SwapManager:
         return choice(self.person1.get_adjacent_districts())
 
     def get_person2(self):
-        def key(p):  # put people of opposite parties first priority
+        def key(p):  # put people of opposite parties to person1 first
             if p.party is self.person1.party:
                 return 1 + random()
             return random()
 
         for person in sorted(self.district2.people, key=key):
-            if self.district1 not in person.get_adjacent_districts():  # if not touching self.district1
+            if self.district1 not in person.get_adjacent_districts():  # if not touching district1
                 continue
 
             if person.get_is_removable():

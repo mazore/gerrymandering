@@ -4,7 +4,6 @@ import tkinter as tk
 
 """
 TODO:
-- pick district2 before person1?
 - prioritize swapping districts (and people) with different parties
 - change constants.py to parameters.py (reformat documentation)
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)

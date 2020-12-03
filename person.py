@@ -99,7 +99,9 @@ class Person:
 
         Method: get a boolean list of whether each of the surrounding 8 squares are in our district. If there are more
         than 2 'streaks' of True's (including carrying over between start and end of the list), then removing the square
-        will cause a disconnected group because the surrounding squares are not connected to each other.
+        will cause a disconnected group because the surrounding squares are not connected to each other. This works on
+        the assumption that there are no holes, which there aren't because all districts are the same size, and there
+        are no people without a district.
         """
 
         bool_list = [getattr(person, 'district', None) is self.district for person in self.surrounding_people]
