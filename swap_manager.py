@@ -1,5 +1,5 @@
-from constants import ADVANTAGE, DISADVANTAGE, NUM_SWAPS, NUM_SWAPS_PER_DRAW, OUTPUT_SCORES
 from misc import profile
+from parameters import ADVANTAGE, DISADVANTAGE, NUM_SWAPS, NUM_SWAPS_PER_DRAW, OUTPUT_SCORES
 from random import choice, random
 
 

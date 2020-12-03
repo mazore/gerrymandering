@@ -1,5 +1,5 @@
-from constants import GRID_WIDTH, LINE_WIDTH
 from itertools import groupby
+from parameters import GRID_WIDTH, LINE_WIDTH
 
 
 class Person:

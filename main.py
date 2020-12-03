@@ -1,5 +1,5 @@
-from constants import NUM_PROCESSES
 from multiprocessing import Pool
+from parameters import NUM_PROCESSES
 from root import Root
 
 

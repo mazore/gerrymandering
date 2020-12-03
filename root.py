@@ -1,11 +1,10 @@
 from canvas import Canvas
-from constants import WIDTH, HEIGHT
+from parameters import WIDTH, HEIGHT
 import tkinter as tk
 
 """
 TODO:
 - prioritize swapping districts (and people) with different parties
-- change constants.py to parameters.py (reformat documentation)
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - recursion error when no possible moves (mostly small grids)
 - record swaps already done, don't undo an already done swap

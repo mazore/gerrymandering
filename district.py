@@ -1,6 +1,6 @@
 from collections import defaultdict
-from constants import ADVANTAGE
 from parties import TIE
+from parameters import ADVANTAGE
 
 
 class District:

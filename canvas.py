@@ -1,6 +1,6 @@
-from constants import *
 from district import District
 from math import ceil, sqrt
+from parameters import *
 from parties import BLUE, RED, TIE
 from person import Person
 from random import random

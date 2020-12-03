@@ -1,6 +1,6 @@
 import atexit
-from constants import OUTPUT_PROFILER
 import line_profiler
+from parameters import OUTPUT_PROFILER
 
 profile = line_profiler.LineProfiler()
 if OUTPUT_PROFILER:
