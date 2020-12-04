@@ -1,5 +1,4 @@
 from misc import profile
-from parameters import ADVANTAGE, DISADVANTAGE, NUM_SWAPS, NUM_SWAPS_PER_DRAW, OUTPUT_SCORES
 from random import choice, random
 
 
@@ -43,13 +42,11 @@ class SwapManager:
             return
 
         self.update_district_scores()
-        if NUM_SWAPS_PER_DRAW == 1:
+        if self.canvas.parameters.num_swaps_per_draw == 1:
             self.district1.draw()
             self.district2.draw()
         self.valid_swaps += 1
-        if self.valid_swaps == NUM_SWAPS:
-            if OUTPUT_SCORES:
-                print(self.canvas.get_score()[ADVANTAGE], end=',')
+        if self.valid_swaps == self.canvas.parameters.num_swaps:
             self.canvas.rerun_simulation()
 
     def get_district1(self):
@@ -89,14 +86,15 @@ class SwapManager:
         """
         district1_at_risk = 0 <= self.district1.net_advantage <= 2
         district2_at_risk = 0 <= self.district2.net_advantage <= 2
-        if district1_at_risk and self.person1.party is ADVANTAGE and self.person2.party is DISADVANTAGE:
+        advantage, disadvantage = self.canvas.parameters.advantage, self.canvas.parameters.disadvantage
+        if district1_at_risk and self.person1.party == advantage and self.person2.party == disadvantage:
             return True
-        if district2_at_risk and self.person2.party is ADVANTAGE and self.person1.party is DISADVANTAGE:
+        if district2_at_risk and self.person2.party == advantage and self.person1.party == disadvantage:
             return True
         return False
 
     def update_district_scores(self):
-        self.district1.net_advantage += -1 if self.person1.party is ADVANTAGE else 1
-        self.district1.net_advantage += 1 if self.person2.party is ADVANTAGE else -1
-        self.district2.net_advantage += -1 if self.person2.party is ADVANTAGE else 1
-        self.district2.net_advantage += 1 if self.person1.party is ADVANTAGE else -1
+        self.district1.net_advantage += -1 if self.person1.party == self.canvas.parameters.advantage else 1
+        self.district1.net_advantage += 1 if self.person2.party == self.canvas.parameters.advantage else -1
+        self.district2.net_advantage += -1 if self.person2.party == self.canvas.parameters.advantage else 1
+        self.district2.net_advantage += 1 if self.person1.party == self.canvas.parameters.advantage else -1

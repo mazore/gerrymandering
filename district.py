@@ -1,6 +1,5 @@
 from collections import defaultdict
 from parties import TIE
-from parameters import ADVANTAGE
 
 
 class District:
@@ -22,7 +21,7 @@ class District:
         """Get whichever party has a majority of people, or a tie"""
         if self.net_advantage == 0:
             return TIE
-        return ADVANTAGE if self.net_advantage > 0 else ADVANTAGE.opponent
+        return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.advantage.opponent
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""
@@ -32,7 +31,7 @@ class District:
 
                 self.people.append(person)
                 person.district = self
-                self.net_advantage += 1 if person.party is ADVANTAGE else -1
+                self.net_advantage += 1 if person.party == self.canvas.parameters.advantage else -1
 
     def draw(self):
         """Draw the outline and shading of the district"""

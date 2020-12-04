@@ -1,10 +1,12 @@
 from canvas import Canvas
-from parameters import WIDTH, HEIGHT
+from parameters import Parameters
 import tkinter as tk
+
 
 """
 TODO:
-- add tests.py that outputs avg score and avg swap time (for certain parameters), with seed?
+- add seed to tests?
+- make parties static, use class variables and methods
 - make a district use its net_advantage to determine what type of person it wants to get rid of/take in
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - recursion error when no possible moves (mostly small grids)
@@ -22,13 +24,12 @@ TODO:
 
 class Root(tk.Tk):
     """Manages UI things, subclass of tkinter application root (represents a window)"""
-
-    def __init__(self, _=None):
+    def __init__(self, parameters=Parameters()):
         super().__init__()
 
         self.simulation_number = 1
 
-        self.canvas = Canvas(self)
+        self.canvas = Canvas(self, parameters)
 
-        self.geometry(f'{WIDTH}x{HEIGHT}+1060+100')
+        self.geometry(f'{parameters.width}x{parameters.height}+1060+100')
         self.mainloop()

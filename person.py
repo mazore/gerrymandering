@@ -1,5 +1,4 @@
 from itertools import groupby
-from parameters import GRID_WIDTH, LINE_WIDTH
 
 
 class Person:
@@ -15,7 +14,8 @@ class Person:
         self.district = None
 
         self.at_west, self.at_north = self.x == 0, self.y == 0
-        self.at_east, self.at_south = self.x == GRID_WIDTH - 1, self.y == GRID_WIDTH - 1
+        self.at_east = self.x == self.canvas.parameters.grid_width - 1
+        self.at_south = self.y == self.canvas.parameters.grid_width - 1
         """at_[direction] - Whether person is on far [direction] of grid"""
         self.person_north = self.person_south = self.person_west = self.person_east = None
         self.person_ne = self.person_se = self.person_sw = self.person_nw = None
@@ -41,10 +41,12 @@ class Person:
 
         self.east_line_id = self.south_line_id = None
         if not self.at_east:
-            self.east_line_id = self.canvas.create_line(x2, y1, x2, y2, fill='black', width=LINE_WIDTH, state='hidden')
+            self.east_line_id = self.canvas.create_line(x2, y1, x2, y2, fill='black',
+                                                        width=self.canvas.parameters.line_width, state='hidden')
             self.canvas.line_id_state_map[self.east_line_id] = 'hidden'
         if not self.at_south:
-            self.south_line_id = self.canvas.create_line(x1, y2, x2, y2, fill='black', width=LINE_WIDTH, state='hidden')
+            self.south_line_id = self.canvas.create_line(x1, y2, x2, y2, fill='black',
+                                                         width=self.canvas.parameters.line_width, state='hidden')
             self.canvas.line_id_state_map[self.south_line_id] = 'hidden'
 
     def secondary_init(self):
