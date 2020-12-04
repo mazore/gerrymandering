@@ -1,10 +1,10 @@
 from canvas import Canvas
 from parameters import Parameters
+import random
 import tkinter as tk
 
 """
 TODO:
-- add seed to tests?
 - make a district use its net_advantage to determine what type of person it wants to get rid of/take in
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - recursion error when no possible moves (mostly small grids)
@@ -23,8 +23,11 @@ TODO:
 class Root(tk.Tk):
     """Manages UI things, subclass of tkinter application root (represents a window)"""
 
-    def __init__(self, parameters=Parameters()):
+    def __init__(self, parameters=Parameters(), seed=None):
         super().__init__()
+
+        if seed is not None:
+            random.seed(seed)
 
         self.simulation_number = 1
 

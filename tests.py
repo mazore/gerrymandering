@@ -10,18 +10,18 @@ class Tests:
         print(f'Grid width: {self.parameters.grid_width}')
         print(f'District size: {self.parameters.district_size}')
         print(f'Number of swaps: {self.parameters.num_swaps}')
-        self.score_test()
+        # self.score_test()
         self.speed_test()
 
     def score_test(self):
-        num_processes = 5  # number of processes (windows) to run simultaneously using multiprocessing
+        num_processes = 10  # number of processes (windows) to run simultaneously using multiprocessing
+        seeds = list(range(num_processes))
         with Manager() as manager:
-            self.parameters.num_simulations = 10
+            self.parameters.num_simulations = 5
             self.parameters.score_list = manager.list()
-            self.parameters.avg_swap_time_list = None
             processes = []
             for i in range(num_processes):
-                p = Process(target=Root.__call__, args=(self.parameters,))
+                p = Process(target=Root.__call__, kwargs=dict(parameters=self.parameters, seed=seeds[i]))
                 p.start()
                 processes.append(p)
             for p in processes:
@@ -32,7 +32,7 @@ class Tests:
     def speed_test(self):
         self.parameters.num_simulations = 30
         self.parameters.score_list = None  # don't need to record scores
-        Root(self.parameters)
+        Root(parameters=self.parameters, seed=1)
         timings = next(iter(profile.get_stats().timings.values()))
         avg_time = sum(line_timings[2] for line_timings in timings) / self.parameters.num_simulations
         avg_time *= profile.timer_unit  # scale to seconds

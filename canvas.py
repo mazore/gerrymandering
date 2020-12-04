@@ -1,6 +1,6 @@
 from district import District
 from math import ceil, sqrt
-from parties import BLUE, RED, TIE
+from parties import BLUE, RED
 from person import Person
 from random import random
 from swap_manager import SwapManager
