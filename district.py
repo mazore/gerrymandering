@@ -21,7 +21,7 @@ class District:
         """Get whichever party has a majority of people, or a tie"""
         if self.net_advantage == 0:
             return TIE
-        return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.advantage.opponent
+        return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.disadvantage
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""

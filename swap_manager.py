@@ -65,7 +65,7 @@ class SwapManager:
 
     def get_person2(self):
         def key(p):  # put people of opposite parties to person1 first
-            if p.party is self.person1.party:
+            if p.party == self.person1.party:
                 return 1 + random()
             return random()
 

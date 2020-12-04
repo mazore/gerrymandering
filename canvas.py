@@ -41,7 +41,7 @@ class Canvas(tk.Canvas):
 
     def rerun_simulation(self):
         if self.parameters.score_list is not None:  # add score to list for tests
-            score = self.get_score()[self.parameters.advantage]
+            score = self.get_score()[self.parameters.advantage.name]
             self.parameters.score_list.append(score)
 
         if self.root.simulation_number == self.parameters.num_simulations:
@@ -81,9 +81,9 @@ class Canvas(tk.Canvas):
 
     def get_score(self):
         """Return a dict of format {party: num_districts_won, ...}"""
-        score = {BLUE: 0, RED: 0, TIE: 0}
+        score = {'blue': 0, 'red': 0, 'tie': 0}
         for district in self.districts:
-            score[district.get_winner()] += 1
+            score[district.get_winner().name] += 1
         return score
 
     def generate_people(self):

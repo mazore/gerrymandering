@@ -1,10 +1,11 @@
 from math import sqrt
-from parties import *
+from parties import BLUE, RED
 
 
 class Parameters:
     def __init__(self, grid_width=24, district_size=16, num_swaps=1000,
-                 width=480, height=480, advantage=BLUE, line_width=3, ms_between_draws=1, num_swaps_per_draw=1,
+                 width=480, height=480, advantage=BLUE, disadvantage=RED,
+                 line_width=3, ms_between_draws=1, num_swaps_per_draw=1,
                  num_simulations=None, score_list=None):
         """
         ---SIMULATION PARAMETERS---
@@ -32,7 +33,7 @@ class Parameters:
         self.width, self.height = width, height
         self.num_districts = (grid_width ** 2) / district_size
         self.advantage = advantage
-        self.disadvantage = advantage.opponent
+        self.disadvantage = disadvantage
         self.line_width = line_width
         self.ms_between_draws = ms_between_draws
         self.num_swaps_per_draw = num_swaps_per_draw
