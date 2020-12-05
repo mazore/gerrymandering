@@ -21,10 +21,12 @@ class SwapManager:
         """
         self.district1 = self.get_district1()
         self.person1 = self.get_person1()  # person1 is originally from district1
+        if self.person1 is None:
+            self.do_swap()
+            return
         self.district2 = self.get_district2()
         self.person2 = self.get_person2()  # person2 is originally from district2
-
-        if self.person1 is None or self.person2 is None:
+        if self.person2 is None:
             self.do_swap()
             return
 
@@ -53,7 +55,12 @@ class SwapManager:
         return choice(self.canvas.districts)
 
     def get_person1(self):
+        get_rid_of = self.district1.get_get_rid_of()
+
         for person in sorted(self.district1.people, key=lambda _: random()):  # more efficient than random.shuffle
+            if get_rid_of is not None and person.party != get_rid_of:
+                continue
+
             if not person.get_adjacent_districts():  # if person is in the middle of district
                 continue
 
@@ -77,12 +84,12 @@ class SwapManager:
                 return person
 
     def harmful(self):
-        """Returns whether proceeding with the swap will cause a district to flip from ADVANTAGE to TIE, or TIE to
-        DISADVANTAGE
+        """Returns whether proceeding with the swap will cause a district to flip from advantage to TIE, or TIE to
+        disadvantage
 
         Method: if a district is getting rid of a person in the party we are trying to advantage, and taking in a person
         from the party we are trying to disadvantage, we know the net_advantage of that district will decrease by 2. If
-        the districts net_advantage is <= 2, that will cause it to flip to either TIE or DISADVANTAGE.
+        the districts net_advantage is <= 2, that will cause it to flip to either TIE or disadvantage.
         """
         district1_at_risk = 0 <= self.district1.net_advantage <= 2
         district2_at_risk = 0 <= self.district2.net_advantage <= 2

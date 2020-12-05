@@ -7,7 +7,7 @@ class District:
         self.canvas = canvas
 
         (self.x1, self.y1), (self.x2, self.y2) = p1, p2  # in grid coordinates
-        self.net_advantage = 0  # ADVANTAGE score - DISADVANTAGE score
+        self.net_advantage = 0  # advantage score - disadvantage score
         self.people = []
         self.get_people()
         # self.color = '#' + ''.join(choice(list('0123456789abcdef')) for _ in range(6))  # random color
@@ -17,11 +17,14 @@ class District:
         return f'District that contains a person at {self.people[0].x, self.people[0].y} ' \
                f'won by {self.get_winner()} with +{abs(self.net_advantage)} people margin'
 
-    def get_winner(self):
-        """Get whichever party has a majority of people, or a tie"""
-        if self.net_advantage == 0:
-            return TIE
-        return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.disadvantage
+    def get_get_rid_of(self):
+        if 0 <= self.net_advantage <= 2:
+            return self.canvas.parameters.disadvantage
+        if 2 < self.net_advantage:
+            return self.canvas.parameters.advantage
+        if -4 <= self.net_advantage < 0:
+            return self.canvas.parameters.disadvantage
+        return self.canvas.parameters.advantage
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""
@@ -32,6 +35,12 @@ class District:
                 self.people.append(person)
                 person.district = self
                 self.net_advantage += 1 if person.party == self.canvas.parameters.advantage else -1
+
+    def get_winner(self):
+        """Get whichever party has a majority of people, or a tie"""
+        if self.net_advantage == 0:
+            return TIE
+        return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.disadvantage
 
     def draw(self):
         """Draw the outline and shading of the district"""

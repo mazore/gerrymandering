@@ -5,18 +5,22 @@ import tkinter as tk
 
 """
 TODO:
-- make a district use its net_advantage to determine what type of person it wants to get rid of/take in
+- minor formatting and documentation clean up
+- use backtracking to pick swap districts/people, and use 6x6 example to test it. Use ideal_give_away, ideal_take_in,
+  possible_take_in methods on district class. Order district 1's by their net_advantage.
+- safe import line_profiler
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - recursion error when no possible moves (mostly small grids)
 - record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive
 - more profiling
+- learn C and convert some code
 - make settings class
 - packages
 - UI
 - better documentation (readme)
 - line smoothing (spline, make districts look more organic)
-- multiple parties?
+- multiple parties? make red and blue into other non american colors?
 """
 
 

@@ -42,6 +42,6 @@ class Parameters:
         self.score_list = score_list
 
         if not sqrt(district_size).is_integer():
-            raise ValueError('districts start as squares, DISTRICT_SIZE must be a perfect square')
+            raise ValueError('districts start as squares, district_size must be a perfect square')
         if not sqrt(self.num_districts).is_integer():
             raise ValueError('districts must be able to fit into the grid without remainders')

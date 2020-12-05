@@ -62,7 +62,7 @@ class Canvas(tk.Canvas):
         self.pause()
 
     def swap_dispatch(self):
-        """Called every MS_BETWEEN_DRAWS (while running), calls do_swap multiple times if needed, draws once"""
+        """Called every ms_between_draws (while running), calls do_swap multiple times if needed, draws once"""
         if not self.running:
             return
 
@@ -106,7 +106,7 @@ class Canvas(tk.Canvas):
                 person.secondary_init()
 
     def generate_districts(self):
-        """Generate square districts, of size DISTRICT_SIZE.
+        """Generate square districts, of size district_size.
 
         We know this can fit because of assertions in constants.py"""
         district_width = sqrt(self.parameters.district_size)
