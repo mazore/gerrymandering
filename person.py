@@ -2,8 +2,7 @@ from itertools import groupby
 
 
 class Person:
-    """This represents one person, who gets one vote for one party (red or blue). District lines are drawn around these
-    people"""
+    """This represents one person, who gets one vote for one party. District lines are drawn around these people"""
 
     def __init__(self, canvas, p1, p2, x, y, party):
         self.canvas = canvas
@@ -69,7 +68,7 @@ class Person:
         if not self.at_north and not self.at_west:  # northwest
             self.person_nw = self.canvas.people_grid[self.y - 1][self.x - 1]
 
-        # 'filter(None.__ne__, l)` removes all occurrences of None from a list
+        # `filter(None.__ne__, l)` removes all occurrences of None from a list
         self.adjacent_people = list(filter(None.__ne__, [
             self.person_north, self.person_south, self.person_west, self.person_east
         ]))
@@ -105,7 +104,6 @@ class Person:
         the assumption that there are no holes, which there aren't because all districts are the same size, and there
         are no people without a district.
         """
-
         bool_list = [getattr(person, 'district', None) is self.district for person in self.surrounding_people]
         num_trues = bool_list.count(True)
         for k, v in groupby(bool_list * 2):

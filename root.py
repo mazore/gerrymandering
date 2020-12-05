@@ -5,7 +5,6 @@ import tkinter as tk
 
 """
 TODO:
-- minor formatting and documentation clean up
 - use backtracking to pick swap districts/people, and use 6x6 example to test it. Use ideal_give_away, ideal_take_in,
   possible_take_in methods on district class. Order district 1's by their net_advantage.
 - safe import line_profiler

@@ -3,6 +3,9 @@ from parties import TIE
 
 
 class District:
+    """Represents a collection of people, with a line drawn around them. The winner is determined by which party has the
+    most people contained in this district"""
+
     def __init__(self, canvas, p1, p2):
         self.canvas = canvas
 
@@ -18,13 +21,14 @@ class District:
                f'won by {self.get_winner()} with +{abs(self.net_advantage)} people margin'
 
     def get_get_rid_of(self):
-        if 0 <= self.net_advantage <= 2:
+        """Ideal party to give away during a swap"""
+        if 0 <= self.net_advantage <= 2:  # if at risk of flipping
             return self.canvas.parameters.disadvantage
-        if 2 < self.net_advantage:
+        if 2 < self.net_advantage:  # if safe to advantage, try to give away advantage people
             return self.canvas.parameters.advantage
-        if -4 <= self.net_advantage < 0:
+        if -4 <= self.net_advantage < 0:  # if flippable but disadvantage
             return self.canvas.parameters.disadvantage
-        return self.canvas.parameters.advantage
+        return self.canvas.parameters.advantage  # if to far disadvantage
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""
@@ -52,7 +56,7 @@ class District:
                 line_ids.add(line_id)
                 line_id_occurrence_map[line_id] += 1
         for line_id in line_ids:
-            # hide if not on edge of district (repeated)
+            # hide if not on edge of district (if repeated)
             state = 'hidden' if line_id_occurrence_map[line_id] > 1 else 'normal'
             if self.canvas.line_id_state_map[line_id] != state:
                 self.canvas.itemconfig(line_id, state=state)

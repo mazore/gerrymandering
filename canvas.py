@@ -19,7 +19,7 @@ class Canvas(tk.Canvas):
         self.running = False
         self.swap_manager = SwapManager(self)
 
-        self.line_id_state_map = {}
+        self.line_id_state_map = {}  # {tkinter.Canvas id for the line: the current state ('hidden' or 'normal')}
         self.people_grid = []
         self.generate_people()
 
@@ -80,7 +80,7 @@ class Canvas(tk.Canvas):
         self.root.after(self.parameters.ms_between_draws, self.swap_dispatch)
 
     def get_score(self):
-        """Return a dict of format {party: num_districts_won, ...}"""
+        """Return a dict of format {party_name: num_districts_won, ...}"""
         score = {'blue': 0, 'red': 0, 'tie': 0}
         for district in self.districts:
             score[district.get_winner().name] += 1
@@ -88,18 +88,18 @@ class Canvas(tk.Canvas):
 
     def generate_people(self):
         """Create grid of people with randomized parties"""
-        # make sure people's parties are random but same number of people for each
+        # make sure peoples parties are random but same number of people for each
         parties = [RED, BLUE] * ceil(self.parameters.grid_width ** 2 / 2)
         parties = sorted(parties, key=lambda _: random())  # more efficient than random.shuffle
 
         square_width = self.parameters.width / self.parameters.grid_width
-        for y in range(0, self.parameters.grid_width):
+        for grid_y in range(0, self.parameters.grid_width):
             row = []
-            for x in range(0, self.parameters.grid_width):
-                person1 = (x * square_width, y * square_width)
-                person2 = ((x + 1) * square_width, (y + 1) * square_width)
-                party = parties[x + y * self.parameters.grid_width]
-                row.append(Person(self, person1, person2, x, y, party=party))
+            for grid_x in range(0, self.parameters.grid_width):
+                p1 = (grid_x * square_width, grid_y * square_width)
+                p2 = ((grid_x + 1) * square_width, (grid_y + 1) * square_width)
+                party = parties[grid_x + grid_y * self.parameters.grid_width]
+                row.append(Person(self, p1, p2, grid_x, grid_y, party=party))
             self.people_grid.append(row)
         for row in self.people_grid:
             for person in row:
@@ -108,10 +108,11 @@ class Canvas(tk.Canvas):
     def generate_districts(self):
         """Generate square districts, of size district_size.
 
-        We know this can fit because of assertions in constants.py"""
+        We know this can fit because of assertions in constants.py
+        """
         district_width = sqrt(self.parameters.district_size)
         for grid_x in range(int(sqrt(self.parameters.num_districts))):
             for grid_y in range(int(sqrt(self.parameters.num_districts))):
-                grid_person1 = grid_x * district_width, grid_y * district_width
-                grid_person2 = (grid_x + 1) * district_width, (grid_y + 1) * district_width
-                self.districts.append(District(self, grid_person1, grid_person2))
+                grid_p1 = grid_x * district_width, grid_y * district_width
+                grid_p2 = (grid_x + 1) * district_width, (grid_y + 1) * district_width
+                self.districts.append(District(self, grid_p1, grid_p2))

@@ -14,6 +14,7 @@ class Tests:
         self.speed_test()
 
     def score_test(self):
+        """Run multiple windows, at the end print out the average score of `advantage` at the end of each simulation"""
         num_processes = 10  # number of processes (windows) to run simultaneously using multiprocessing
         seeds = list(range(num_processes))
         with Manager() as manager:
@@ -30,6 +31,7 @@ class Tests:
             print(f'Avg score ({len(score_list)} total simulations):', sum(score_list) / len(score_list))
 
     def speed_test(self):
+        """Runs many simulations, takes the average of the line_profiler total time doing do_swap at the end"""
         self.parameters.num_simulations = 30
         self.parameters.score_list = None  # don't need to record scores
         Root(parameters=self.parameters, seed=1)

@@ -10,7 +10,7 @@ class SwapManager:
         self.valid_swaps = 0
         self.before_score = None
         self.district1 = self.district2 = None
-        self.person1 = self.person2 = None
+        self.person1 = self.person2 = None  # person[n] is originally from district[n]
 
     @profile
     def do_swap(self):
@@ -20,12 +20,12 @@ class SwapManager:
         hinder the party that we're supposed to be gerrymandering for.
         """
         self.district1 = self.get_district1()
-        self.person1 = self.get_person1()  # person1 is originally from district1
+        self.person1 = self.get_person1()
         if self.person1 is None:
             self.do_swap()
             return
         self.district2 = self.get_district2()
-        self.person2 = self.get_person2()  # person2 is originally from district2
+        self.person2 = self.get_person2()
         if self.person2 is None:
             self.do_swap()
             return
@@ -90,6 +90,8 @@ class SwapManager:
         Method: if a district is getting rid of a person in the party we are trying to advantage, and taking in a person
         from the party we are trying to disadvantage, we know the net_advantage of that district will decrease by 2. If
         the districts net_advantage is <= 2, that will cause it to flip to either TIE or disadvantage.
+        Bugs: if one party is switching from tie to red, and the other is switching from red to tie, this will return
+        True, even though it is not harmful to the total score
         """
         district1_at_risk = 0 <= self.district1.net_advantage <= 2
         district2_at_risk = 0 <= self.district2.net_advantage <= 2
@@ -101,7 +103,9 @@ class SwapManager:
         return False
 
     def update_district_scores(self):
+        """Updates districts net_advantage after swap. We don't do this when people switch districts because we often
+        need to revert those because of disconnections"""
+        self.district2.net_advantage += 1 if self.person1.party == self.canvas.parameters.advantage else -1
         self.district1.net_advantage += -1 if self.person1.party == self.canvas.parameters.advantage else 1
         self.district1.net_advantage += 1 if self.person2.party == self.canvas.parameters.advantage else -1
         self.district2.net_advantage += -1 if self.person2.party == self.canvas.parameters.advantage else 1
-        self.district2.net_advantage += 1 if self.person1.party == self.canvas.parameters.advantage else -1
