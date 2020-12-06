@@ -1,13 +1,18 @@
+import atexit
 from canvas import Canvas
+from misc import profile
 from parameters import Parameters
 import random
 import tkinter as tk
 
 """
 TODO:
-- use backtracking to pick swap districts/people, and use 6x6 example to test it. Use ideal_give_away, ideal_take_in,
-  possible_take_in methods on district class. Order district 1's by their net_advantage.
+- order conditions in getting people to swap for efficiency (think about how much it filters out to run less conditions)
+- fix bug in harmful checks - if one party is switching from tie to red, and the other is switching from red to tie, it
+  will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
+- expand upon ideal_give_away
 - safe import line_profiler
+- why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - recursion error when no possible moves (mostly small grids)
 - record swaps already done, don't undo an already done swap
@@ -31,6 +36,9 @@ class Root(tk.Tk):
 
         if seed is not None:
             random.seed(seed)
+
+        if parameters.print_profiler:
+            atexit.register(profile.print_stats)
 
         self.simulation_number = 1
 

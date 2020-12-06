@@ -1,5 +1,5 @@
-from misc import profile
-from random import choice, random
+from misc import fast_shuffle, profile
+from random import random
 
 
 class SwapManager:
@@ -14,36 +14,11 @@ class SwapManager:
 
     @profile
     def do_swap(self):
-        """Takes 2 districts that are adjacent, and switches one person from each.
-
-        It also checks to make sure the districts are continuous (connected) after swapping, and that the swap did not
-        hinder the party that we're supposed to be gerrymandering for.
-        """
-        self.district1 = self.get_district1()
-        self.person1 = self.get_person1()
-        if self.person1 is None:
-            self.do_swap()
-            return
-        self.district2 = self.get_district2()
-        self.person2 = self.get_person2()
-        if self.person2 is None:
-            self.do_swap()
-            return
-
-        if self.harmful():
-            self.do_swap()
-            return
+        self.get_person1()
 
         self.person1.change_districts(self.district2)
         self.person2.change_districts(self.district1)
 
-        if not (self.person1.get_is_connected() and self.person2.get_is_connected()):
-            self.person1.change_districts(self.district1)
-            self.person2.change_districts(self.district2)
-            self.do_swap()
-            return
-
-        self.update_district_scores()
         if self.canvas.parameters.num_swaps_per_draw == 1:
             self.district1.draw()
             self.district2.draw()
@@ -51,61 +26,39 @@ class SwapManager:
         if self.valid_swaps == self.canvas.parameters.num_swaps:
             self.canvas.rerun_simulation()
 
-    def get_district1(self):
-        return choice(self.canvas.districts)
-
     def get_person1(self):
-        get_rid_of = self.district1.get_get_rid_of()
+        for self.district1 in fast_shuffle(self.canvas.districts):
+            give_away = self.district1.ideal_give_away()
+            for self.person1 in fast_shuffle(self.district1.people):
+                if give_away is not None and self.person1.party != give_away:
+                    continue
+                if not self.person1.get_is_removable():
+                    continue
 
-        for person in sorted(self.district1.people, key=lambda _: random()):  # more efficient than random.shuffle
-            if get_rid_of is not None and person.party != get_rid_of:
-                continue
+                if self.get_person2():
+                    return
+        print('no possible swaps')
+        while True:  # stall
+            pass
 
-            if not person.get_adjacent_districts():  # if person is in the middle of district
-                continue
-
-            if person.get_is_removable():
-                return person
-
-    def get_district2(self):
-        return choice(self.person1.get_adjacent_districts())
+    def diff_parties_first(self, person):
+        """Used in get_person2, puts people of opposite parties to person1 first (lower number)"""
+        return int(person.party == self.person1.party) + random()
 
     def get_person2(self):
-        def key(p):  # put people of opposite parties to person1 first
-            if p.party == self.person1.party:
-                return 1 + random()
-            return random()
+        for self.district2 in self.person1.get_adjacent_districts():
+            for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
+                if self.district1 not in self.person2.get_adjacent_districts():  # if not touching district1
+                    continue
+                if self.person1 in self.person2.adjacent_people:
+                    continue
+                if not self.person2.get_is_removable():
+                    continue
 
-        for person in sorted(self.district2.people, key=key):
-            if self.district1 not in person.get_adjacent_districts():  # if not touching district1
-                continue
+                if 0 <= self.district2.net_advantage <= 2:  # if district2 possible to be flipped
+                    party1 = self.person1.party
+                    if party1 != self.canvas.parameters.advantage and party1 != self.person2.party:
+                        continue  # if district2 would be flipped on swap
 
-            if person.get_is_removable():
-                return person
-
-    def harmful(self):
-        """Returns whether proceeding with the swap will cause a district to flip from advantage to TIE, or TIE to
-        disadvantage
-
-        Method: if a district is getting rid of a person in the party we are trying to advantage, and taking in a person
-        from the party we are trying to disadvantage, we know the net_advantage of that district will decrease by 2. If
-        the districts net_advantage is <= 2, that will cause it to flip to either TIE or disadvantage.
-        Bugs: if one party is switching from tie to red, and the other is switching from red to tie, this will return
-        True, even though it is not harmful to the total score
-        """
-        district1_at_risk = 0 <= self.district1.net_advantage <= 2
-        district2_at_risk = 0 <= self.district2.net_advantage <= 2
-        advantage, disadvantage = self.canvas.parameters.advantage, self.canvas.parameters.disadvantage
-        if district1_at_risk and self.person1.party == advantage and self.person2.party == disadvantage:
-            return True
-        if district2_at_risk and self.person2.party == advantage and self.person1.party == disadvantage:
-            return True
+                return True
         return False
-
-    def update_district_scores(self):
-        """Updates districts net_advantage after swap. We don't do this when people switch districts because we often
-        need to revert those because of disconnections"""
-        self.district2.net_advantage += 1 if self.person1.party == self.canvas.parameters.advantage else -1
-        self.district1.net_advantage += -1 if self.person1.party == self.canvas.parameters.advantage else 1
-        self.district1.net_advantage += 1 if self.person2.party == self.canvas.parameters.advantage else -1
-        self.district2.net_advantage += -1 if self.person2.party == self.canvas.parameters.advantage else 1

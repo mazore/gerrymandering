@@ -20,15 +20,15 @@ class District:
         return f'District that contains a person at {self.people[0].x, self.people[0].y} ' \
                f'won by {self.get_winner()} with +{abs(self.net_advantage)} people margin'
 
-    def get_get_rid_of(self):
-        """Ideal party to give away during a swap"""
+    def ideal_give_away(self):
+        if 3 <= self.net_advantage:  # if safe to advantage, try to give away advantage people
+            return self.canvas.parameters.advantage
         if 0 <= self.net_advantage <= 2:  # if at risk of flipping
             return self.canvas.parameters.disadvantage
-        if 2 < self.net_advantage:  # if safe to advantage, try to give away advantage people
-            return self.canvas.parameters.advantage
-        if -4 <= self.net_advantage < 0:  # if flippable but disadvantage
+        if -4 <= self.net_advantage <= -1:  # if flippable but disadvantage
             return self.canvas.parameters.disadvantage
-        return self.canvas.parameters.advantage  # if to far disadvantage
+        if self.net_advantage <= -5:  # if to far disadvantage
+            return self.canvas.parameters.advantage
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""

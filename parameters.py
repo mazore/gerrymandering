@@ -26,11 +26,12 @@ class Parameters:
     num_simulations - number of simulation repeats to run before quiting, per process, use None for keep rerunning
     score_list - multiprocessing.managers.ListProxy of scores of advantage at the end of the simulation. It is
       appended to at the end of each simulation
+    print_profiler - whether or not to print results from line_profiler (misc.py) at the end of each process
     """
     def __init__(self, grid_width=24, district_size=16, num_swaps=1000,
                  width=480, height=480, advantage=BLUE, disadvantage=RED,
                  line_width=3, ms_between_draws=1, num_swaps_per_draw=1,
-                 num_simulations=None, score_list=None):
+                 num_simulations=None, score_list=None, print_profiler=False):
         self.grid_width = grid_width
         self.district_size = district_size
         self.num_swaps = num_swaps
@@ -45,6 +46,7 @@ class Parameters:
 
         self.num_simulations = num_simulations
         self.score_list = score_list
+        self.print_profiler = print_profiler
 
         if not sqrt(district_size).is_integer():
             raise ParameterError('districts start as squares, district_size must be a perfect square')

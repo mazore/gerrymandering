@@ -88,13 +88,6 @@ class Person:
         """Returns a list of districts neighboring this person, not including the district this is in"""
         return [person.district for person in self.adjacent_people if person.district is not self.district]
 
-    def get_is_connected(self):
-        """Returns if this person is touching the any other part of their district"""
-        for person in self.adjacent_people:
-            if person.district is self.district:
-                return True
-        return False
-
     def get_is_removable(self):
         """Returns whether the person can be removed from their district without disconnecting district
 
@@ -114,5 +107,7 @@ class Person:
     def change_districts(self, destination):
         """Change which district this person belongs to, does not change location or party"""
         self.district.people.remove(self)
+        self.district.net_advantage -= 1 if self.party == self.canvas.parameters.advantage else -1
         destination.people.append(self)
         self.district = destination
+        self.district.net_advantage += 1 if self.party == self.canvas.parameters.advantage else -1

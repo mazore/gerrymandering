@@ -1,8 +1,8 @@
 from district import District
 from math import ceil, sqrt
+from misc import fast_shuffle
 from parties import BLUE, RED
 from person import Person
-from random import random
 from swap_manager import SwapManager
 import tkinter as tk
 
@@ -90,7 +90,7 @@ class Canvas(tk.Canvas):
         """Create grid of people with randomized parties"""
         # make sure peoples parties are random but same number of people for each
         parties = [RED, BLUE] * ceil(self.parameters.grid_width ** 2 / 2)
-        parties = sorted(parties, key=lambda _: random())  # more efficient than random.shuffle
+        parties = fast_shuffle(parties)
 
         square_width = self.parameters.width / self.parameters.grid_width
         for grid_y in range(0, self.parameters.grid_width):
