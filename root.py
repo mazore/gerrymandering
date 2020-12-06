@@ -7,10 +7,11 @@ import tkinter as tk
 
 """
 TODO:
-- order conditions in getting people to swap for efficiency (think about how much it filters out to run less conditions)
+- try restarting getting people when there is a non beneficial condition
 - fix bug in harmful checks - if one party is switching from tie to red, and the other is switching from red to tie, it
   will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
 - expand upon ideal_give_away
+- fix imperfect touching p1 check if it would be disconnected (says it will when it wont)
 - safe import line_profiler
 - why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)

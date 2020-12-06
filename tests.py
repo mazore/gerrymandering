@@ -10,7 +10,7 @@ class Tests:
         print(f'Grid width: {self.parameters.grid_width}')
         print(f'District size: {self.parameters.district_size}')
         print(f'Number of swaps: {self.parameters.num_swaps}')
-        self.score_test()
+        # self.score_test()
         self.speed_test()
 
     def score_test(self):
@@ -34,7 +34,7 @@ class Tests:
 
     def speed_test(self):
         """Runs many simulations, takes the average of the line_profiler total time doing do_swap at the end"""
-        self.parameters.num_simulations = 10
+        self.parameters.num_simulations = 30
         self.parameters.score_list = None  # don't need to record scores
         self.parameters.num_swaps_per_draw = 1
         self.parameters.print_profiler = True
