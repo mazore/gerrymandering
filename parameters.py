@@ -28,7 +28,7 @@ class Parameters:
       appended to at the end of each simulation
     print_profiler - whether or not to print results from line_profiler (misc.py) at the end of each process
     """
-    def __init__(self, grid_width=24, district_size=16, num_swaps=1000,
+    def __init__(self, grid_width=24, district_size=16, num_swaps=None,
                  width=480, height=480, advantage=BLUE, disadvantage=RED,
                  line_width=3, ms_between_draws=1, num_swaps_per_draw=1,
                  num_simulations=None, score_list=None, print_profiler=False):

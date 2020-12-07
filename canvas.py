@@ -33,8 +33,9 @@ class Canvas(tk.Canvas):
         self.bind('<Button-3>', self.right_click)
 
     def run(self):
-        self.running = True
-        self.swap_dispatch()
+        if not self.running:
+            self.running = True
+            self.swap_dispatch()
 
     def pause(self):
         self.running = False

@@ -7,6 +7,7 @@ import tkinter as tk
 
 """
 TODO:
+- rework tests to just track score after certain amount of time (per simulations), also output num swaps achieved
 - fix bug in harmful checks - if one party is switching from tie to red, and the other is switching from red to tie, it
   will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
 - expand upon ideal_give_away
@@ -14,7 +15,6 @@ TODO:
 - safe import line_profiler
 - why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
-- recursion error when no possible moves (mostly small grids)
 - record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive
 - more profiling

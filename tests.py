@@ -10,7 +10,7 @@ class Tests:
         print(f'Grid width: {self.parameters.grid_width}')
         print(f'District size: {self.parameters.district_size}')
         print(f'Number of swaps: {self.parameters.num_swaps}')
-        # self.score_test()
+        self.score_test()
         self.speed_test()
 
     def score_test(self):
