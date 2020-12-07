@@ -55,6 +55,7 @@ class SwapManager:
                 if district2_at_risk:  # if district2 possible to be flipped
                     party1 = self.person1.party
                     if party1 != self.canvas.parameters.advantage and party1 != self.person2.party:
+                        # `return False` not `continue` to increases avg score by ~0.3 but slows down by 0.1 seconds
                         continue  # if district2 would be flipped on swap
                 if self.person1 in self.person2.adjacent_people:
                     continue  # swapping two adjacent people will likely cause disconnection, although imperfect

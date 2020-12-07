@@ -7,7 +7,6 @@ import tkinter as tk
 
 """
 TODO:
-- try restarting getting people when there is a non beneficial condition
 - fix bug in harmful checks - if one party is switching from tie to red, and the other is switching from red to tie, it
   will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
 - expand upon ideal_give_away
