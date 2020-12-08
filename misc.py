@@ -12,6 +12,7 @@ def fast_shuffled(l):
 
 
 class SimulationData:
-    def __init__(self, score, num_swaps):
+    def __init__(self, score, num_swaps, time_length):
         self.score = score
         self.num_swaps = num_swaps
+        self.time_length = time_length

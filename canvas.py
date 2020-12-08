@@ -46,7 +46,8 @@ class Canvas(tk.Canvas):
     def rerun_simulation(self):
         self.root.simulation_data_list.append(SimulationData(
             self.get_score()[self.parameters.advantage.name],
-            self.swap_manager.swaps_done
+            self.swap_manager.swaps_done,
+            time() - self.start_time
         ))
 
         self.running = False

@@ -45,7 +45,6 @@ class SwapManager:
         self.person2.change_districts(self.district1)
         self.swaps_done += 1
 
-    @profile
     def get_people(self):
         for self.district1 in fast_shuffled(self.canvas.districts):
             give_away = self.district1.ideal_give_away()
@@ -66,9 +65,8 @@ class SwapManager:
                             continue  # swapping two adjacent people will likely cause disconnection, not always
                         if not self.person2.get_is_removable():
                             continue  # if removing will cause disconnection in district2
-                        if 0 <= self.district2.net_advantage <= 2:
-                            if self.person1.party not in (self.canvas.parameters.advantage, self.person2.party):
-                                raise RestartGettingPeopleError
+                        if self.person2_harmful():
+                            raise RestartGettingPeopleError
                         return
                 raise RestartGettingPeopleError
 
@@ -79,3 +77,22 @@ class SwapManager:
     def diff_parties_first(self, person):
         """Used in get_person2, puts people of opposite parties to person1 first (lower number)"""
         return int(person.party == self.person1.party) + random()
+
+    def person2_harmful(self):
+        advantage, disadvantage = self.canvas.parameters.advantage, self.canvas.parameters.disadvantage
+        if not (self.person1.party == disadvantage and self.person2.party == advantage):
+            return False
+        # now we know that district2 score is decreasing by two
+        if self.district2.net_advantage == 2:  # if district2 will become tie from blue
+            if self.district1.net_advantage == 0:  # district1 will become blue from tie
+                return False
+            else:
+                return True
+        elif 0 <= self.district2.net_advantage <= 1:  # if district2 will become red from blue/tie
+            if -2 <= self.district1.net_advantage <= -1:  # if district1 will become blue/tie from red
+                return False
+            elif 0 == self.district1.net_advantage:
+                return False
+            else:
+                return True
+        return False

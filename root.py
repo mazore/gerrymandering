@@ -5,13 +5,14 @@ import tkinter as tk
 
 """
 TODO:
-- make test more consistent
-- fix bug in harmful checks - if one party is switching from tie to red, and the other is switching from red to tie, it
+-  - if one party is switching from tie to red, and the other is switching from red to tie, it
   will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
+- change tests mostly back (probably keep simulation data) but add third stat that combines speed and score
 - expand upon ideal_give_away
 - fix imperfect touching p1 check if it would be disconnected (says it will when it wont)
 - safe import line_profiler
 - mess around with district1 order (maybe district2 order)
+- make test more consistent
 - change terminology for advantage/disadvantage
 - why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
