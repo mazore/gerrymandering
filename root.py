@@ -1,24 +1,23 @@
-import atexit
 from canvas import Canvas
-from misc import profile
 from parameters import Parameters
 import random
 import tkinter as tk
 
 """
 TODO:
-- rework tests to just track score after certain amount of time (per simulations), also output num swaps achieved
+- make test more consistent
 - fix bug in harmful checks - if one party is switching from tie to red, and the other is switching from red to tie, it
   will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
 - expand upon ideal_give_away
 - fix imperfect touching p1 check if it would be disconnected (says it will when it wont)
 - safe import line_profiler
+- mess around with district1 order (maybe district2 order)
+- change terminology for advantage/disadvantage
 - why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - record swaps already done, don't undo an already done swap
-- prioritize keeping districts more cohesive
+- prioritize keeping districts more cohesive?
 - more profiling
-- learn C and convert some code
 - make settings class
 - packages
 - UI
@@ -37,10 +36,8 @@ class Root(tk.Tk):
         if seed is not None:
             random.seed(seed)
 
-        if parameters.print_profiler:
-            atexit.register(profile.print_stats)
-
         self.simulation_number = 1
+        self.simulation_data_list = []
 
         self.canvas = Canvas(self, parameters)
 

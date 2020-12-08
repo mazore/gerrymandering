@@ -12,7 +12,8 @@ class Parameters:
     ---SIMULATION PARAMETERS---
     grid_width - width (and height) of the grid of people, must be multiple of sqrt(district_size)
     district_size - number of people contained in a district, must be perfect square
-    num_swaps - number of swaps to perform before rerunning simulation (or exiting), use None for run infinitely
+    num_swaps - number of swaps to perform before rerunning simulation (or exiting), None for run infinitely
+    simulation_time - how long (seconds) to run before rerunning simulation (or exiting), None for run infinitely
 
     ---APPLICATION/VISUAL PARAMETERS---
     width, height - size of the window in pixels
@@ -24,17 +25,15 @@ class Parameters:
 
     ---TESTING PARAMETERS---
     num_simulations - number of simulation repeats to run before quiting, per process, use None for keep rerunning
-    score_list - multiprocessing.managers.ListProxy of scores of advantage at the end of the simulation. It is
-      appended to at the end of each simulation
-    print_profiler - whether or not to print results from line_profiler (misc.py) at the end of each process
     """
-    def __init__(self, grid_width=24, district_size=16, num_swaps=None,
+    def __init__(self, grid_width=24, district_size=16, num_swaps=None, simulation_time=None,
                  width=480, height=480, advantage=BLUE, disadvantage=RED,
                  line_width=3, ms_between_draws=1, num_swaps_per_draw=1,
-                 num_simulations=None, score_list=None, print_profiler=False):
+                 num_simulations=None):
         self.grid_width = grid_width
         self.district_size = district_size
         self.num_swaps = num_swaps
+        self.simulation_time = simulation_time
 
         self.width, self.height = width, height
         self.num_districts = (grid_width ** 2) / district_size
@@ -45,10 +44,15 @@ class Parameters:
         self.num_swaps_per_draw = num_swaps_per_draw
 
         self.num_simulations = num_simulations
-        self.score_list = score_list
-        self.print_profiler = print_profiler
 
         if not sqrt(district_size).is_integer():
             raise ParameterError('districts start as squares, district_size must be a perfect square')
         if not sqrt(self.num_districts).is_integer():
             raise ParameterError('districts must be able to fit into the grid without remainders')
+
+    def __repr__(self):
+        inside = []
+        for k, v in self.__dict__.items():
+            inside.append(f'    {k}: {v},')
+        inside = '\n'.join(inside)
+        return f'Parameters(\n{inside}\n)'

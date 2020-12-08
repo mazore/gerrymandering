@@ -1,10 +1,12 @@
 from district import District
 from math import ceil, sqrt
-from misc import fast_shuffle
+from misc import fast_shuffled
 from parties import BLUE, RED
 from person import Person
+from misc import SimulationData
 from swap_manager import SwapManager
 import tkinter as tk
+from time import time
 
 
 class Canvas(tk.Canvas):
@@ -26,7 +28,8 @@ class Canvas(tk.Canvas):
         self.districts = []
         self.generate_districts()
 
-        self.run()
+        self.start_time = time()
+        self.root.after(1, self.run)
 
         self.bind('<Button-1>', self.left_click)
         self.bind('<Button-2>', self.middle_click)
@@ -41,13 +44,15 @@ class Canvas(tk.Canvas):
         self.running = False
 
     def rerun_simulation(self):
-        if self.parameters.score_list is not None:  # add score to list for tests
-            score = self.get_score()[self.parameters.advantage.name]
-            self.parameters.score_list.append(score)
+        self.root.simulation_data_list.append(SimulationData(
+            self.get_score()[self.parameters.advantage.name],
+            self.swap_manager.swaps_done
+        ))
 
+        self.running = False
         if self.root.simulation_number == self.parameters.num_simulations:
             self.root.quit()
-        self.running = False
+            return
         self.pack_forget()
         self.root.simulation_number += 1
         self.root.canvas = Canvas(self.root, self.parameters)
@@ -63,20 +68,10 @@ class Canvas(tk.Canvas):
         self.pause()
 
     def swap_dispatch(self):
-        """Called every ms_between_draws (while running), calls do_swap multiple times if needed, draws once"""
         if not self.running:
             return
 
-        if self.parameters.num_swaps_per_draw == 1:
-            self.swap_manager.do_swap()  # draws in do_swap if 1 swap per draw
-        else:  # if multiple swaps per draw
-            to_draw = set()
-            for _ in range(self.parameters.num_swaps_per_draw):
-                self.swap_manager.do_swap()
-                to_draw.add(self.swap_manager.district1)
-                to_draw.add(self.swap_manager.district2)
-            for district in to_draw:
-                district.draw()
+        self.swap_manager.swap_dispatch()
 
         self.root.after(self.parameters.ms_between_draws, self.swap_dispatch)
 
@@ -91,7 +86,7 @@ class Canvas(tk.Canvas):
         """Create grid of people with randomized parties"""
         # make sure peoples parties are random but same number of people for each
         parties = [RED, BLUE] * ceil(self.parameters.grid_width ** 2 / 2)
-        parties = fast_shuffle(parties)
+        parties = fast_shuffled(parties)
 
         square_width = self.parameters.width / self.parameters.grid_width
         for grid_y in range(0, self.parameters.grid_width):
