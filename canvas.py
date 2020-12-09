@@ -1,9 +1,7 @@
 from district import District
 from math import ceil, sqrt
-from misc import fast_shuffled
-from parties import BLUE, RED
+from misc import fast_shuffled, BLUE, RED
 from person import Person
-from misc import SimulationData
 from swap_manager import SwapManager
 import tkinter as tk
 from time import time
@@ -14,15 +12,15 @@ class Canvas(tk.Canvas):
 
     def __init__(self, root, parameters):
         self.root = root
-        self.parameters = parameters
+        self.parameters = parameters  # same as root.parameters, just more convenient
         super().__init__(width=parameters.width, height=parameters.height)
         self.pack()
 
         self.running = False
         self.swap_manager = SwapManager(self)
 
-        self.line_id_state_map = {}  # {tkinter.Canvas id for the line: the current state ('hidden' or 'normal')}
-        self.people_grid = []
+        self.line_id_state_map = {}  # {tkinter.Canvas id for the line: current state ('hidden' or 'normal')}
+        self.people_grid = []  # 2d list of Person objects
         self.generate_people()
 
         self.districts = []
@@ -36,27 +34,14 @@ class Canvas(tk.Canvas):
         self.bind('<Button-3>', self.right_click)
 
     def run(self):
+        """Start running or resume from being paused"""
         if not self.running:
             self.running = True
             self.swap_dispatch()
 
     def pause(self):
+        """Stop the simulation from doing swaps"""
         self.running = False
-
-    def rerun_simulation(self):
-        self.root.simulation_data_list.append(SimulationData(
-            self.get_score()[self.parameters.advantage.name],
-            self.swap_manager.swaps_done,
-            time() - self.start_time
-        ))
-
-        self.running = False
-        if self.root.simulation_number == self.parameters.num_simulations:
-            self.root.quit()
-            return
-        self.pack_forget()
-        self.root.simulation_number += 1
-        self.root.canvas = Canvas(self.root, self.parameters)
 
     def left_click(self, _):
         self.run()
@@ -69,6 +54,7 @@ class Canvas(tk.Canvas):
         self.pause()
 
     def swap_dispatch(self):
+        """Called every ms_between_draws while running, initiates swaps on SwapManager object"""
         if not self.running:
             return
 
@@ -103,10 +89,8 @@ class Canvas(tk.Canvas):
                 person.secondary_init()
 
     def generate_districts(self):
-        """Generate square districts, of size district_size.
-
-        We know this can fit because of assertions in constants.py
-        """
+        """Generate square districts of size district_size. We know this can fit because of assertions in Parameters
+        initialization"""
         district_width = sqrt(self.parameters.district_size)
         for grid_x in range(int(sqrt(self.parameters.num_districts))):
             for grid_y in range(int(sqrt(self.parameters.num_districts))):

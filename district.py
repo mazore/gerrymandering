@@ -1,5 +1,5 @@
 from collections import defaultdict
-from parties import TIE
+from misc import TIE
 
 
 class District:
@@ -13,7 +13,7 @@ class District:
         self.net_advantage = 0  # advantage score - disadvantage score
         self.people = []
         self.get_people()
-        # self.color = '#' + ''.join(choice(list('0123456789abcdef')) for _ in range(6))  # random color
+        # self.color = '#' + ''.join(choice('0123456789abcdef') for _ in range(6))  # random color
         self.draw()
 
     def __repr__(self):
@@ -21,6 +21,7 @@ class District:
                f'won by {self.get_winner()} with +{abs(self.net_advantage)} people margin'
 
     def ideal_give_away(self):
+        """Which party this district prioritizes giving away, in the form of a person1 swapped into district2"""
         if 3 <= self.net_advantage:  # if safe to advantage, try to give away advantage people
             return self.canvas.parameters.advantage
         if 0 <= self.net_advantage <= 2:  # if at risk of flipping
@@ -47,7 +48,7 @@ class District:
         return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.disadvantage
 
     def draw(self):
-        """Draw the outline and shading of the district"""
+        """Draw the outline and fill of the district"""
         # outline
         line_ids = set()
         line_id_occurrence_map = defaultdict(int)

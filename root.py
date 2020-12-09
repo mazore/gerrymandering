@@ -1,13 +1,12 @@
 from canvas import Canvas
 from parameters import Parameters
 import random
+from misc import SimulationData
 import tkinter as tk
+from time import time
 
 """
 TODO:
--  - if one party is switching from tie to red, and the other is switching from red to tie, it
-  will say harmful, even though it is not harmful to the total score. This will allow tied districts to appear to move
-- change tests mostly back (probably keep simulation data) but add third stat that combines speed and score
 - expand upon ideal_give_away
 - fix imperfect touching p1 check if it would be disconnected (says it will when it wont)
 - safe import line_profiler
@@ -32,15 +31,32 @@ class Root(tk.Tk):
     """Manages UI things, subclass of tkinter application root (represents a window)"""
 
     def __init__(self, parameters=Parameters(), seed=None):
+        self.parameters = parameters
         super().__init__()
 
         if seed is not None:
             random.seed(seed)
 
+        self.simulation_datas = []
         self.simulation_number = 1
-        self.simulation_data_list = []
 
         self.canvas = Canvas(self, parameters)
 
         self.geometry(f'{parameters.width}x{parameters.height}+1060+100')
         self.mainloop()
+
+    def rerun_simulation(self):
+        """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
+        self.simulation_datas.append(SimulationData(
+            self.canvas.get_score()[self.parameters.advantage.name],
+            self.canvas.swap_manager.swaps_done,
+            time() - self.canvas.start_time
+        ))
+
+        self.canvas.running = False
+        if self.simulation_number == self.parameters.num_simulations:
+            self.quit()
+            return
+        self.canvas.pack_forget()
+        self.simulation_number += 1
+        self.canvas = Canvas(self, self.parameters)

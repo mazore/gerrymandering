@@ -1,5 +1,5 @@
 from math import sqrt
-from parties import BLUE, RED
+from misc import BLUE, RED
 
 
 class ParameterError(Exception):
