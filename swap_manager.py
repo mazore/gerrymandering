@@ -51,15 +51,16 @@ class SwapManager:
         to the gerrymandering process occur. If it returns without a RestartGettingPeopleError, we know the people are
         OK to swap districts"""
         for self.district1 in fast_shuffled(self.canvas.districts):
-            ideal_give_away = self.district1.ideal_give_away()
+            ideal_party1 = self.district1.ideal_give_away()
 
             for self.person1 in fast_shuffled(self.district1.people):
-                if self.person1.party != ideal_give_away:
+                if self.person1.party != ideal_party1:
                     continue  # if is not the ideal party to give away for this district
                 if not self.person1.get_is_removable():
                     continue  # if removing will cause disconnection in district1
 
                 for self.district2 in fast_shuffled(self.person1.get_adjacent_districts()):
+                    party2_can_be_advantage = self.party2_can_be_advantage()
 
                     for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
                         if self.district1 not in self.person2.get_adjacent_districts():
@@ -68,8 +69,8 @@ class SwapManager:
                             continue  # swapping two adjacent people will likely cause disconnection, not always though
                         if not self.person2.get_is_removable():
                             continue  # if removing will cause disconnection in district2
-                        if self.person2_harmful():
-                            raise RestartGettingPeopleError
+                        if not party2_can_be_advantage and self.person2.party == self.canvas.parameters.advantage:
+                            raise RestartGettingPeopleError  # better than `continue`
                         return
                 raise RestartGettingPeopleError
 
@@ -81,20 +82,20 @@ class SwapManager:
         """Used in get_person2, puts people of opposite parties to person1 first (lower number)"""
         return int(person.party == self.person1.party) + random()
 
-    def person2_harmful(self):
-        """Returns whether district2 will flip in the wrong direction. District1 wont flip because it picks person1"""
+    def party2_can_be_advantage(self):
+        """Returns whether the party of person2 can be advantage without having a decrease in advantage's total score"""
         advantage, disadvantage = self.canvas.parameters.advantage, self.canvas.parameters.disadvantage
-        if not (self.person1.party == disadvantage and self.person2.party == advantage):
-            return False  # if net_advantages will stay the same or district2's will increase
+        if self.person1.party != disadvantage:
+            return True  # if net_advantages will stay the same or district2's will increase
         # now we know that district2 net_advantage is decreasing by 2 and district1 net_advantage is increasing by 2
-        if self.district2.net_advantage == 2:  # if district2 will become tie from blue
-            if self.district1.net_advantage == 0:  # district1 will become blue from tie
-                return False
-            else:
+        if self.district2.net_advantage == 2:  # if district2 will become tie from advantage
+            if self.district1.net_advantage == 0:  # district1 will become advantage from tie
                 return True
-        elif 0 <= self.district2.net_advantage <= 1:  # if district2 will become red from blue/tie
-            if -2 <= self.district1.net_advantage <= -1:  # if district1 will become blue/tie from red
-                return False
             else:
+                return False
+        elif 0 <= self.district2.net_advantage <= 1:  # if district2 will become disadvantage from advantage/tie
+            if -2 <= self.district1.net_advantage <= -1:  # if district1 will become advantage/tie from disadvantage
                 return True
-        return False
+            else:
+                return False
+        return True

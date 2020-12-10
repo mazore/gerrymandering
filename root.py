@@ -7,9 +7,9 @@ from time import time
 
 """
 TODO:
-- expand upon ideal_give_away
-- fix imperfect touching p1 check if it would be disconnected (says it will when it wont)
+- fix imperfect touching p1 check if it would be disconnected (sometimes says it will when it wont)
 - safe import line_profiler
+- break down get_people into 2 or 4 methods
 - mess around with district1 order (maybe district2 order)
 - make test more consistent
 - change terminology for advantage/disadvantage

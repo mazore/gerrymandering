@@ -21,7 +21,8 @@ def get_avg_time():
     simulation_datas = []
     run_process(simulation_datas, parameters, 1)
 
-    assert len(profile.functions) == 1 and profile.functions[0].__name__ == 'swap'
+    if len(profile.functions) != 1 or profile.functions[0].__name__ != 'swap':
+        print('incorrect time results!')
     timings = next(iter(profile.get_stats().timings.values()))
     avg_time = sum(line_timings[2] for line_timings in timings) / parameters.num_simulations
     avg_time *= profile.timer_unit  # scale to seconds
@@ -38,7 +39,7 @@ def get_avg_score():
     )
     num_processes = 50
     print('score parameters: ', parameters, 'x', num_processes, 'processes')
-    seeds = list(range(num_processes))
+    seeds = [i+0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
     with Manager() as manager:
         simulation_datas = manager.list()
         processes = []

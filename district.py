@@ -22,14 +22,9 @@ class District:
 
     def ideal_give_away(self):
         """Which party this district prioritizes giving away, in the form of a person1 swapped into district2"""
-        if 3 <= self.net_advantage:  # if safe to advantage, try to give away advantage people
+        if not -4 <= self.net_advantage <= 2:  # if not flippable or safe advantage, share out advantage people
             return self.canvas.parameters.advantage
-        if 0 <= self.net_advantage <= 2:  # if at risk of flipping
-            return self.canvas.parameters.disadvantage
-        if -4 <= self.net_advantage <= -1:  # if flippable but disadvantage
-            return self.canvas.parameters.disadvantage
-        if self.net_advantage <= -5:  # if to far disadvantage
-            return self.canvas.parameters.advantage
+        return self.canvas.parameters.disadvantage  # if flippable/at risk, try to get more advantage people
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""

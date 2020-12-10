@@ -34,6 +34,7 @@ class Person:
         self.inner_id = self.canvas.create_rectangle(x1 + w / 4, y1 + w / 4, x2 - h / 4, y2 - h / 4,
                                                      fill=self.party.color, width=0)
         self.outer_id = self.canvas.create_rectangle(x1, y1, x2, y2, fill='white', stipple='gray50', width=0)
+        # self.canvas.itemconfig(self.outer_id, state='hidden')
         self.canvas.tag_lower(self.outer_id)
         self.canvas.tag_lower(self.inner_id)
         self.outer_color = 'white'
