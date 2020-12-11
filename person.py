@@ -73,7 +73,7 @@ class Person:
         self.adjacent_people = list(filter(None.__ne__, [
             self.person_north, self.person_south, self.person_west, self.person_east
         ]))
-        self.surrounding_people = [  # include None, always length 8
+        self.surrounding_people = [
             self.person_north, self.person_ne, self.person_east, self.person_se,
             self.person_south, self.person_sw, self.person_west, self.person_nw
         ]
@@ -81,6 +81,11 @@ class Person:
             getattr(self.person_west, 'east_line_id', None), self.east_line_id,
             getattr(self.person_north, 'south_line_id', None), self.south_line_id
         ]))
+        """
+        adjacent_people - up to 4 people in direct cardinal directions
+        surrounding_people - always length 8, includes all people in surrounding 8 squares, None if no person
+        edge_ids - up to 4 tkinter Canvas ids that correspond to lines enclosing this person, hidden or not
+        """
 
     def __repr__(self):
         return f'{str(self.party).title()} person at {self.x, self.y}'
@@ -92,7 +97,7 @@ class Person:
     def get_is_removable(self):
         """Returns whether the person can be removed from their district without disconnecting district
 
-        Method: get a boolean list of whether each of the surrounding 8 squares are in our district. If there are more
+        Method: get a boolean list of whether each of the surrounding 8 people are in our district. If there are more
         than 2 'streaks' of True's (including carrying over between start and end of the list), then removing the square
         will cause a disconnected group because the surrounding squares are not connected to each other. This works on
         the assumption that there are no holes, which there aren't because all districts are the same size, and there

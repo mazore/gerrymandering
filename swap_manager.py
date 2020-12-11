@@ -1,4 +1,4 @@
-from misc import fast_shuffled, profile
+from misc import fast_shuffled
 from random import random
 from time import time
 
@@ -32,9 +32,10 @@ class SwapManager:
         for district in to_draw:
             district.draw()
 
-    @profile
     def swap(self):
         """Do a swap of two people between their districts. See readme for more information on how this works"""
+        time_before = time()
+
         while True:
             try:
                 self.get_people()
@@ -45,6 +46,7 @@ class SwapManager:
         self.person1.change_districts(self.district2)
         self.person2.change_districts(self.district1)
         self.swaps_done += 1
+        self.canvas.total_swap_time += time() - time_before
 
     def get_people(self):
         """Gets district1, person1, district2, person2 with conditions to make sure no disconnections or swaps harmful

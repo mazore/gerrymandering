@@ -1,4 +1,4 @@
-from misc import profile, BLUE, RED
+from misc import BLUE, RED
 from multiprocessing import Manager, Process
 from parameters import Parameters
 from root import Root
@@ -13,20 +13,16 @@ def get_avg_time():
     """Runs simulations on one process and returns how long was spent on swapping per simulation"""
     parameters = Parameters(
         grid_width=24, district_size=16, num_swaps=1000,
-        simulation_time=None, num_simulations=100,
+        simulation_time=None, num_simulations=150,
         width=480, height=480, advantage=BLUE, disadvantage=RED,
         line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
     )
     print('time parameters: ', parameters)
     simulation_datas = []
     run_process(simulation_datas, parameters, 1)
-
-    if len(profile.functions) != 1 or profile.functions[0].__name__ != 'swap':
-        print('incorrect time results!')
-    timings = next(iter(profile.get_stats().timings.values()))
-    avg_time = sum(line_timings[2] for line_timings in timings) / parameters.num_simulations
-    avg_time *= profile.timer_unit  # scale to seconds
-    return round(avg_time, 6)
+    times = [simulation_data.total_swap_time for simulation_data in simulation_datas]
+    avg_time = sum(times) / len(times)
+    return f'avg_time:  {round(avg_time * 1000, 4)} ms'
 
 
 def get_avg_score():
@@ -50,7 +46,7 @@ def get_avg_score():
         for p in processes:
             p.join()
         scores = [simulation_data.score for simulation_data in simulation_datas]
-        return sum(scores) / len(scores)
+        return f'avg_score:  {sum(scores) / len(scores)}'
 
 
 def tests():
@@ -58,8 +54,8 @@ def tests():
         the algorithm are beneficial"""
     avg_time = get_avg_time()
     avg_score = get_avg_score()
-    print('avg_time: ', avg_time, 'seconds')
-    print('avg_score: ', avg_score)
+    print(avg_time)
+    print(avg_score)
 
 
 if __name__ == '__main__':

@@ -27,6 +27,7 @@ class Canvas(tk.Canvas):
         self.generate_districts()
 
         self.start_time = time()
+        self.total_swap_time = 0  # total time spent in the swap_manager.swap function in seconds
         self.root.after(1, self.run)
 
         self.bind('<Button-1>', self.left_click)

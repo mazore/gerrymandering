@@ -3,12 +3,9 @@ from parameters import Parameters
 import random
 from misc import SimulationData
 import tkinter as tk
-from time import time
 
 """
 TODO:
-- fix imperfect touching p1 check if it would be disconnected (sometimes says it will when it wont)
-- safe import line_profiler
 - break down get_people into 2 or 4 methods
 - mess around with district1 order (maybe district2 order)
 - make test more consistent
@@ -50,7 +47,7 @@ class Root(tk.Tk):
         self.simulation_datas.append(SimulationData(
             self.canvas.get_score()[self.parameters.advantage.name],
             self.canvas.swap_manager.swaps_done,
-            time() - self.canvas.start_time
+            self.canvas.total_swap_time
         ))
 
         self.canvas.running = False
