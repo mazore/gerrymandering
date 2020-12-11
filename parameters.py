@@ -19,14 +19,14 @@ class Parameters:
     ---APPLICATION/VISUAL PARAMETERS---
     width, height - size of the window in pixels
     num_districts - number of districts in total (calculated automatically)
-    advantage, disadvantage - party to give advantage/disadvantage to in the gerrymandering process
+    help_party, hinder_party - party to give help/hinder in the gerrymandering process
     line_width - district line width
     ms_between_draws - number of ms between drawing districts. Each draw, num_swaps_per_draw swaps are done
     num_swaps_per_draw - number of swaps done for every draw, which are done ms_between_draws ms apart
     """
     def __init__(self, grid_width=24, district_size=16, num_swaps=None,
                  simulation_time=None, num_simulations=None,
-                 width=480, height=480, advantage=BLUE, disadvantage=RED,
+                 width=480, height=480, help_party=BLUE, hinder_party=RED,
                  line_width=3, ms_between_draws=1, num_swaps_per_draw=1):
         self.grid_width = grid_width
         self.district_size = district_size
@@ -36,8 +36,8 @@ class Parameters:
 
         self.width, self.height = width, height
         self.num_districts = (grid_width ** 2) / district_size
-        self.advantage = advantage
-        self.disadvantage = disadvantage
+        self.help_party = help_party
+        self.hinder_party = hinder_party
         self.line_width = line_width
         self.ms_between_draws = ms_between_draws
         self.num_swaps_per_draw = num_swaps_per_draw

@@ -7,16 +7,14 @@ import tkinter as tk
 """
 TODO:
 - mess around with district1 order (maybe district2 order)
-- change terminology for advantage/disadvantage
 - why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive?
 - more profiling
-- make settings class
 - packages
 - UI
-- better documentation (readme)
+- readme
 - line smoothing (spline, make districts look more organic)
 - multiple parties? make red and blue into other non american colors?
 """
@@ -43,7 +41,7 @@ class Root(tk.Tk):
     def rerun_simulation(self):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
         self.simulation_datas.append(SimulationData(
-            self.canvas.get_score()[self.parameters.advantage.name],
+            self.canvas.get_score()[self.parameters.help_party.name],
             self.canvas.swap_manager.swaps_done,
             self.canvas.total_swap_time
         ))

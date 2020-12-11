@@ -72,7 +72,7 @@ class SwapManager:
         """Second part of get_people, gets district2 and person2. We do not need to return if we find no suitable
         district2, because it is more efficient to just restart getting people (RestartGettingPeopleError)"""
         for self.district2 in fast_shuffled(self.person1.get_adjacent_districts()):
-            party2_can_be_advantage = self.party2_can_be_advantage()
+            party2_can_be_help_party = self.party2_can_be_help_party()
 
             for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
                 if self.district1 not in self.person2.get_adjacent_districts():
@@ -81,7 +81,7 @@ class SwapManager:
                     continue  # swapping two adjacent people will likely cause disconnection, not always though
                 if not self.person2.get_is_removable():
                     continue  # if removing will cause disconnection in district2
-                if not party2_can_be_advantage and self.person2.party == self.canvas.parameters.advantage:
+                if not party2_can_be_help_party and self.person2.party == self.canvas.parameters.help_party:
                     raise RestartGettingPeopleError  # better than `continue`
                 return
         raise RestartGettingPeopleError
@@ -90,19 +90,18 @@ class SwapManager:
         """Used in get_person2, puts people of opposite parties to person1 first (lower number)"""
         return int(person.party == self.person1.party) + random()
 
-    def party2_can_be_advantage(self):
-        """Returns whether the party of person2 can be advantage without having a decrease in advantage's total score"""
-        advantage, disadvantage = self.canvas.parameters.advantage, self.canvas.parameters.disadvantage
-        if self.person1.party != disadvantage:
+    def party2_can_be_help_party(self):
+        """Returns person2 can be help_party without having a decrease in help_party's total score"""
+        if self.person1.party != self.canvas.parameters.hinder_party:
             return True  # if net_advantages will stay the same or district2's will increase
         # now we know that district2 net_advantage is decreasing by 2 and district1 net_advantage is increasing by 2
-        if self.district2.net_advantage == 2:  # if district2 will become tie from advantage
-            if self.district1.net_advantage == 0:  # district1 will become advantage from tie
+        if self.district2.net_advantage == 2:  # if district2 will become tie from help_party
+            if self.district1.net_advantage == 0:  # district1 will become help_party from tie
                 return True
             else:
                 return False
-        elif 0 <= self.district2.net_advantage <= 1:  # if district2 will become disadvantage from advantage/tie
-            if -2 <= self.district1.net_advantage <= -1:  # if district1 will become advantage/tie from disadvantage
+        elif 0 <= self.district2.net_advantage <= 1:  # if district2 will become hinder_party from help_party/tie
+            if -2 <= self.district1.net_advantage <= -1:  # if district1 will become help_party/tie from hinder_party
                 return True
             else:
                 return False

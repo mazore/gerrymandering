@@ -113,7 +113,7 @@ class Person:
     def change_districts(self, destination):
         """Change which district this person belongs to, does not change location or party"""
         self.district.people.remove(self)
-        self.district.net_advantage -= 1 if self.party == self.canvas.parameters.advantage else -1
+        self.district.net_advantage -= 1 if self.party == self.canvas.parameters.help_party else -1
         destination.people.append(self)
         self.district = destination
-        self.district.net_advantage += 1 if self.party == self.canvas.parameters.advantage else -1
+        self.district.net_advantage += 1 if self.party == self.canvas.parameters.help_party else -1

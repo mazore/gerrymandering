@@ -14,7 +14,7 @@ def get_avg_time():
     parameters = Parameters(
         grid_width=24, district_size=16, num_swaps=1000,
         simulation_time=None, num_simulations=150,
-        width=480, height=480, advantage=BLUE, disadvantage=RED,
+        width=480, height=480, help_party=BLUE, hinder_party=RED,
         line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
     )
     print('time parameters: ', parameters)
@@ -26,11 +26,11 @@ def get_avg_time():
 
 
 def get_avg_score():
-    """Runs simulations on many processes and returns the average score of the advantaged party per simulation"""
+    """Runs simulations on many processes and returns the average score of help_party per simulation"""
     parameters = Parameters(
         grid_width=24, district_size=16, num_swaps=1000,
         simulation_time=None, num_simulations=10,
-        width=480, height=480, advantage=BLUE, disadvantage=RED,
+        width=480, height=480, help_party=BLUE, hinder_party=RED,
         line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
     )
     num_processes = 50
@@ -52,9 +52,9 @@ def get_avg_score():
 def tests():
     """Prints out statistics of the project, like the avg score and time per simulation. Used to test if changes made to
         the algorithm are beneficial"""
-    avg_time = get_avg_time()
+    # avg_time = get_avg_time()
     avg_score = get_avg_score()
-    print(avg_time)
+    # print(avg_time)
     print(avg_score)
 
 

@@ -10,7 +10,7 @@ class District:
         self.canvas = canvas
 
         (self.x1, self.y1), (self.x2, self.y2) = p1, p2  # in grid coordinates
-        self.net_advantage = 0  # advantage score - disadvantage score
+        self.net_advantage = 0  # help_party score - hinder_party score
         self.people = []
         self.get_people()
         # self.color = '#' + ''.join(choice('0123456789abcdef') for _ in range(6))  # random color
@@ -22,9 +22,9 @@ class District:
 
     def ideal_give_away(self):
         """Which party this district prioritizes giving away, in the form of a person1 swapped into district2"""
-        if not -4 <= self.net_advantage <= 2:  # if not flippable or safe advantage, share out advantage people
-            return self.canvas.parameters.advantage
-        return self.canvas.parameters.disadvantage  # if flippable/at risk, try to get more advantage people
+        if not -4 <= self.net_advantage <= 2:  # if not flippable or safe help_party, share our help_party people
+            return self.canvas.parameters.help_party
+        return self.canvas.parameters.hinder_party  # if flippable/at risk, try to get more help_party people
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""
@@ -34,13 +34,13 @@ class District:
 
                 self.people.append(person)
                 person.district = self
-                self.net_advantage += 1 if person.party == self.canvas.parameters.advantage else -1
+                self.net_advantage += 1 if person.party == self.canvas.parameters.help_party else -1
 
     def get_winner(self):
         """Get whichever party has a majority of people, or a tie"""
         if self.net_advantage == 0:
             return TIE
-        return self.canvas.parameters.advantage if self.net_advantage > 0 else self.canvas.parameters.disadvantage
+        return self.canvas.parameters.help_party if self.net_advantage > 0 else self.canvas.parameters.hinder_party
 
     def draw(self):
         """Draw the outline and fill of the district"""
