@@ -61,24 +61,30 @@ class SwapManager:
                 if not self.person1.get_is_removable():
                     continue  # if removing will cause disconnection in district1
 
-                for self.district2 in fast_shuffled(self.person1.get_adjacent_districts()):
-                    party2_can_be_advantage = self.party2_can_be_advantage()
-
-                    for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
-                        if self.district1 not in self.person2.get_adjacent_districts():
-                            continue  # if not touching district1
-                        if self.person1 in self.person2.adjacent_people:
-                            continue  # swapping two adjacent people will likely cause disconnection, not always though
-                        if not self.person2.get_is_removable():
-                            continue  # if removing will cause disconnection in district2
-                        if not party2_can_be_advantage and self.person2.party == self.canvas.parameters.advantage:
-                            raise RestartGettingPeopleError  # better than `continue`
-                        return
-                raise RestartGettingPeopleError
+                self.get_person2()
+                return
 
         print('no possible swaps')
         while True:
             pass  # stall
+
+    def get_person2(self):
+        """Second part of get_people, gets district2 and person2. We do not need to return if we find no suitable
+        district2, because it is more efficient to just restart getting people (RestartGettingPeopleError)"""
+        for self.district2 in fast_shuffled(self.person1.get_adjacent_districts()):
+            party2_can_be_advantage = self.party2_can_be_advantage()
+
+            for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
+                if self.district1 not in self.person2.get_adjacent_districts():
+                    continue  # if not touching district1
+                if self.person1 in self.person2.adjacent_people:
+                    continue  # swapping two adjacent people will likely cause disconnection, not always though
+                if not self.person2.get_is_removable():
+                    continue  # if removing will cause disconnection in district2
+                if not party2_can_be_advantage and self.person2.party == self.canvas.parameters.advantage:
+                    raise RestartGettingPeopleError  # better than `continue`
+                return
+        raise RestartGettingPeopleError
 
     def diff_parties_first(self, person):
         """Used in get_person2, puts people of opposite parties to person1 first (lower number)"""

@@ -6,9 +6,7 @@ import tkinter as tk
 
 """
 TODO:
-- break down get_people into 2 or 4 methods
 - mess around with district1 order (maybe district2 order)
-- make test more consistent
 - change terminology for advantage/disadvantage
 - why does it go slower when we have more swaps per draw
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
