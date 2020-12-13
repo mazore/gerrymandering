@@ -6,8 +6,8 @@ import tkinter as tk
 
 """
 TODO:
-- mess around with district1 order (maybe district2 order)
 - why does it go slower when we have more swaps per draw
+- test prioritizing certain district2s
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive?

@@ -5,11 +5,11 @@ from root import Root
 
 
 def run_process(simulation_datas, parameters, seed):
-    """Runs a process (window) and appends the simulation datas to the list"""
+    """Runs a process (window) and appends its simulation datas to the list"""
     simulation_datas.extend(Root(parameters=parameters, seed=seed).simulation_datas)
 
 
-def get_avg_time():
+def get_avg_time(print_params=False):
     """Runs simulations on one process and returns how long was spent on swapping per simulation"""
     parameters = Parameters(
         grid_width=24, district_size=16, num_swaps=1000,
@@ -17,15 +17,15 @@ def get_avg_time():
         width=480, height=480, help_party=BLUE, hinder_party=RED,
         line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
     )
-    print('time parameters: ', parameters)
+    if print_params:
+        print(f'time parameters: {parameters}')
     simulation_datas = []
     run_process(simulation_datas, parameters, 1)
     times = [simulation_data.total_swap_time for simulation_data in simulation_datas]
-    avg_time = sum(times) / len(times)
-    return f'avg_time:  {round(avg_time * 1000, 4)} ms'
+    return sum(times) / len(times)
 
 
-def get_avg_score():
+def get_avg_score(print_params=False):
     """Runs simulations on many processes and returns the average score of help_party per simulation"""
     parameters = Parameters(
         grid_width=24, district_size=16, num_swaps=1000,
@@ -34,7 +34,8 @@ def get_avg_score():
         line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
     )
     num_processes = 50
-    print('score parameters: ', parameters, 'x', num_processes, 'processes')
+    if print_params:
+        print(f'score parameters: {parameters} x {num_processes} processes')
     seeds = [i+0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
     with Manager() as manager:
         simulation_datas = manager.list()
@@ -46,16 +47,16 @@ def get_avg_score():
         for p in processes:
             p.join()
         scores = [simulation_data.score for simulation_data in simulation_datas]
-        return f'avg_score:  {sum(scores) / len(scores)}'
+        return sum(scores) / len(scores)
 
 
 def tests():
     """Prints out statistics of the project, like the avg score and time per simulation. Used to test if changes made to
-        the algorithm are beneficial"""
-    # avg_time = get_avg_time()
-    avg_score = get_avg_score()
-    # print(avg_time)
-    print(avg_score)
+    the algorithm are beneficial"""
+    avg_time = get_avg_time(print_params=True)
+    avg_score = get_avg_score(print_params=True)
+    print(f'avg_time:  {round(avg_time * 1000, 4)} ms')
+    print(f'avg_score:  {avg_score}')
 
 
 if __name__ == '__main__':

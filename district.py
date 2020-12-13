@@ -42,6 +42,17 @@ class District:
             return TIE
         return self.canvas.parameters.help_party if self.net_advantage > 0 else self.canvas.parameters.hinder_party
 
+    def get_swap_order_weight(self):
+        """Returns the weight to use for this district when picking a random district1. Values were determined by a
+        black box optimization method"""
+        if 0 <= self.net_advantage <= 2:  # if at risk
+            return 1
+        if -4 <= self.net_advantage <= 0:  # if flippable
+            return 4.35442295
+        if self.net_advantage > 2:  # if safe to help_party
+            return 2.47490108
+        return 2.06497273  # if safe not flippable/safe for hinder_party
+
     def draw(self):
         """Draw the outline and fill of the district"""
         # outline

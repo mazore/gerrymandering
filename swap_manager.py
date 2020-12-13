@@ -1,4 +1,4 @@
-from misc import fast_shuffled
+from misc import fast_shuffled, weighted_choice
 from random import random
 from time import time
 
@@ -52,7 +52,7 @@ class SwapManager:
         """Gets district1, person1, district2, person2 with conditions to make sure no disconnections or swaps harmful
         to the gerrymandering process occur. If it returns without a RestartGettingPeopleError, we know the people are
         OK to swap districts"""
-        for self.district1 in fast_shuffled(self.canvas.districts):
+        for self.district1 in self.district1_generator():
             ideal_party1 = self.district1.ideal_give_away()
 
             for self.person1 in fast_shuffled(self.district1.people):
@@ -106,3 +106,10 @@ class SwapManager:
             else:
                 return False
         return True
+
+    def district1_generator(self):
+        district_weight_map = {d: d.get_swap_order_weight() for d in self.canvas.districts}
+        while True:
+            choice = weighted_choice(district_weight_map.items())
+            yield choice
+            del district_weight_map[choice]
