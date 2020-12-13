@@ -45,8 +45,10 @@ class District:
     def get_swap_order_weight(self):
         """Returns the weight to use for this district when picking a random district1. Values were determined by a
         black box optimization method"""
-        if 0 <= self.net_advantage <= 2:  # if at risk
+        if 0 < self.net_advantage <= 2:  # if at risk
             return 1
+        if self.net_advantage == 0:
+            return 11
         if -4 <= self.net_advantage <= 0:  # if flippable
             return 4.35442295
         if self.net_advantage > 2:  # if safe to help_party

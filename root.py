@@ -1,7 +1,6 @@
 from canvas import Canvas
 from parameters import Parameters
 import random
-from misc import SimulationData
 import tkinter as tk
 
 """
@@ -40,11 +39,7 @@ class Root(tk.Tk):
 
     def rerun_simulation(self):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
-        self.simulation_datas.append(SimulationData(
-            self.canvas.get_score()[self.parameters.help_party.name],
-            self.canvas.swap_manager.swaps_done,
-            self.canvas.total_swap_time
-        ))
+        self.simulation_datas.append(self.canvas.get_simulation_data())
 
         self.canvas.running = False
         if self.simulation_number == self.parameters.num_simulations:

@@ -1,6 +1,6 @@
 from district import District
 from math import ceil, sqrt
-from misc import fast_shuffled, BLUE, RED
+from misc import fast_shuffled, BLUE, RED, SimulationData
 from person import Person
 from swap_manager import SwapManager
 import tkinter as tk
@@ -62,6 +62,14 @@ class Canvas(tk.Canvas):
         self.swap_manager.swap_dispatch()
 
         self.root.after(self.parameters.ms_between_draws, self.swap_dispatch)
+
+    def get_simulation_data(self):
+        return SimulationData(
+            self.get_score()[self.parameters.help_party.name],
+            self.swap_manager.swaps_done,
+            time() - self.start_time,
+            self.total_swap_time
+        )
 
     def get_score(self):
         """Return a dict of format {party_name: num_districts_won, ...}"""
