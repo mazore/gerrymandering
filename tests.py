@@ -21,9 +21,9 @@ def get_avg_time(print_params=False):
         print(f'time parameters: {parameters}')
     simulation_datas = []
     run_process(simulation_datas, parameters, 1)
-    times = [simulation_data.total_swap_time for simulation_data in simulation_datas]
     # total_times = [simulation_data.total_time for simulation_data in simulation_datas]
     # print(f'avg total simulation time: {sum(total_times) / len(total_times)}')
+    times = [simulation_data.total_swap_time for simulation_data in simulation_datas]
     return sum(times) / len(times)
 
 
@@ -63,4 +63,3 @@ def tests():
 
 if __name__ == '__main__':
     tests()
-

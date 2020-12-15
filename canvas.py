@@ -38,7 +38,11 @@ class Canvas(tk.Canvas):
         """Start running or resume from being paused"""
         if not self.running:
             self.running = True
-            self.swap_dispatch()
+        while True:
+            if not self.running:
+                break
+            self.swap_manager.swap_dispatch()
+            self.root.update()
 
     def pause(self):
         """Stop the simulation from doing swaps"""
@@ -53,15 +57,6 @@ class Canvas(tk.Canvas):
 
     def right_click(self, _):
         self.pause()
-
-    def swap_dispatch(self):
-        """Called every ms_between_draws while running, initiates swaps on SwapManager object"""
-        if not self.running:
-            return
-
-        self.swap_manager.swap_dispatch()
-
-        self.root.after(self.parameters.ms_between_draws, self.swap_dispatch)
 
     def get_simulation_data(self):
         return SimulationData(

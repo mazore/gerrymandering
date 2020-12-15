@@ -5,7 +5,6 @@ import tkinter as tk
 
 """
 TODO:
-- why does it go slower when we have more swaps per draw
 - test prioritizing certain district2s
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - record swaps already done, don't undo an already done swap
@@ -14,6 +13,7 @@ TODO:
 - packages
 - UI
 - readme
+- better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
 - line smoothing (spline, make districts look more organic)
 - multiple parties? make red and blue into other non american colors?
 """

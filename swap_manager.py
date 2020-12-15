@@ -4,7 +4,7 @@ from time import time
 
 
 class RestartGettingPeopleError(Exception):
-    """Raised when we encounter certain conditions when getting people, and need to redo the get_people method"""
+    """Raised when we encounter certain conditions when getting people, and need to redo the getting people"""
     pass
 
 
@@ -38,7 +38,8 @@ class SwapManager:
 
         while True:
             try:
-                self.get_people()
+                self.get_person1()
+                self.get_person2()
                 break
             except RestartGettingPeopleError:
                 pass
@@ -48,10 +49,8 @@ class SwapManager:
         self.swaps_done += 1
         self.canvas.total_swap_time += time() - time_before
 
-    def get_people(self):
-        """Gets district1, person1, district2, person2 with conditions to make sure no disconnections or swaps harmful
-        to the gerrymandering process occur. If it returns without a RestartGettingPeopleError, we know the people are
-        OK to swap districts"""
+    def get_person1(self):
+        """Gets district1 and person1, using with conditions to make sure no disconnections or harmful swaps occur"""
         for self.district1 in self.district1_generator():
             ideal_party1 = self.district1.ideal_give_away()
 
@@ -61,16 +60,10 @@ class SwapManager:
                 if not self.person1.get_is_removable():
                     continue  # if removing will cause disconnection in district1
 
-                self.get_person2()
                 return
 
-        print('no possible swaps')
-        while True:
-            pass  # stall
-
     def get_person2(self):
-        """Second part of get_people, gets district2 and person2. We do not need to return if we find no suitable
-        district2, because it is more efficient to just restart getting people (RestartGettingPeopleError)"""
+        """Gets district2 and person2. If no suitable district2 is found, we raise RestartGettingPeopleError"""
         for self.district2 in fast_shuffled(self.person1.get_adjacent_districts()):
             party2_can_be_help_party = self.party2_can_be_help_party()
 
@@ -83,6 +76,7 @@ class SwapManager:
                     continue  # if removing will cause disconnection in district2
                 if not party2_can_be_help_party and self.person2.party == self.canvas.parameters.help_party:
                     raise RestartGettingPeopleError  # better than `continue`
+
                 return
         raise RestartGettingPeopleError
 
@@ -108,6 +102,7 @@ class SwapManager:
         return True
 
     def district1_generator(self):
+        """Yields district1 options back weighted by districts swap_order_weight"""
         district_weight_map = {d: d.get_swap_order_weight() for d in self.canvas.districts}
         while True:
             choice = weighted_choice(district_weight_map.items())
