@@ -64,7 +64,7 @@ class SwapManager:
 
     def get_person2(self):
         """Gets district2 and person2. If no suitable district2 is found, we raise RestartGettingPeopleError"""
-        for self.district2 in fast_shuffled(self.person1.get_adjacent_districts()):
+        for self.district2 in self.district2_generator():
             party2_can_be_help_party = self.party2_can_be_help_party()
 
             for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
@@ -102,9 +102,19 @@ class SwapManager:
         return True
 
     def district1_generator(self):
-        """Yields district1 options back weighted by districts swap_order_weight"""
-        district_weight_map = {d: d.get_swap_order_weight() for d in self.canvas.districts}
+        """Yields district1 options back weighted by districts district1_weight"""
+        district_weight_map = {d: d.get_district1_weight() for d in self.canvas.districts}
         while True:
+            choice = weighted_choice(district_weight_map.items())
+            yield choice
+            del district_weight_map[choice]
+
+    def district2_generator(self):
+        """Yields district2 options back weighted by districts district2_weight"""
+        district_weight_map = {d: d.get_district2_weight(self.district1) for d in self.person1.get_adjacent_districts()}
+        while True:
+            if district_weight_map == {}:
+                return
             choice = weighted_choice(district_weight_map.items())
             yield choice
             del district_weight_map[choice]

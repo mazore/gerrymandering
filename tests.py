@@ -21,8 +21,6 @@ def get_avg_time(print_params=False):
         print(f'time parameters: {parameters}')
     simulation_datas = []
     run_process(simulation_datas, parameters, 1)
-    # total_times = [simulation_data.total_time for simulation_data in simulation_datas]
-    # print(f'avg total simulation time: {sum(total_times) / len(total_times)}')
     times = [simulation_data.total_swap_time for simulation_data in simulation_datas]
     return sum(times) / len(times)
 
@@ -59,6 +57,25 @@ def tests():
     avg_score = get_avg_score(print_params=True)
     print(f'avg_time:  {round(avg_time * 1000, 4)} ms')
     print(f'avg_score:  {avg_score}')
+
+
+def black_box():
+    from black_box import search_min
+
+    def func(args):
+        parameters = Parameters(
+            grid_width=24, district_size=16, num_swaps=1000,
+            simulation_time=None, num_simulations=150,
+            width=480, height=480, help_party=BLUE, hinder_party=RED,
+            line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
+        )
+        simulation_datas = Root(parameters=parameters, seed=1, testing_parameter=args).simulation_datas
+        scores = [simulation_data.score for simulation_data in simulation_datas]
+        avg_score = sum(scores) / len(scores)
+        print(avg_score, args)
+        return 36 - avg_score
+
+    print(search_min(func, domain=[[0.0, 10.0]]*25, budget=1000, batch=10, resfile='output.csv'))
 
 
 if __name__ == '__main__':

@@ -5,10 +5,10 @@ import tkinter as tk
 
 """
 TODO:
-- test prioritizing certain district2s
 - reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive?
+- implement get_district2_weight
 - more profiling
 - packages
 - UI
@@ -22,8 +22,10 @@ TODO:
 class Root(tk.Tk):
     """Manages UI things, subclass of tkinter application root (represents a window)"""
 
-    def __init__(self, parameters=Parameters(), seed=None):
+    def __init__(self, parameters=Parameters(), seed=None, testing_parameter=None):
         self.parameters = parameters
+        self.testing_parameter = testing_parameter
+
         super().__init__()
 
         if seed is not None:
