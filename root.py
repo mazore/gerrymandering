@@ -5,7 +5,7 @@ import tkinter as tk
 
 """
 TODO:
-- record swaps already done, don't undo an already done swap
+- fix error when closing test window
 - prioritize keeping districts more cohesive?
 - implement get_district2_weight
 - more profiling
