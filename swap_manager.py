@@ -18,7 +18,7 @@ class SwapManager:
         self.person1 = self.person2 = None  # person[n] is originally from district[n]
 
     def swap_dispatch(self):
-        """Called every ms_between_draws (while running), calls swap multiple times if needed, draws once"""
+        """Called repeatedly while running, calls swap multiple times if needed, draws once"""
         to_draw = set()
         for _ in range(self.canvas.parameters.num_swaps_per_draw):
             self.swap()

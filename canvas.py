@@ -4,7 +4,7 @@ from misc import fast_shuffled, BLUE, RED, SimulationData
 from person import Person
 from swap_manager import SwapManager
 import tkinter as tk
-from time import time
+from time import sleep, time
 
 
 class Canvas(tk.Canvas):
@@ -28,7 +28,6 @@ class Canvas(tk.Canvas):
 
         self.start_time = time()
         self.total_swap_time = 0  # total time spent in the swap_manager.swap function in seconds
-        self.root.after(1, self.run)
 
         self.bind('<Button-1>', self.left_click)
         self.bind('<Button-2>', self.middle_click)
@@ -36,27 +35,31 @@ class Canvas(tk.Canvas):
 
     def run(self):
         """Start running or resume from being paused"""
-        if not self.running:
-            self.running = True
+        self.running = True
         while True:
             if not self.running:
                 break
             self.swap_manager.swap_dispatch()
             self.root.update()
+            if self.parameters.sleep_between_draws != 0:
+                sleep(self.parameters.sleep_between_draws)
 
     def pause(self):
         """Stop the simulation from doing swaps"""
         self.running = False
 
     def left_click(self, _):
-        self.run()
+        if not self.running:
+            self.run()
+        else:
+            self.pause()
 
     def middle_click(self, _):
         if not self.districts:  # if no districts
             self.generate_districts()
 
     def right_click(self, _):
-        self.pause()
+        pass
 
     def get_simulation_data(self):
         return SimulationData(

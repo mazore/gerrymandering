@@ -15,7 +15,7 @@ def get_avg_time(print_params=False):
         grid_width=24, district_size=16, num_swaps=1000,
         simulation_time=None, num_simulations=150,
         width=480, height=480, help_party=BLUE, hinder_party=RED,
-        line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
+        line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     )
     if print_params:
         print(f'time parameters: {parameters}')
@@ -31,7 +31,7 @@ def get_avg_score(print_params=False):
         grid_width=24, district_size=16, num_swaps=1000,
         simulation_time=None, num_simulations=10,
         width=480, height=480, help_party=BLUE, hinder_party=RED,
-        line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
+        line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     )
     num_processes = 50
     if print_params:
@@ -67,7 +67,7 @@ def black_box():
             grid_width=24, district_size=16, num_swaps=1000,
             simulation_time=None, num_simulations=150,
             width=480, height=480, help_party=BLUE, hinder_party=RED,
-            line_width=3, ms_between_draws=1, num_swaps_per_draw=2000,
+            line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
         )
         simulation_datas = Root(parameters=parameters, seed=1, testing_parameter=args).simulation_datas
         scores = [simulation_data.score for simulation_data in simulation_datas]

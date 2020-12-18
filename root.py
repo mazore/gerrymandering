@@ -5,7 +5,6 @@ import tkinter as tk
 
 """
 TODO:
-- reward for more than just flipping a district (margins? decide if district is competitive or all red?)
 - record swaps already done, don't undo an already done swap
 - prioritize keeping districts more cohesive?
 - implement get_district2_weight
@@ -35,9 +34,16 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self, parameters)
+        self.after(1, self.canvas.run)
 
         self.geometry(f'{parameters.width}x{parameters.height}+1060+100')
+        self.protocol("WM_DELETE_WINDOW", self.on_close)
+
         self.mainloop()
+
+    def on_close(self):
+        self.canvas.running = False
+        self.destroy()
 
     def rerun_simulation(self):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
@@ -49,4 +55,6 @@ class Root(tk.Tk):
             return
         self.canvas.pack_forget()
         self.simulation_number += 1
+
         self.canvas = Canvas(self, self.parameters)
+        self.after(1, self.canvas.run)
