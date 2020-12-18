@@ -5,7 +5,6 @@ import tkinter as tk
 
 """
 TODO:
-- fix error when closing test window
 - prioritize keeping districts more cohesive?
 - implement get_district2_weight
 - more profiling
@@ -34,7 +33,7 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self, parameters)
-        self.after(1, self.canvas.run)
+        self.after_id = self.after(1, self.canvas.run)
 
         self.geometry(f'{parameters.width}x{parameters.height}+1060+100')
         self.protocol("WM_DELETE_WINDOW", self.on_close)
@@ -43,6 +42,7 @@ class Root(tk.Tk):
 
     def on_close(self):
         self.canvas.running = False
+        self.after_cancel(self.after_id)
         self.destroy()
 
     def rerun_simulation(self):
@@ -57,4 +57,4 @@ class Root(tk.Tk):
         self.simulation_number += 1
 
         self.canvas = Canvas(self, self.parameters)
-        self.after(1, self.canvas.run)
+        self.after_id = self.after(1, self.canvas.run)
