@@ -5,12 +5,11 @@ import tkinter as tk
 
 """
 TODO:
-- prioritize keeping districts more cohesive?
-- implement get_district2_weight
-- more profiling
 - packages
-- UI
 - readme
+- more profiling
+- UI
+- implement get_district2_weight
 - better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
 - line smoothing (spline, make districts look more organic)
 - multiple parties? make red and blue into other non american colors?

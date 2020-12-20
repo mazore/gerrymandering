@@ -67,7 +67,7 @@ class SwapManager:
         for self.district2 in self.district2_generator():
             party2_can_be_help_party = self.party2_can_be_help_party()
 
-            for self.person2 in sorted(self.district2.people, key=self.diff_parties_first):
+            for self.person2 in sorted(self.district2.people, key=self.person2_key):
                 if self.district1 not in self.person2.get_adjacent_districts():
                     continue  # if not touching district1
                 if self.person1 in self.person2.adjacent_people:
@@ -80,7 +80,7 @@ class SwapManager:
                 return
         raise RestartGettingPeopleError
 
-    def diff_parties_first(self, person):
+    def person2_key(self, person):
         """Used in get_person2, puts people of opposite parties to person1 first (lower number)"""
         return int(person.party == self.person1.party) + random()
 
