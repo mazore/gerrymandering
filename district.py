@@ -1,5 +1,5 @@
 from collections import defaultdict
-from misc import TIE
+from misc import BLUE, RED, TIE
 
 
 class District:
@@ -22,6 +22,11 @@ class District:
 
     def ideal_give_away(self):
         """Which party this district prioritizes giving away, in the form of a person1 swapped into district2"""
+        if self.canvas.parameters.favor_tie:
+            if self.tied:
+                return None
+            return self.get_winner()
+
         if not -4 <= self.net_advantage <= 2:  # if not flippable or safe help_party, share our help_party people
             return self.canvas.parameters.help_party
         return self.canvas.parameters.hinder_party  # if flippable/at risk, try to get more help_party people
@@ -37,9 +42,13 @@ class District:
                 self.canvas.itemconfig(person.outer_id, state='normal')
                 self.net_advantage += 1 if person.party == self.canvas.parameters.help_party else -1
 
+    @property
+    def tied(self):
+        return self.net_advantage == 0
+
     def get_winner(self):
         """Get whichever party has a majority of people, or a tie"""
-        if self.net_advantage == 0:
+        if self.tied:
             return TIE
         return self.canvas.parameters.help_party if self.net_advantage > 0 else self.canvas.parameters.hinder_party
 
@@ -48,7 +57,7 @@ class District:
         black box optimization method"""
         if 0 < self.net_advantage <= 2:  # if at risk
             return 1
-        if self.net_advantage == 0:
+        if self.tied:
             return 11
         if -4 <= self.net_advantage <= 0:  # if flippable
             return 4.35442295

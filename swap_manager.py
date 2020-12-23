@@ -55,7 +55,7 @@ class SwapManager:
             ideal_party1 = self.district1.ideal_give_away()
 
             for self.person1 in fast_shuffled(self.district1.people):
-                if self.person1.party != ideal_party1:
+                if ideal_party1 is not None and self.person1.party != ideal_party1:
                     continue  # if is not the ideal party to give away for this district
                 if not self.person1.get_is_removable():
                     continue  # if removing will cause disconnection in district1
@@ -66,6 +66,8 @@ class SwapManager:
         """Gets district2 and person2. If no suitable district2 is found, we raise RestartGettingPeopleError"""
         for self.district2 in self.district2_generator():
             party2_can_be_help_party = self.party2_can_be_help_party()
+            favor_tie = self.canvas.parameters.favor_tie
+            a_district_tied = self.district1.tied or self.district2.tied if favor_tie else None
 
             for self.person2 in sorted(self.district2.people, key=self.person2_key):
                 if self.district1 not in self.person2.get_adjacent_districts():
@@ -74,6 +76,8 @@ class SwapManager:
                     continue  # swapping two adjacent people will likely cause disconnection, not always though
                 if not self.person2.get_is_removable():
                     continue  # if removing will cause disconnection in district2
+                if favor_tie and a_district_tied and self.person1.party is not self.person2.party:
+                    continue  # if swapping will cause a district to become not tied
                 if not party2_can_be_help_party and self.person2.party == self.canvas.parameters.help_party:
                     raise RestartGettingPeopleError  # better than `continue`
 
@@ -90,7 +94,7 @@ class SwapManager:
             return True  # if net_advantages will stay the same or district2's will increase
         # now we know that district2 net_advantage is decreasing by 2 and district1 net_advantage is increasing by 2
         if self.district2.net_advantage == 2:  # if district2 will become tie from help_party
-            if self.district1.net_advantage == 0:  # district1 will become help_party from tie
+            if self.district1.tied:  # district1 will become help_party from tie
                 return True
             else:
                 return False

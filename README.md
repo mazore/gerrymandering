@@ -17,7 +17,7 @@ Run `python tests.py`. This runs two simulations, one that figures out how much 
 ## How It Works
 
 ### Overview
-First, a grid of people is generated, with parties that are randomized while ensuring that there are an equal amount of people in each party. Districts are then drawn around those people. Districts are initially squares of size `district_size`, which is possible because we ensure that `grid_width` and `district_width` allow this to be possible. From there, we perform a series of swaps of people between districts. These swaps will over time give one party (specified in `help_party`) more and more districts, without changing the people grid.
+First, a grid of people is generated, with parties that are randomized while ensuring that there are an equal amount of people in each party. Districts are then drawn around those people. Districts are initially squares of size `district_size`, which is possible because we ensure that `grid_width` and `district_width` allow this to be possible. From there, we perform a series of swaps of people between districts. These swaps will over time give one party (specified by `help_party`) more and more districts, without changing the people grid.
 
 ### Swapping
 

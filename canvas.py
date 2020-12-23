@@ -65,7 +65,7 @@ class Canvas(tk.Canvas):
 
     def get_simulation_data(self):
         return SimulationData(
-            self.get_score()[self.parameters.help_party.name],
+            self.get_score()['tie' if self.parameters.favor_tie else self.parameters.help_party.name],
             self.swap_manager.swaps_done,
             time() - self.start_time,
             self.total_swap_time

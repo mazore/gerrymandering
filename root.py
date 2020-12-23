@@ -5,11 +5,11 @@ import tkinter as tk
 
 """
 TODO:
-- make it possible to have TIE be help_party
 - readme roadmap & contribution section
 - add a "most recent stats" file
 - more profiling
 - packages
+- improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - UI
 - implement get_district2_weight in District class
 - better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
@@ -22,9 +22,7 @@ class Root(tk.Tk):
     """Manages UI things, subclass of tkinter application root (represents a window)"""
 
     def __init__(self, parameters=Parameters(), seed=None, testing_parameter=None):
-        self.parameters = parameters
         self.testing_parameter = testing_parameter
-
         super().__init__()
 
         if seed is not None:
@@ -53,11 +51,11 @@ class Root(tk.Tk):
         self.simulation_datas.append(self.canvas.get_simulation_data())
 
         self.canvas.running = False
-        if self.simulation_number == self.parameters.num_simulations:
+        if self.simulation_number == self.canvas.parameters.num_simulations:
             self.quit()
             return
         self.canvas.pack_forget()
         self.simulation_number += 1
 
-        self.canvas = Canvas(self, self.parameters)
+        self.canvas = Canvas(self, self.canvas.parameters)
         self.run_id = self.after(1, self.canvas.run)
