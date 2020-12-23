@@ -34,6 +34,7 @@ class District:
 
                 self.people.append(person)
                 person.district = self
+                self.canvas.itemconfig(person.outer_id, state='normal')
                 self.net_advantage += 1 if person.party == self.canvas.parameters.help_party else -1
 
     def get_winner(self):

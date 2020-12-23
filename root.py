@@ -5,11 +5,13 @@ import tkinter as tk
 
 """
 TODO:
-- packages
-- readme
+- make it possible to have TIE be help_party
+- readme roadmap & contribution section
+- add a "most recent stats" file
 - more profiling
+- packages
 - UI
-- implement get_district2_weight
+- implement get_district2_weight in District class
 - better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
 - line smoothing (spline, make districts look more organic)
 - multiple parties? make red and blue into other non american colors?
@@ -28,11 +30,12 @@ class Root(tk.Tk):
         if seed is not None:
             random.seed(seed)
 
+        self.run_id = None
         self.simulation_datas = []
         self.simulation_number = 1
 
         self.canvas = Canvas(self, parameters)
-        self.after_id = self.after(1, self.canvas.run)
+        self.run_id = self.after(1, self.canvas.run)
 
         self.geometry(f'{parameters.width}x{parameters.height}+1060+100')
         self.protocol("WM_DELETE_WINDOW", self.on_close)
@@ -41,7 +44,8 @@ class Root(tk.Tk):
 
     def on_close(self):
         self.canvas.running = False
-        self.after_cancel(self.after_id)
+        if self.run_id is not None:
+            self.after_cancel(self.run_id)
         self.destroy()
 
     def rerun_simulation(self):
@@ -56,4 +60,4 @@ class Root(tk.Tk):
         self.simulation_number += 1
 
         self.canvas = Canvas(self, self.parameters)
-        self.after_id = self.after(1, self.canvas.run)
+        self.run_id = self.after(1, self.canvas.run)

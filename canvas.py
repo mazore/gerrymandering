@@ -59,7 +59,9 @@ class Canvas(tk.Canvas):
             self.generate_districts()
 
     def right_click(self, _):
-        pass
+        if not self.running:
+            self.swap_manager.swap_dispatch()
+            self.root.update()
 
     def get_simulation_data(self):
         return SimulationData(

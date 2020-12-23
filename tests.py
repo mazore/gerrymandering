@@ -1,3 +1,4 @@
+import atexit
 from misc import BLUE, RED
 from multiprocessing import Manager, Process
 from parameters import Parameters
@@ -19,7 +20,7 @@ def get_avg_time(print_params=False, testing_parameter=None):
         line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     )
     if print_params:
-        print(f'time parameters: {parameters}')
+        atexit.register(lambda: print(f'time parameters: {parameters}'))
     simulation_datas = []
     run_process(simulation_datas, parameters, 1, testing_parameter=testing_parameter)
     times = [simulation_data.total_swap_time for simulation_data in simulation_datas]
@@ -36,7 +37,7 @@ def get_avg_score(print_params=False, testing_parameter=None):
     )
     num_processes = 50
     if print_params:
-        print(f'score parameters: {parameters} x {num_processes} processes')
+        atexit.register(lambda: print(f'score parameters: {parameters} x {num_processes} processes'))
     seeds = [i+0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
     with Manager() as manager:
         simulation_datas = manager.list()
@@ -73,10 +74,8 @@ def black_box():
 def tests():
     """Prints out statistics of the project, like the avg score and time per simulation. Used to test if changes made to
     the algorithm are beneficial"""
-    avg_time = get_avg_time(print_params=True)
-    avg_score = get_avg_score(print_params=True)
-    print(f'avg_time:  {round(avg_time * 1000, 4)} ms')
-    print(f'avg_score:  {avg_score}')
+    print(f'avg_time:  {round(get_avg_time(print_params=True) * 1000, 4)} ms')
+    print(f'avg_score:  {get_avg_score(print_params=True)}')
 
 
 if __name__ == '__main__':
