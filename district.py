@@ -1,5 +1,5 @@
 from collections import defaultdict
-from misc import BLUE, RED, TIE
+from misc import TIE
 
 
 class District:

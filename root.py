@@ -5,8 +5,7 @@ import tkinter as tk
 
 """
 TODO:
-- readme roadmap & contribution section
-- add a "most recent stats" file
+- readme roadmap & contribution section (and swap diagram)
 - more profiling
 - packages
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)

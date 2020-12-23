@@ -1,5 +1,5 @@
 from math import sqrt
-from misc import BLUE, RED, TIE
+from misc import BLUE, RED
 
 
 class ParameterError(Exception):

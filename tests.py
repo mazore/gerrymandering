@@ -1,5 +1,5 @@
 import atexit
-from misc import BLUE, RED
+from misc import BLUE
 from multiprocessing import Manager, Process
 from parameters import Parameters
 from root import Root
@@ -59,7 +59,7 @@ def black_box():
         parameters = Parameters(
             grid_width=24, district_size=16, num_swaps=1000,
             simulation_time=None, num_simulations=150,
-            width=480, height=480, help_party=BLUE, hinder_party=RED,
+            width=480, height=480, help_party=BLUE, favor_tie=False,
             line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
         )
         simulation_datas = Root(parameters=parameters, seed=1, testing_parameter=args).simulation_datas
