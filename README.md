@@ -29,24 +29,33 @@ From there, we perform a series of swaps of people between districts. These swap
 (specified by `help_party`) more and more districts, without changing the people grid.
 
 ### Swapping
-
 We pick 2 districts, `district1` and `district2` that are touching by 2 or more people. We also pick a person from each
 of those districts (`person1` and `person2`), using certain conditions to ensure that the swap not hinder the wrong
 party or cause disconnections in the districts. More information about these conditions can be found in `get_person1`
-and `get_person2` methods in `swap_manager.py`. We can then make `person1` part of `district2`, and `person2` part of
-`district1`. 
+and `get_person2` methods in `swap_manager.py`.
 
-**TODO:** Add diagram
+![Swap diagram 1](https://github.com/mazore/images/blob/main/GerrymanderingSwapDiagram1.png)
 
-### Structure
+We can then make `person1` part of `district2`, and `person2` part of `district1`. 
+
+![Swap diagram 2](https://github.com/mazore/images/blob/main/GerrymanderingSwapDiagram2.png)
+
+In this example, we have flipped one district from being tied to being blue.
+
+### Code structure
 ![Structure diagram](https://github.com/mazore/images/blob/main/GerrymanderingStructure.png)
 
 ## Roadmap & Contributing
+You can find a todo list at the top of the `root.py` file. I am always trying to make the program faster and better at
+gerrymandering. By doing this, we can get to the ideal gerrymandered state faster, and scale up the grids and district
+sizes. You can measure how good the program is in a given version using [testing](##testing). Other things on the road
+map are making a UI, porting to website(?), >2 parties support (can be found in todo in `root.py`). PR's, feedback, and
+general insight are much appreciated.
 
 ## Test results for this version
 ```
 avg_time:  86.3503 ms
 avg_score:  29.09
-score parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=10, width=480, height=480, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000) x 50 processes
-time parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=150, width=480, height=480, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000)
+score parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=10, width=480, height=480, num_districts=36.0, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000) x 50 processes
+time parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=150, width=480, height=480, num_districts=36.0, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000)
 ```

@@ -26,12 +26,7 @@ class Parameters:
     num_swaps_per_draw - number of swaps done for every draw, which are done repeatedly while running
     """
     def __repr__(self):
-        inside = []
-        for i, (k, v) in enumerate(self.__dict__.items()):
-            if k == 'num_districts':  # num_districts is calculated
-                continue
-            inside.append(f'{k}={v}')
-        inside = ', '.join(inside)
+        inside = ', '.join(f'{k}={v}' for k, v in self.__dict__.items())
         return f'Parameters({inside})'
 
     def __init__(self, grid_width=24, district_size=16, num_swaps=None,
