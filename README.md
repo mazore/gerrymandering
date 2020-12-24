@@ -2,8 +2,9 @@
 A program that draws district lines around a two-party grid of people (equal proportions for each party) in order to
 give an unfair advantage to one party.
 
-![Example  of grid after gerrymandering for blue](https://github.com/mazore/images/blob/main/GerrymanderedForBlue.png)
-![Example  of grid after gerrymandering for red](https://github.com/mazore/images/blob/main/GerrymanderedForRed.png)
+![Grid with no districts](https://github.com/mazore/images/blob/main/GerrymanderingNoDistricts.png)
+![Example of grid after gerrymandering for blue](https://github.com/mazore/images/blob/main/GerrymanderedForBlue.png)
+![Example of grid after gerrymandering for red](https://github.com/mazore/images/blob/main/GerrymanderedForRed.png)
 
 Above shows the same grid of people gerrymandered for blue (31-5) and gerrymandered for red (31-5)
 
