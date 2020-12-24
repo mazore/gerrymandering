@@ -5,7 +5,6 @@ import tkinter as tk
 
 """
 TODO:
-- more profiling
 - packages
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - UI

@@ -3,23 +3,24 @@ A program that draws district lines around a two-party grid of people (equal pro
 give an unfair advantage to one party.
 
 ![Grid with no districts](https://github.com/mazore/images/blob/main/GerrymanderingNoDistricts.png)
-![Example of grid after gerrymandering for blue](https://github.com/mazore/images/blob/main/GerrymanderedForBlue.png)
-![Example of grid after gerrymandering for red](https://github.com/mazore/images/blob/main/GerrymanderedForRed.png)
 
-Above shows the same grid of people gerrymandered for blue (31-5) and gerrymandered for red (31-5)
+Above is a grid of people, each colored by which party they vote for. There are 288 blue people and 288 red people.
 
-People are smaller red or blue squares and districts are groups of people enclosed in black lines. Districts are shaded
-based on winner, which is determined by which party has more people in the district.
+![Grid with square districts](https://github.com/mazore/images/blob/main/GerrymanderingSquareDistricts.png)
+
+Districts are groups of people (16 people in this case) enclosed in black lines, shaded by which party has more people
+in the district.
+
+![Grid after gerrymandering for blue](https://github.com/mazore/images/blob/main/GerrymanderedForBlue.png)
+
+We can draw the district lines in such a way that gives blue 31 districts and red only 5.
+
+![Grid after gerrymandering for red](https://github.com/mazore/images/blob/main/GerrymanderedForRed.png)
+
+This is the **same grid** but with lines drawn so that red has 31 districts and blue only has 5.
 
 ## Usage
 Download the project and run `python main.py` in the directory. Only python3.7 standard library is required.
-
-## Testing
-Run `python tests.py`. This runs two simulations, one that figures out how much time is spent doing swaps (see
-[Swapping](###swapping)) called avg_time, and another that takes the average score after a certain number of swaps
-called avg_score. It also prints the parameters used to run each of these simulations, set in file `tests.py`. These
-results can be compared with other versions, and the most recent results for the current version are at the bottom of
-this file. Keep in mind that the avg_time varies greatly different machines.
 
 ## How It Works
 ### Overview
@@ -49,9 +50,16 @@ In this example, we have flipped one district from being tied to being blue.
 ## Roadmap & Contributing
 You can find a todo list at the top of the `root.py` file. I am always trying to make the program faster and better at
 gerrymandering. By doing this, we can get to the ideal gerrymandered state faster, and scale up the grids and district
-sizes. You can measure how good the program is in a given version using [testing](##testing). Other things on the road
-map are making a UI, porting to website(?), >2 parties support (can be found in todo in `root.py`). PR's, feedback, and
-general insight are much appreciated.
+sizes. You can measure how good the program is in a given version using [testing](##testing). Other things on the
+roadmap (can be found in todo in `root.py`) are making a UI, porting to website(?), >2 parties support, making people's
+parties more clumped together to resemble reality better. PR's, feedback, and general insight are much appreciated.
+
+## Testing
+Run `python tests.py`. This runs two simulations, one that figures out how much time is spent doing swaps (see
+[Swapping](###swapping)) called avg_time, and another that takes the average score after a certain number of swaps
+called avg_score. It also prints the parameters used to run each of these simulations, set in file `tests.py`. These
+results can be compared with other versions, and the most recent results for the current version are at the bottom of
+this file. Keep in mind that the avg_time varies greatly different machines.
 
 ## Test results for this version
 ```
