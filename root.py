@@ -1,11 +1,10 @@
-from canvas import Canvas
 from parameters import Parameters
 import random
+from simulation import Canvas
 import tkinter as tk
 
 """
 TODO:
-- packages
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - UI
 - implement get_district2_weight in District class

@@ -1,8 +1,8 @@
-from district import District
 from math import ceil, sqrt
 from misc import fast_shuffled, BLUE, RED, SimulationData
-from person import Person
-from swap_manager import SwapManager
+from .district import District
+from .person import Person
+from .swap_manager import SwapManager
 import tkinter as tk
 from time import sleep, time
 

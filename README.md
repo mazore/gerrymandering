@@ -26,15 +26,15 @@ Download the project and run `python main.py` in the directory. Only python3.7 s
 ### Overview
 First, a grid of people is generated, with parties that are randomized while ensuring that there are an equal amount of
 people in each party. Districts are then drawn around those people. Districts are initially squares of size
-`district_size`, which is possible because we ensure that `grid_width` and `district_width` allow this to be possible.
-From there, we perform a series of swaps of people between districts. These swaps will over time give one party
-(specified by `help_party`) more and more districts, without changing the people grid.
+`district_size`, and we ensure that `grid_width` and `district_width` allow this to be possible. From there, we perform
+a series of swaps of people between districts. These swaps will over time give one party (specified by `help_party`)
+more and more districts, without changing the people grid.
 
 ### Swapping
 We pick 2 districts, `district1` and `district2` that are touching by 2 or more people. We also pick a person from each
 of those districts (`person1` and `person2`), using certain conditions to ensure that the swap not hinder the wrong
 party or cause disconnections in the districts. More information about these conditions can be found in `get_person1`
-and `get_person2` methods in `swap_manager.py`.
+and `get_person2` methods in `simulation/swap_manager.py`.
 
 ![Swap diagram 1](https://github.com/mazore/images/blob/main/GerrymanderingSwapDiagram1.png)
 
