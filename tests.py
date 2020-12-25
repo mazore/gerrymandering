@@ -1,8 +1,8 @@
 import atexit
-from misc import BLUE
 from multiprocessing import Manager, Process
 from parameters import Parameters
 from root import Root
+from simulation import BLUE
 
 
 def run_process(simulation_datas, parameters, seed, testing_parameter=None):

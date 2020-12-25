@@ -1,7 +1,9 @@
 from math import ceil, sqrt
-from misc import fast_shuffled, BLUE, RED, SimulationData
+from misc import fast_shuffled
 from .district import District
+from .parties import BLUE, RED
 from .person import Person
+from .simulation_data import SimulationData
 from .swap_manager import SwapManager
 import tkinter as tk
 from time import sleep, time

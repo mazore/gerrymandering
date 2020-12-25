@@ -1,5 +1,5 @@
 from math import sqrt
-from misc import BLUE, RED
+from simulation import BLUE, RED
 
 
 class ParameterError(Exception):
