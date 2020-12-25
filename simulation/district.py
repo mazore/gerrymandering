@@ -1,5 +1,5 @@
 from collections import defaultdict
-from .parties import TIE
+from .misc import TIE
 
 
 class District:

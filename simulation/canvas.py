@@ -1,9 +1,8 @@
 from math import ceil, sqrt
 from misc import fast_shuffled
 from .district import District
-from .parties import BLUE, RED
+from .misc import BLUE, RED, SimulationData
 from .person import Person
-from .simulation_data import SimulationData
 from .swap_manager import SwapManager
 import tkinter as tk
 from time import sleep, time
@@ -16,7 +15,6 @@ class Canvas(tk.Canvas):
         self.root = root
         self.parameters = parameters  # same as root.parameters, just more convenient
         super().__init__(width=parameters.width, height=parameters.height)
-        self.pack()
 
         self.running = False
         self.swap_manager = SwapManager(self)

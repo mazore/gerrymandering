@@ -5,7 +5,7 @@ import tkinter as tk
 
 """
 TODO:
-- UI
+- add control panel with adjustments for each parameter
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - implement get_district2_weight in District class
 - better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
@@ -29,6 +29,7 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self, parameters)
+        self.canvas.pack()
         self.run_id = self.after(1, self.canvas.run)
 
         self.geometry(f'{parameters.width}x{parameters.height}+1060+100')

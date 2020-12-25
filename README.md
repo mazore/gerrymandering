@@ -2,20 +2,20 @@
 A program that draws district lines around a two-party grid of people (equal proportions for each party) in order to
 give an unfair advantage to one party.
 
-![Grid with no districts](https://github.com/mazore/images/blob/main/GerrymanderingNoDistricts.png)
+![Grid with no districts](images/no_districts.png)
 
 Above is a grid of people, each colored by which party they vote for. There are 288 blue people and 288 red people.
 
-![Grid with square districts](https://github.com/mazore/images/blob/main/GerrymanderingSquareDistricts.png)
+![Grid with square districts](images/square_districts.png)
 
 Districts are groups of people (16 people in this case) enclosed in black lines, shaded by which party has more people
 in the district.
 
-![Grid after gerrymandering for blue](https://github.com/mazore/images/blob/main/GerrymanderedForBlue.png)
+![Grid after gerrymandering for blue](images/gerrymandered_for_blue.png)
 
 We can draw the district lines in such a way that gives blue 31 districts and red only 5.
 
-![Grid after gerrymandering for red](https://github.com/mazore/images/blob/main/GerrymanderedForRed.png)
+![Grid after gerrymandering for red](images/gerrymandered_for_red.png)
 
 This is the **same grid** but with lines drawn so that red has 31 districts and blue only has 5.
 
@@ -36,16 +36,16 @@ of those districts (`person1` and `person2`), using certain conditions to ensure
 party or cause disconnections in the districts. More information about these conditions can be found in `get_person1`
 and `get_person2` methods in `simulation/swap_manager.py`.
 
-![Swap diagram 1](https://github.com/mazore/images/blob/main/GerrymanderingSwapDiagram1.png)
+![Swap diagram 1](images/swap_diagram1.png)
 
 We can then make `person1` part of `district2`, and `person2` part of `district1`. 
 
-![Swap diagram 2](https://github.com/mazore/images/blob/main/GerrymanderingSwapDiagram2.png)
+![Swap diagram 2](images/swap_diagram2.png)
 
 In this example, we have flipped one district from being tied to being blue.
 
 ### Code structure
-![Structure diagram](https://github.com/mazore/images/blob/main/GerrymanderingStructure.png)
+![Structure diagram](images/code_structure.png)
 
 ## Roadmap & Contributing
 You can find a todo list at the top of the `root.py` file. I am always trying to make the program faster and better at

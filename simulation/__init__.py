@@ -1,2 +1,2 @@
 from .canvas import Canvas
-from .parties import BLUE, RED
+from .misc import BLUE, RED
