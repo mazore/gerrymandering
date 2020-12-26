@@ -14,7 +14,7 @@ class Canvas(tk.Canvas):
     def __init__(self, root, parameters):
         self.root = root
         self.parameters = parameters  # same as root.parameters, just more convenient
-        super().__init__(width=parameters.width, height=parameters.height)
+        super().__init__(width=parameters.canvas_width, height=parameters.canvas_height)
 
         self.running = False
         self.swap_manager = SwapManager(self)
@@ -84,7 +84,7 @@ class Canvas(tk.Canvas):
         parties = [RED, BLUE] * ceil(self.parameters.grid_width ** 2 / 2)
         parties = fast_shuffled(parties)
 
-        square_width = self.parameters.width / self.parameters.grid_width
+        square_width = self.parameters.canvas_width / self.parameters.grid_width
         for grid_y in range(0, self.parameters.grid_width):
             row = []
             for grid_x in range(0, self.parameters.grid_width):

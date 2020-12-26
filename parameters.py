@@ -17,7 +17,7 @@ class Parameters:
     num_simulations - number of simulation repeats to run before quiting, per process, use None for keep rerunning
 
     ---APPLICATION/VISUAL PARAMETERS---
-    width, height - size of the window in pixels
+    canvas_width, canvas_height - size of the canvas in pixels
     num_districts - number of districts in total (calculated automatically)
     help_party, hinder_party - party to give help/hinder in the gerrymandering process
     favor_tie - whether or not to try to make more tied districts
@@ -31,7 +31,7 @@ class Parameters:
 
     def __init__(self, grid_width=24, district_size=16, num_swaps=None,
                  simulation_time=None, num_simulations=None,
-                 width=480, height=480, help_party=BLUE, favor_tie=False,
+                 canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
                  line_width=3, sleep_between_draws=0, num_swaps_per_draw=1):
         self.grid_width = grid_width
         self.district_size = district_size
@@ -39,7 +39,7 @@ class Parameters:
         self.simulation_time = simulation_time
         self.num_simulations = num_simulations
 
-        self.width, self.height = width, height
+        self.canvas_width, self.canvas_height = canvas_width, canvas_height
         self.num_districts = (grid_width ** 2) / district_size
         assert help_party is BLUE or help_party is RED
         self.help_party = help_party

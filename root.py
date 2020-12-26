@@ -2,10 +2,13 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
+from ui import ParameterAdjusterPanel
 
 """
 TODO:
 - add control panel with adjustments for each parameter
+- add parameters and control of starting and stopping swaps
+- redo code structure diagram
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - implement get_district2_weight in District class
 - better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
@@ -29,11 +32,14 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self, parameters)
-        self.canvas.pack()
+        self.canvas.pack(side='left')
         self.run_id = self.after(1, self.canvas.run)
 
-        self.geometry(f'{parameters.width}x{parameters.height}+1060+100')
-        self.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.parameter_adjuster_panel = ParameterAdjusterPanel(self, parameters)
+        self.parameter_adjuster_panel.pack(side='top')
+
+        self.geometry('+1060+100')
+        self.protocol('WM_DELETE_WINDOW', self.on_close)
 
         self.mainloop()
 
