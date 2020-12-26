@@ -2,7 +2,7 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
-from ui import ParameterAdjusterPanel
+from ui import ParameterAdjusters
 
 """
 TODO:
@@ -35,8 +35,8 @@ class Root(tk.Tk):
         self.canvas.pack(side='left')
         self.run_id = self.after(1, self.canvas.run)
 
-        self.parameter_adjuster_panel = ParameterAdjusterPanel(self, parameters)
-        self.parameter_adjuster_panel.pack(side='top')
+        self.parameter_adjusters = ParameterAdjusters(self, parameters)
+        self.parameter_adjusters.pack(side='top')
 
         self.geometry('+1060+100')
         self.protocol('WM_DELETE_WINDOW', self.on_close)

@@ -14,8 +14,8 @@ def run_process(simulation_datas, parameters, seed, testing_parameter=None):
 def get_avg_time(print_params=False, testing_parameter=None):
     """Runs simulations on one process and returns how long was spent on swapping per simulation"""
     parameters = Parameters(
-        grid_width=24, district_size=16, num_swaps=1000,
-        simulation_time=None, num_simulations=150,
+        grid_width=24, district_size=16,
+        num_swaps=1000, simulation_time=None, num_simulations=150,
         canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
         line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     )
@@ -30,8 +30,8 @@ def get_avg_time(print_params=False, testing_parameter=None):
 def get_avg_score(print_params=False, testing_parameter=None):
     """Runs simulations on many processes and returns the average score of help_party per simulation"""
     parameters = Parameters(
-        grid_width=24, district_size=16, num_swaps=1000,
-        simulation_time=None, num_simulations=10,
+        grid_width=24, district_size=16,
+        num_swaps=1000, simulation_time=None, num_simulations=10,
         canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
         line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     )
@@ -57,8 +57,8 @@ def black_box():
 
     def func(args):
         parameters = Parameters(
-            grid_width=24, district_size=16, num_swaps=1000,
-            simulation_time=None, num_simulations=150,
+            grid_width=24, district_size=16,
+            num_swaps=1000, simulation_time=None, num_simulations=150,
             canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
             line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
         )

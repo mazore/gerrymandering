@@ -2,11 +2,6 @@ from math import sqrt
 from simulation import BLUE, RED
 
 
-class ParameterError(Exception):
-    """Used when a parameter is given that will cause the program to break later"""
-    pass
-
-
 class Parameters:
     """
     ---SIMULATION PARAMETERS---
@@ -29,8 +24,8 @@ class Parameters:
         inside = ', '.join(f'{k}={v}' for k, v in self.__dict__.items())
         return f'Parameters({inside})'
 
-    def __init__(self, grid_width=24, district_size=16, num_swaps=None,
-                 simulation_time=None, num_simulations=None,
+    def __init__(self, grid_width=24, district_size=16,
+                 num_swaps=None, simulation_time=None, num_simulations=None,
                  canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
                  line_width=3, sleep_between_draws=0, num_swaps_per_draw=1):
         self.grid_width = grid_width
@@ -50,6 +45,6 @@ class Parameters:
         self.num_swaps_per_draw = num_swaps_per_draw
 
         if not sqrt(district_size).is_integer():
-            raise ParameterError('districts start as squares, district_size must be a perfect square')
+            raise ValueError('districts start as squares, district_size must be a perfect square')
         if not sqrt(self.num_districts).is_integer():
-            raise ParameterError('districts must be able to fit into the grid without remainders')
+            raise ValueError('districts must be able to fit into the grid without remainders')
