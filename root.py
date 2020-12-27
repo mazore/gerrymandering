@@ -2,25 +2,14 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
-from ui import ParameterAdjusters
-
-"""
-TODO:
-- add control panel with adjustments for each parameter
-- add parameters and control of starting and stopping swaps
-- redo code structure diagram
-- improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
-- implement get_district2_weight in District class
-- better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
-- line smoothing (spline, make districts look more organic)
-- multiple parties? make red and blue into other non american colors?
-"""
+from ui import ParameterAdjusters, RerunButton
 
 
 class Root(tk.Tk):
     """Manages UI things, subclass of tkinter application root (represents a window)"""
 
     def __init__(self, parameters=Parameters(), seed=None, testing_parameter=None):
+        self.parameters = parameters
         self.testing_parameter = testing_parameter
         super().__init__()
 
@@ -31,12 +20,15 @@ class Root(tk.Tk):
         self.simulation_datas = []
         self.simulation_number = 1
 
-        self.canvas = Canvas(self, parameters)
-        self.canvas.pack(side='left')
+        self.canvas = Canvas(self)
+        self.canvas.grid(column=1, row=1)
         self.run_id = self.after(1, self.canvas.run)
 
-        self.parameter_adjusters = ParameterAdjusters(self, parameters)
-        self.parameter_adjusters.pack(side='top')
+        self.parameter_adjusters = ParameterAdjusters(self)
+        self.parameter_adjusters.grid(column=2, row=1)
+
+        self.rerun_button = RerunButton(self)
+        self.rerun_button.grid(column=2, row=1, sticky='s', pady=5)
 
         self.geometry('+1060+100')
         self.protocol('WM_DELETE_WINDOW', self.on_close)
@@ -60,5 +52,6 @@ class Root(tk.Tk):
         self.canvas.pack_forget()
         self.simulation_number += 1
 
-        self.canvas = Canvas(self, self.canvas.parameters)
+        self.canvas = Canvas(self)
+        self.canvas.grid(column=1, row=1)
         self.run_id = self.after(1, self.canvas.run)

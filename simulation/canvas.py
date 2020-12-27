@@ -11,10 +11,10 @@ from time import sleep, time
 class Canvas(tk.Canvas):
     """Manages people, districts, and swapping, subclass of tkinter Canvas"""
 
-    def __init__(self, root, parameters):
+    def __init__(self, root):
         self.root = root
-        self.parameters = parameters  # same as root.parameters, just more convenient
-        super().__init__(width=parameters.canvas_width, height=parameters.canvas_height)
+        self.parameters = root.parameters
+        super().__init__(width=root.parameters.canvas_width, height=root.parameters.canvas_height)
 
         self.running = False
         self.swap_manager = SwapManager(self)

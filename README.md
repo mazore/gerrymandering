@@ -48,10 +48,10 @@ In this example, we have flipped one district from being tied to being blue.
 ![Structure diagram](images/code_structure.png)
 
 ## Roadmap & Contributing
-You can find a todo list at the top of the `root.py` file. I am always trying to make the program faster and better at
+You can find a todo list at the top of the `main.py` file. I am always trying to make the program faster and better at
 gerrymandering. By doing this, we can get to the ideal gerrymandered state faster, and scale up the grids and district
 sizes. You can measure how good the program is in a given version using [testing](##testing). Other things on the
-roadmap (can be found in todo in `root.py`) are making a UI, porting to website(?), >2 parties support, making people's
+roadmap (can be found in todo in `main.py`) are making a UI, porting to website(?), >2 parties support, making people's
 parties more clumped together to resemble reality better. PR's, feedback, and general insight are much appreciated.
 
 ## Testing
