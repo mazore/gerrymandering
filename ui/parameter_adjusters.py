@@ -31,7 +31,8 @@ class ParameterAdjusters(tk.Frame):
 
     def get_parameters(self):
         kwargs = {name: self.get_parameter(name) for name in self.adjusters.keys()}
-        print(kwargs)
+        if any(parameter is None for parameter in kwargs.values()):
+            return None
         return Parameters(**kwargs)
 
     def get_parameter(self, name):
@@ -44,9 +45,7 @@ class ParameterAdjusters(tk.Frame):
 
     def district_size_after_select(self):
         if self.get_parameter('grid_width') not in self.get_grid_width_choices():
-            print('invalid grid_width')
-        else:
-            print('grid_width still valid')
+            self.adjusters['grid_width'].var.set('invalid')
 
     def get_grid_width_choices(self):
         district_width = int(sqrt(int(self.get_parameter('district_size'))))

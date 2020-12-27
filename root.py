@@ -21,14 +21,13 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
-        self.canvas.grid(column=1, row=1)
-        self.run_id = self.after(1, self.canvas.run)
-
         self.parameter_adjusters = ParameterAdjusters(self)
-        self.parameter_adjusters.grid(column=2, row=1)
-
         self.rerun_button = RerunButton(self)
+        self.canvas.grid(column=1, row=1)
+        self.parameter_adjusters.grid(column=2, row=1)
         self.rerun_button.grid(column=2, row=1, sticky='s', pady=5)
+
+        self.run_id = self.after(1, self.canvas.run)
 
         self.geometry('+1060+100')
         self.protocol('WM_DELETE_WINDOW', self.on_close)

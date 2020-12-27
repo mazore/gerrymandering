@@ -18,7 +18,10 @@ class ChoicePicker(tk.OptionMenu):
         self.bind('<Button-1>', self.on_click)
 
     def get(self):
-        return self.choice_type(self.var.get())
+        try:
+            return self.choice_type(self.var.get())
+        except ValueError:
+            return None
 
     def on_click(self, _):
         """Refresh the choices in the list using the get_choices function"""
