@@ -2,10 +2,10 @@ from root import Root
 
 """
 TODO:
-- rework adjuster_containers to make instances into subclasses (and make everything more specified)
-- package parameter_adjusters
 - document ui better
-- add entry and tick-box parameter adjusters
+- visualize how good the program is at different grid_widths and district_sizes
+- make it more clear that you have to rerun after changing district_size or grid_width
+- add entry and tick-box parameter adjuster types and the rest of the adjusters
 - add parameters and control of starting and stopping swaps
 - redo code structure diagram
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)

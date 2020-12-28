@@ -2,7 +2,7 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
-from ui import ParameterAdjusters, RerunButton
+from ui import ParameterPanel, RerunButton
 
 
 class Root(tk.Tk):
@@ -21,7 +21,7 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
-        self.parameter_adjusters = ParameterAdjusters(self)
+        self.parameter_adjusters = ParameterPanel(self)
         self.rerun_button = RerunButton(self)
         self.canvas.grid(column=1, row=1)
         self.parameter_adjusters.grid(column=2, row=1)
