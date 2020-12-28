@@ -36,9 +36,9 @@ class Parameters:
 
         self.canvas_width, self.canvas_height = canvas_width, canvas_height
         self.num_districts = (grid_width ** 2) / district_size
-        assert help_party is BLUE or help_party is RED
+        assert help_party in (BLUE, RED)
         self.help_party = help_party
-        self.hinder_party = BLUE if help_party is RED else RED
+        self.hinder_party = BLUE if help_party == RED else RED
         self.favor_tie = favor_tie
         self.line_width = line_width
         self.sleep_between_draws = sleep_between_draws

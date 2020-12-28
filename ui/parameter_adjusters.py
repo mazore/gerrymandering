@@ -1,6 +1,7 @@
 from .adjuster_types import ChoicePicker
 from math import sqrt
 from parameters import Parameters
+from simulation import BLUE, RED
 import tkinter as tk
 
 
@@ -23,9 +24,12 @@ class ParameterAdjusters(tk.Frame):
         super().__init__(width=200, height=root.parameters.canvas_height - 100, bd=1, relief='solid')
 
         self.adjuster_containers = [
-            AdjusterContainer(self, ChoicePicker, 'district_size', 16, get_choices=self.get_district_size_choices,
-                              after_select=self.district_size_after_select),
-            AdjusterContainer(self, ChoicePicker, 'grid_width', 24, get_choices=self.get_grid_width_choices),
+            AdjusterContainer(self, ChoicePicker, 'district_size', 16,
+                              get_choices=self.get_district_size_choices, after_select=self.check_grid_width_valid),
+            AdjusterContainer(self, ChoicePicker, 'grid_width', 24,
+                              get_choices=self.get_grid_width_choices),
+            AdjusterContainer(self, ChoicePicker, 'help_party', 'blue', choices=['blue', 'red'],
+                              after_select=self.confirm_help_party, result_formatter=self.help_party_result_formatter)
         ]
         self.adjusters = {ac.name: ac.adjuster for ac in self.adjuster_containers}
 
@@ -43,10 +47,24 @@ class ParameterAdjusters(tk.Frame):
     def get_district_size_choices():
         return [i*i for i in range(2, 10)]
 
-    def district_size_after_select(self):
+    def check_grid_width_valid(self):
         if self.get_parameter('grid_width') not in self.get_grid_width_choices():
             self.adjusters['grid_width'].var.set('invalid')
 
     def get_grid_width_choices(self):
         district_width = int(sqrt(int(self.get_parameter('district_size'))))
         return [districts_per_row * district_width for districts_per_row in range(2, 15)]
+
+    def confirm_help_party(self):
+        party = self.get_parameter('help_party')
+        help_party = party
+        hinder_party = {'red': BLUE, 'blue': RED}[party.name]
+        if self.root.parameters.help_party != help_party:  # if a change happened
+            self.root.parameters.help_party = self.root.canvas.parameters.help_party = help_party
+            self.root.parameters.hinder_party = self.root.canvas.parameters.hinder_party = hinder_party
+            for district in self.root.canvas.districts:
+                district.net_advantage *= -1
+
+    @staticmethod
+    def help_party_result_formatter(result):
+        return {'blue': BLUE, 'red': RED}[result]
