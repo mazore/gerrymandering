@@ -1,9 +1,10 @@
-from .parameter_adjuster import ParameterAdjuster
+from .parameter_adjuster_base import ParameterAdjusterBase
 import tkinter as tk
 
 
-class ChoicePicker(ParameterAdjuster):
-    """An adjuster type that can be used to choose an item from a list of (or function that returns) choices"""
+class ChoicePickerAdjusterType(ParameterAdjusterBase):
+    """An adjuster type that can be used to choose an item from a list of (or function that returns) choices, shown as a
+    dropdown list"""
 
     def __init__(self, parameter_panel, name, default):
         super().__init__(parameter_panel, name, tk.StringVar(value=default))
@@ -19,11 +20,15 @@ class ChoicePicker(ParameterAdjuster):
             self.widget['menu'].add_command(label=choice, command=lambda c=choice: self.on_choice(c))
 
     def on_choice(self, choice):
+        """Called when an item is selected from the dropdown list"""
         self.var.set(choice)
         self.after_choice()
 
     def get_choices(self):
+        """Overridden by subclasses, returns all choices valid"""
         return []
 
     def after_choice(self):
+        """Overridden by subclasses, called after an item is selected from the dropdown list. Typically used to ensure
+        other entered parameters are valid or actually change a simulation parameter"""
         pass

@@ -1,7 +1,10 @@
 import tkinter as tk
 
 
-class ParameterAdjuster:
+class ParameterAdjusterBase:
+    """The base class of parameter adjuster types (like ChoicePicker & TextField), and those are subclassed in
+    adjusters.py into adjusters of specific parameters (like DistrictSizeAdjuster & GridWidthAdjuster)"""
+
     def __init__(self, parameter_panel, name, var):
         self.parameter_panel = parameter_panel
         self.name = name
@@ -22,4 +25,6 @@ class ParameterAdjuster:
 
     @staticmethod
     def result_formatter(value):
+        """Overridden by subclasses, is called on the result of the widgets variable. Typically used to do typing or
+        other conversions"""
         return value

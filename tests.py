@@ -38,7 +38,7 @@ def get_avg_score(print_params=False, testing_parameter=None):
     num_processes = 50
     if print_params:
         atexit.register(lambda: print(f'score parameters: {parameters} x {num_processes} processes'))
-    seeds = [i+0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
+    seeds = [i + 0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
     with Manager() as manager:
         simulation_datas = manager.list()
         processes = []
@@ -68,7 +68,7 @@ def black_box():
         print(avg_score, args)
         return 36 - avg_score
 
-    print(search_min(func, domain=[[0.0, 10.0]]*25, budget=1000, batch=10, resfile='output.csv'))
+    print(search_min(func, domain=[[0.0, 10.0]] * 25, budget=1000, batch=10, resfile='output.csv'))
 
 
 def tests():

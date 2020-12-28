@@ -3,6 +3,7 @@ from random import random, uniform
 
 try:
     import line_profiler  # use `pip install line-profiler`
+
     profile = line_profiler.LineProfiler()  # use as decorator to save & print timings
     atexit.register(lambda: profile.print_stats() if profile.functions else None)  # print stats if decorator used
 except ImportError as e:

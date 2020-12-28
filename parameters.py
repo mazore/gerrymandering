@@ -20,6 +20,7 @@ class Parameters:
     sleep_between_draws - number of ms between drawing districts. Each draw, num_swaps_per_draw swaps are done
     num_swaps_per_draw - number of swaps done for every draw, which are done repeatedly while running
     """
+
     def __repr__(self):
         inside = ', '.join(f'{k}={v}' for k, v in self.__dict__.items())
         return f'Parameters({inside})'

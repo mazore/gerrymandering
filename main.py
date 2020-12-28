@@ -2,7 +2,6 @@ from root import Root
 
 """
 TODO:
-- document ui better
 - visualize how good the program is at different grid_widths and district_sizes
 - make it more clear that you have to rerun after changing district_size or grid_width
 - add entry and tick-box parameter adjuster types and the rest of the adjusters
