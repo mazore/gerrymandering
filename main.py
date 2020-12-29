@@ -2,10 +2,11 @@ from root import Root
 
 """
 TODO:
+- shade districts with different intensities based on margins
 - visualize how good the program is at different grid_widths and district_sizes
-- make it more clear that you have to rerun after changing district_size or grid_width
 - add entry and tick-box parameter adjuster types and the rest of the adjusters
 - add parameters and control of starting and stopping swaps
+- visualization of districts separate from canvas (for better understanding)
 - redo code structure diagram
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - implement get_district2_weight in District class

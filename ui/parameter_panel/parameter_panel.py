@@ -24,3 +24,7 @@ class ParameterPanel(tk.Frame):
     def get_parameter(self, name):
         """Returns the parameter by name, as set in this panel"""
         return self.adjusters[name].get()
+
+    def on_rerun(self):
+        for adjuster in self.adjusters.values():
+            adjuster.label.configure(font=adjuster.normal_font)

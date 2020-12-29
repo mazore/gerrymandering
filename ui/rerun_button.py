@@ -7,8 +7,10 @@ class RerunButton(tk.Button):
         super().__init__(command=self.command, text='Rerun')
 
     def command(self):
+        self.root.parameter_adjusters.on_rerun()
         parameters = self.root.parameter_adjusters.get_parameters()
         if parameters is None:
+            print('at least one parameter is invalid')
             return  # if a parameter is invalid
         self.root.parameters = parameters
         self.root.rerun_simulation()

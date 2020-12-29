@@ -10,6 +10,7 @@ class ChoicePickerAdjusterType(ParameterAdjusterBase):
         super().__init__(parameter_panel, name, tk.StringVar(value=default))
 
         self.widget = tk.OptionMenu(self.frame, self.var, [])
+        self.widget.config(font=self.normal_font)
         self.widget.bind('<Button-1>', self.on_dropdown)
         self.widget.pack(side='left')
 
@@ -23,6 +24,7 @@ class ChoicePickerAdjusterType(ParameterAdjusterBase):
         """Called when an item is selected from the dropdown list"""
         self.var.set(choice)
         self.after_choice()
+        self.update_boldness()
 
     def get_choices(self):
         """Overridden by subclasses, returns all choices valid"""

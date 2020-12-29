@@ -1,4 +1,5 @@
 import atexit
+from math import sqrt
 from multiprocessing import Manager, Process
 from parameters import Parameters
 from root import Root
@@ -79,4 +80,8 @@ def tests():
 
 
 if __name__ == '__main__':
-    tests()
+    # tests()
+    for district_size in [i * i for i in range(2, 10)]:
+        grid_widths = [districts_per_row * int(sqrt(district_size)) for districts_per_row in range(2, 15)]
+        for grid_width in grid_widths:
+            print(', '.join([str(district_size), str(grid_width), str(get_avg_score())]))
