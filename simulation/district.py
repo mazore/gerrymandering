@@ -1,5 +1,6 @@
 from collections import defaultdict
 from .misc import TIE
+from misc import hex_to_rgb, rgb_to_hex
 
 
 class District:
@@ -13,7 +14,6 @@ class District:
         self.net_advantage = 0  # help_party score - hinder_party score
         self.people = []
         self.get_people()
-        # self.color = '#' + ''.join(choice('0123456789abcdef') for _ in range(6))  # random color
         self.draw()
 
     def __repr__(self):
@@ -87,6 +87,12 @@ class District:
                 self.canvas.line_id_state_map[line_id] = state
 
         # fill
+
+        # show margins in shading
+        # r, g, b = hex_to_rgb(self.get_winner().color)
+        # factor = abs(self.net_advantage) / self.canvas.parameters.district_size * 3
+        # color = rgb_to_hex(int(r*factor), int(g*factor), int(b*factor))
+
         color = self.get_winner().color
         for person in self.people:
             if person.outer_color != color:

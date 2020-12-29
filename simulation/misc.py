@@ -20,4 +20,4 @@ class Party:
 
 BLUE = Party('blue', '#5868aa')
 RED = Party('red', '#f95955')
-TIE = Party('tie', 'black')
+TIE = Party('tie', '#000000')

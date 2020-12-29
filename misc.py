@@ -1,4 +1,5 @@
 import atexit
+from math import inf
 from random import random, uniform
 
 try:
@@ -11,9 +12,24 @@ except ImportError as e:
     profile = None
 
 
+def constrain(val, min_val=-inf, max_val=inf):
+    return min(max_val, max(min_val, val))
+
+
 def fast_shuffled(l):
     """This shuffle is about 4x faster than random.shuffle"""
     return sorted(l, key=lambda _: random())
+
+
+def hex_to_rgb(h):
+    return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+
+
+def rgb_to_hex(r, g, b):
+    r = constrain(r, min_val=0, max_val=255)
+    g = constrain(g, min_val=0, max_val=255)
+    b = constrain(b, min_val=0, max_val=255)
+    return '#%02x%02x%02x' % (r, g, b)
 
 
 def weighted_choice(choices):

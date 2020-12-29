@@ -6,6 +6,7 @@ TODO:
 - visualize how good the program is at different grid_widths and district_sizes
 - add entry and tick-box parameter adjuster types and the rest of the adjusters
 - add parameters and control of starting and stopping swaps
+- add district counters for each party
 - visualization of districts separate from canvas (for better understanding)
 - redo code structure diagram
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
