@@ -1,5 +1,4 @@
 import atexit
-from math import sqrt
 from multiprocessing import Manager, Process
 from parameters import Parameters
 from root import Root
@@ -28,15 +27,14 @@ def get_avg_time(print_params=False, testing_parameter=None):
     return sum(times) / len(times)
 
 
-def get_avg_score(print_params=False, testing_parameter=None):
+def get_avg_score(parameters=None, num_processes=50, print_params=False, testing_parameter=None):
     """Runs simulations on many processes and returns the average score of help_party per simulation"""
     parameters = Parameters(
         grid_width=24, district_size=16,
         num_swaps=1000, simulation_time=None, num_simulations=10,
         canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
         line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
-    )
-    num_processes = 50
+    ) if parameters is None else parameters
     if print_params:
         atexit.register(lambda: print(f'score parameters: {parameters} x {num_processes} processes'))
     seeds = [i + 0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
@@ -80,8 +78,4 @@ def tests():
 
 
 if __name__ == '__main__':
-    # tests()
-    for district_size in [i * i for i in range(2, 10)]:
-        grid_widths = [districts_per_row * int(sqrt(district_size)) for districts_per_row in range(2, 15)]
-        for grid_width in grid_widths:
-            print(', '.join([str(district_size), str(grid_width), str(get_avg_score())]))
+    tests()

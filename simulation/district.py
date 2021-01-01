@@ -1,6 +1,5 @@
 from collections import defaultdict
 from .misc import TIE
-from misc import hex_to_rgb, rgb_to_hex
 
 
 class District:

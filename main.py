@@ -2,8 +2,6 @@ from root import Root
 
 """
 TODO:
-- shade districts with different intensities based on margins
-- visualize how good the program is at different grid_widths and district_sizes
 - add entry and tick-box parameter adjuster types and the rest of the adjusters
 - add parameters and control of starting and stopping swaps
 - add district counters for each party
