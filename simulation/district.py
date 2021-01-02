@@ -81,6 +81,8 @@ class District:
         for line_id in line_ids:
             # hide if not on edge of district (if repeated)
             state = 'hidden' if line_id_occurrence_map[line_id] > 1 else 'normal'
+            if not self.canvas.show_districts:
+                state = 'hidden'
             if self.canvas.line_id_state_map[line_id] != state:
                 self.canvas.itemconfig(line_id, state=state)
                 self.canvas.line_id_state_map[line_id] = state

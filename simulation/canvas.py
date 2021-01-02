@@ -23,6 +23,7 @@ class Canvas(tk.Canvas):
         self.people_grid = []  # 2d list of Person objects
         self.generate_people()
 
+        self.show_districts = True
         self.districts = []
         self.generate_districts()
 
@@ -55,8 +56,13 @@ class Canvas(tk.Canvas):
             self.pause()
 
     def middle_click(self, _):
-        if not self.districts:  # if no districts
-            self.generate_districts()
+        self.running = False
+        state = 'hidden' if self.show_districts else 'normal'
+        for row in self.people_grid:
+            for person in row:
+                self.itemconfig(person.outer_id, state=state)
+        self.show_districts = not self.show_districts
+        [district.draw() for district in self.districts]
 
     def right_click(self, _):
         if not self.running:

@@ -3,6 +3,7 @@ from root import Root
 """
 TODO:
 - add entry and tick-box parameter adjuster types and the rest of the adjusters
+- add buttons for control of left/middle/right click events
 - add parameters and control of starting and stopping swaps
 - add district counters for each party
 - visualization of districts separate from canvas (for better understanding)

@@ -18,7 +18,8 @@ class ChoicePickerAdjusterType(ParameterAdjusterBase):
         """Refresh the choices in the list using the get_choices function"""
         self.widget['menu'].delete(0, 'end')
         for choice in self.get_choices():
-            self.widget['menu'].add_command(label=choice, command=lambda c=choice: self.on_choice(c))
+            self.widget['menu'].add_command(label=choice, font=self.normal_font,
+                                            command=lambda c=choice: self.on_choice(c))
 
     def on_choice(self, choice):
         """Called when an item is selected from the dropdown list"""
