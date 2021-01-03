@@ -26,7 +26,8 @@ class SwapManager:
             to_draw.add(self.district2)
             simulation_time = self.canvas.parameters.simulation_time
             time_up = simulation_time is not None and time() - self.canvas.start_time >= simulation_time
-            if self.swaps_done == self.canvas.parameters.num_swaps or time_up:
+            num_swaps = self.canvas.parameters.num_swaps
+            if num_swaps is not None and self.swaps_done >= num_swaps or time_up:
                 self.canvas.root.rerun_simulation()
                 return
         for district in to_draw:

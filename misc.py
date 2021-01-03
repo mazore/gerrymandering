@@ -16,9 +16,9 @@ def constrain(val, min_val=-inf, max_val=inf):
     return min(max_val, max(min_val, val))
 
 
-def fast_shuffled(l):
+def fast_shuffled(x):
     """This shuffle is about 4x faster than random.shuffle"""
-    return sorted(l, key=lambda _: random())
+    return sorted(x, key=lambda _: random())
 
 
 def hex_to_rgb(h):
@@ -30,6 +30,10 @@ def rgb_to_hex(r, g, b):
     g = constrain(g, min_val=0, max_val=255)
     b = constrain(b, min_val=0, max_val=255)
     return '#%02x%02x%02x' % (r, g, b)
+
+
+def to_int_or_none(value):
+    return int(value) if value else None
 
 
 def weighted_choice(choices):

@@ -1,11 +1,8 @@
 """Contains Picker subclasses that are directly used by ParameterPanel"""
 from .picker_adjuster_type import PickerAdjusterType
 from math import sqrt
+from misc import to_int_or_none
 from simulation import BLUE, RED
-
-
-def to_int_or_none(value):
-    return int(value) if value else None
 
 
 class DistrictSizeAdjuster(PickerAdjusterType):

@@ -2,8 +2,8 @@ import tkinter as tk
 
 
 class ParameterAdjusterBase:
-    """The base class of parameter adjuster types (like Picker & Entry), and those are subclassed in picker_adjusters.py into
-    adjusters of specific parameters (like DistrictSizeAdjuster & GridWidthAdjuster)"""
+    """The base class of parameter adjuster types (like Picker & Entry), and those are subclassed in picker_adjusters.py
+    into adjusters of specific parameters (like DistrictSizeAdjuster & GridWidthAdjuster)"""
 
     def __init__(self, parameter_panel, name, var):
         self.parameter_panel = parameter_panel
@@ -18,7 +18,7 @@ class ParameterAdjusterBase:
 
     def get(self):
         value = self.var.get()
-        if value == 'invalid':
+        if value in ('invalid', 'none'):  # TODO: differentiate between invalid meaning cannot rerun, and none meaning pass none into the value
             return None
         return self.result_formatter(value)
 
