@@ -1,4 +1,5 @@
-from .adjusters import *
+from .entry_adjusters import *
+from .picker_adjusters import *
 from parameters import Parameters
 import tkinter as tk
 
@@ -11,7 +12,8 @@ class ParameterPanel(tk.Frame):
         self.parameters = root.parameters
         super().__init__(width=200, height=root.parameters.canvas_height - 100, bd=1, relief='solid')
 
-        adjusters = [DistrictSizeAdjuster(self), GridWidthAdjuster(self), HelpPartyAdjuster(self)]
+        adjusters = [DistrictSizeAdjuster(self), GridWidthAdjuster(self), HelpPartyAdjuster(self),
+                     NumSwapsAdjuster(self)]
         self.adjusters = {adjuster.name: adjuster for adjuster in adjusters}
 
     def get_parameters(self):

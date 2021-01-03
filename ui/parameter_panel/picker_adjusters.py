@@ -1,5 +1,5 @@
-"""Contains objects that are directly used by ParameterPanel as the way to manipulate simulation parameters"""
-from .choice_picker_adjuster_type import ChoicePickerAdjusterType
+"""Contains Picker subclasses that are directly used by ParameterPanel"""
+from .picker_adjuster_type import PickerAdjusterType
 from math import sqrt
 from simulation import BLUE, RED
 
@@ -8,7 +8,7 @@ def to_int_or_none(value):
     return int(value) if value else None
 
 
-class DistrictSizeAdjuster(ChoicePickerAdjusterType):
+class DistrictSizeAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'district_size', 16)
 
@@ -23,7 +23,7 @@ class DistrictSizeAdjuster(ChoicePickerAdjusterType):
             grid_width_adjuster.set('invalid')
 
 
-class GridWidthAdjuster(ChoicePickerAdjusterType):
+class GridWidthAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'grid_width', 24)
 
@@ -35,7 +35,7 @@ class GridWidthAdjuster(ChoicePickerAdjusterType):
         return [districts_per_row * district_width for districts_per_row in range(2, 15)]
 
 
-class HelpPartyAdjuster(ChoicePickerAdjusterType):
+class HelpPartyAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'help_party', 'blue')
 

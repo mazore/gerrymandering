@@ -2,8 +2,8 @@ import tkinter as tk
 
 
 class ParameterAdjusterBase:
-    """The base class of parameter adjuster types (like ChoicePicker & TextField), and those are subclassed in
-    adjusters.py into adjusters of specific parameters (like DistrictSizeAdjuster & GridWidthAdjuster)"""
+    """The base class of parameter adjuster types (like Picker & Entry), and those are subclassed in picker_adjusters.py into
+    adjusters of specific parameters (like DistrictSizeAdjuster & GridWidthAdjuster)"""
 
     def __init__(self, parameter_panel, name, var):
         self.parameter_panel = parameter_panel

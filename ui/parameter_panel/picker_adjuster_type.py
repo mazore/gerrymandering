@@ -2,7 +2,7 @@ from .parameter_adjuster_base import ParameterAdjusterBase
 import tkinter as tk
 
 
-class ChoicePickerAdjusterType(ParameterAdjusterBase):
+class PickerAdjusterType(ParameterAdjusterBase):
     """An adjuster type that can be used to choose an item from a list of (or function that returns) choices, shown as a
     dropdown list"""
 
