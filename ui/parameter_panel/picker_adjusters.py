@@ -1,7 +1,7 @@
 """Contains Picker subclasses that are directly used by ParameterPanel"""
 from .picker_adjuster_type import PickerAdjusterType
 from math import sqrt
-from misc import to_int_or_none
+from misc import call_or_none
 from simulation import BLUE, RED
 
 
@@ -10,7 +10,7 @@ class DistrictSizeAdjuster(PickerAdjusterType):
         super().__init__(parameter_panel, 'district_size', 16)
 
         self.get_choices = lambda: [i * i for i in range(2, 10)]
-        self.result_formatter = to_int_or_none
+        self.result_formatter = call_or_none(int)
 
     def after_choice(self):
         """Make sure that grid_width is valid"""
@@ -24,7 +24,7 @@ class GridWidthAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'grid_width', 24)
 
-        self.result_formatter = to_int_or_none
+        self.result_formatter = call_or_none(int)
 
     def get_choices(self):
         """Get choices for grid_width based on current set district_size"""

@@ -2,10 +2,11 @@ from root import Root
 
 """
 TODO:
-- add entry, tick-box, incrementer parameter adjuster types and the rest of the adjusters
+- add checkbox parameter adjuster type
+- instead of typing 'none' into entry, have a checkbox to the left
 - add buttons for control of left/middle/right click events
-- add parameters and control of starting and stopping swaps
 - add district counters for each party
+- add incrementer parameter adjuster type 
 - visualization of districts separate from canvas (for better understanding)
 - redo code structure diagram
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)

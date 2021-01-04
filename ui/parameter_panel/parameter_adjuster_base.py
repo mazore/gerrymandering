@@ -5,7 +5,7 @@ class ParameterAdjusterBase:
     """The base class of parameter adjuster types (like Picker & Entry), and those are subclassed in picker_adjusters.py
     into adjusters of specific parameters (like DistrictSizeAdjuster & GridWidthAdjuster)"""
 
-    def __init__(self, parameter_panel, name, var):
+    def __init__(self, parameter_panel, name, var, pad_y=0):
         self.parameter_panel = parameter_panel
         self.name = name
         self.var = var
@@ -14,13 +14,16 @@ class ParameterAdjusterBase:
         self.frame = tk.Frame(parameter_panel)
         self.label = tk.Label(self.frame, text=name + ':', font=self.normal_font)
         self.label.pack(side='left')
-        self.frame.pack(side='top')
+        self.frame.pack(side='top', pady=pad_y)
 
     def get(self):
         value = self.var.get()
-        if value in ('invalid', 'none'):  # TODO: differentiate between invalid meaning cannot rerun, and none meaning pass none into the value
+        if value == 'none':
             return None
-        return self.result_formatter(value)
+        try:
+            return self.result_formatter(value)
+        except (ValueError, KeyError):
+            return 'invalid'
 
     def set(self, value):
         self.var.set(value)

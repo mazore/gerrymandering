@@ -15,6 +15,8 @@ class Party:
         return self.name
 
     def __eq__(self, other):
+        if not isinstance(other, Party):
+            return False
         return self.name == other.name
 
 

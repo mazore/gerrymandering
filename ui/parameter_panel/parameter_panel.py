@@ -13,13 +13,13 @@ class ParameterPanel(tk.Frame):
         super().__init__(width=200, height=root.parameters.canvas_height - 100, bd=1, relief='solid')
 
         adjusters = [DistrictSizeAdjuster(self), GridWidthAdjuster(self), HelpPartyAdjuster(self),
-                     NumSwapsAdjuster(self)]
+                     NumSwapsAdjuster(self), SimulationTimeAdjuster(self)]
         self.adjusters = {adjuster.name: adjuster for adjuster in adjusters}
 
     def get_parameters(self):
         """Get a parameter object with all parameters set in this panel"""
         kwargs = {name: self.get_parameter(name) for name in self.adjusters.keys()}
-        if any(parameter is None for parameter in kwargs.values()):
+        if any(parameter == 'invalid' for parameter in kwargs.values()):
             return None
         return Parameters(**kwargs)
 

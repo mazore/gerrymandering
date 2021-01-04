@@ -32,8 +32,11 @@ def rgb_to_hex(r, g, b):
     return '#%02x%02x%02x' % (r, g, b)
 
 
-def to_int_or_none(value):
-    return int(value) if value else None
+def call_or_none(to_call):
+    """Returns a function that will call to_call on a value if it is not None"""
+    def func(value):
+        return to_call(value) if value is not None else None
+    return func
 
 
 def weighted_choice(choices):
