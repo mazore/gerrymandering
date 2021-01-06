@@ -9,6 +9,7 @@ class ParameterAdjusterBase:
         self.parameter_panel = parameter_panel
         self.name = name
         self.var = var
+        self.var.trace('w', self.update_boldness)
         self.normal_font, self.bold_font = 'Consolas 9', 'Consolas 9 bold'
 
         self.frame = tk.Frame(parameter_panel)
@@ -28,7 +29,7 @@ class ParameterAdjusterBase:
     def set(self, value):
         self.var.set(value)
 
-    def update_boldness(self):
+    def update_boldness(self, *_):
         changed = self.get() != getattr(self.parameter_panel.root.parameters, self.name)
         if changed:
             self.label.configure(font=self.bold_font)

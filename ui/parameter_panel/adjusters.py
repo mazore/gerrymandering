@@ -1,8 +1,27 @@
-"""Contains Picker subclasses that are directly used by ParameterPanel"""
-from .picker_adjuster_type import PickerAdjusterType
+"""Contains AdjusterType subclasses that are directly used by ParameterPanel"""
+from .adjuster_types import CheckboxAdjusterType, EntryAdjusterType, PickerAdjusterType
+import inspect
 from math import sqrt
 from misc import call_or_none
 from simulation import BLUE, RED
+import sys
+
+
+class FavorTieAdjuster(CheckboxAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'favor_tie', False)
+
+
+class NumSwapsAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'num_swaps', 'none')
+        self.result_formatter = call_or_none(int)
+
+
+class SimulationTimeAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'simulation_time', 'none')
+        self.result_formatter = call_or_none(float)
 
 
 class DistrictSizeAdjuster(PickerAdjusterType):
@@ -51,3 +70,10 @@ class HelpPartyAdjuster(PickerAdjusterType):
             root.parameters.hinder_party = canvas.parameters.hinder_party = hinder_party
             for district in canvas.districts:
                 district.net_advantage *= -1
+
+
+def is_adjuster(obj):
+    return inspect.isclass(obj) and obj.__name__.endswith('Adjuster')
+
+
+all_adjusters = [item[1] for item in inspect.getmembers(sys.modules[__name__], is_adjuster)]
