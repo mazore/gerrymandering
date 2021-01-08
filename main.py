@@ -2,7 +2,7 @@ from root import Root
 
 """
 TODO:
-- make favor_tie adjuster update parameters when changed (update_when_changed value?)
+- fix level of abstraction (update_when_changed value?)
 - don't use 'default' in adjuster types just get from Parameters
 - instead of typing 'none' into entry, have a checkbox to the left
 - add buttons for control of left/middle/right click events

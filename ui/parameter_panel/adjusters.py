@@ -9,7 +9,7 @@ import sys
 
 class FavorTieAdjuster(CheckboxAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'favor_tie', False)
+        super().__init__(parameter_panel, 'favor_tie', False, update_on_change=True)
 
 
 class NumSwapsAdjuster(EntryAdjusterType):
@@ -31,12 +31,8 @@ class DistrictSizeAdjuster(PickerAdjusterType):
         self.get_choices = lambda: [i * i for i in range(2, 10)]
         self.result_formatter = call_or_none(int)
 
-    def after_choice(self):
-        """Make sure that grid_width is valid"""
-        grid_width = self.parameter_panel.get_parameter('grid_width')
-        grid_width_adjuster = self.parameter_panel.adjusters['grid_width']
-        if grid_width not in grid_width_adjuster.get_choices():
-            grid_width_adjuster.set('invalid')
+    def after_choice(self, choice):
+        self.parameter_panel.adjusters['grid_width'].test_invalid()
 
 
 class GridWidthAdjuster(PickerAdjusterType):
@@ -50,25 +46,24 @@ class GridWidthAdjuster(PickerAdjusterType):
         district_width = int(sqrt(self.parameter_panel.get_parameter('district_size')))
         return [districts_per_row * district_width for districts_per_row in range(2, 15)]
 
+    def test_invalid(self):
+        if self.get() not in self.get_choices():
+            self.set('invalid')
+
 
 class HelpPartyAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'help_party', 'blue')
+        super().__init__(parameter_panel, 'help_party', 'blue', update_on_change=True)
 
         self.get_choices = lambda: ['blue', 'red']
         self.result_formatter = lambda value: {'blue': BLUE, 'red': RED}[value]  # Get Party object from party name
 
-    def after_choice(self):
-        """Set the help_party parameter so that simulation can start gerrymandering for which party it was set to"""
-        help_party = self.parameter_panel.get_parameter('help_party')
-        hinder_party = {'red': BLUE, 'blue': RED}[help_party.name]
-
-        root = self.parameter_panel.root
-        canvas = root.canvas
-        if root.parameters.help_party != help_party:  # if a change happened
-            root.parameters.help_party = canvas.parameters.help_party = help_party
-            root.parameters.hinder_party = canvas.parameters.hinder_party = hinder_party
-            for district in canvas.districts:
+    def after_choice(self, choice):
+        """Set the hinder_party parameter to the opposite of help_party"""
+        hinder_party = {'red': BLUE, 'blue': RED}[choice.name]
+        if self.parameter_panel.root.parameters.hinder_party != hinder_party:  # if different
+            self.parameter_panel.set_parameter('hinder_party', hinder_party)
+            for district in self.parameter_panel.root.canvas.districts:
                 district.net_advantage *= -1
 
 

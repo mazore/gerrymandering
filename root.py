@@ -29,7 +29,7 @@ class Root(tk.Tk):
 
         self.run_id = self.after(1, self.canvas.run)
 
-        self.geometry('+1000+100')
+        self.geometry('+100+100')
         self.protocol('WM_DELETE_WINDOW', self.on_close)
 
         self.mainloop()
