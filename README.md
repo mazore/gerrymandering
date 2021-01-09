@@ -8,8 +8,8 @@ Above is a grid of people, each colored by which party they vote for. There are 
 
 ![Grid with square districts](images/square_districts.png)
 
-Districts are groups of people (16 people in this case) enclosed in black lines, shaded by which party has more people
-in the district.
+Districts are groups of people (16 people in this case) enclosed in black lines, shaded by winner (which party has more
+people in the district).
 
 ![Grid after gerrymandering for blue](images/gerrymandered_for_blue.png)
 
@@ -63,7 +63,7 @@ this file. Keep in mind that the avg_time varies greatly different machines.
 
 ## Test results for this version
 ```
-avg_time:  86.3503 ms
+avg_time:  76.7792 ms (new computer)
 avg_score:  29.09
 score parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=10, width=480, height=480, num_districts=36.0, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000) x 50 processes
 time parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=150, width=480, height=480, num_districts=36.0, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000)

@@ -3,30 +3,43 @@ import tkinter as tk
 
 
 class CheckboxAdjusterType(ParameterAdjusterBase):
-    def __init__(self, parameter_panel, name, default, **kwargs):
-        super().__init__(parameter_panel, name, tk.BooleanVar(value=default), pad_y=3, **kwargs)
+    """Can be used to toggle a boolean on or off"""
+
+    def __init__(self, parameter_panel, name, **kwargs):
+        super().__init__(parameter_panel, name, pad_y=3, **kwargs)
 
         self.widget = tk.Checkbutton(self.frame, variable=self.var)
         self.widget.pack(side='left')
 
+    def get_obj_from_str(self, s):
+        return {'0': False, 'False': False, '1': True, 'True': True}[s]
+
 
 class EntryAdjusterType(ParameterAdjusterBase):
-    def __init__(self, parameter_panel, name, default, **kwargs):
-        super().__init__(parameter_panel, name, tk.StringVar(value=default), pad_y=3, **kwargs)
+    """Can be used to enter a value into a field"""
+
+    def __init__(self, parameter_panel, name, type_, **kwargs):
+        self.type = type_
+        super().__init__(parameter_panel, name, pad_y=3, **kwargs)
 
         self.widget = tk.Entry(self.frame, textvariable=self.var, width=5, relief='solid')
         self.widget.config(font=self.normal_font)
         self.widget.pack(side='left')
 
+    def get_obj_from_str(self, s):
+        try:
+            return self.type(s)
+        except ValueError:
+            return None
+
 
 class PickerAdjusterType(ParameterAdjusterBase):
-    """An adjuster type that can be used to choose an item from a list of (or function that returns) choices, shown as a
-    dropdown list"""
+    """Can be used to choose an item from a list of (or function that returns) choices, shown as a dropdown list"""
 
-    def __init__(self, parameter_panel, name, default, **kwargs):
-        super().__init__(parameter_panel, name, tk.StringVar(value=default), **kwargs)
+    def __init__(self, parameter_panel, name, **kwargs):
+        super().__init__(parameter_panel, name, **kwargs)
 
-        self.widget = tk.OptionMenu(self.frame, self.var, [])
+        self.widget = tk.OptionMenu(self.frame, self.var, None)
         self.widget.config(font=self.normal_font)
         self.widget.bind('<Button-1>', self.on_dropdown)
         self.widget.pack(side='left')
