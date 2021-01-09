@@ -13,12 +13,12 @@ class FavorTieAdjuster(CheckboxAdjusterType):
 
 class NumSwapsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps', int)
+        super().__init__(parameter_panel, 'num_swaps', 1000, int)
 
 
 class SimulationTimeAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'simulation_time', float)
+        super().__init__(parameter_panel, 'simulation_time', 2, float, width=4)
 
 
 class DistrictSizeAdjuster(PickerAdjusterType):
