@@ -2,7 +2,7 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
-from ui import ParameterPanel, RerunButton
+from ui import ControlPanel, ParameterPanel
 
 
 class Root(tk.Tk):
@@ -21,11 +21,11 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
+        self.control_panel = ControlPanel(self)
         self.parameter_panel = ParameterPanel(self)
-        self.rerun_button = RerunButton(self)
         self.canvas.grid(column=1, row=1)
+        self.control_panel.grid(column=2, row=1, sticky='s', pady=5)
         self.parameter_panel.grid(column=2, row=1)
-        self.rerun_button.grid(column=2, row=1, sticky='s', pady=5)
 
         self.run_id = self.after(1, self.canvas.run)
 
@@ -35,7 +35,7 @@ class Root(tk.Tk):
         self.mainloop()
 
     def on_close(self):
-        self.canvas.running = False
+        self.canvas.pause()
         if self.run_id is not None:
             self.after_cancel(self.run_id)
         self.destroy()
@@ -44,7 +44,7 @@ class Root(tk.Tk):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
         self.simulation_datas.append(self.canvas.get_simulation_data())
 
-        self.canvas.running = False
+        self.canvas.pause()
         if self.simulation_number == self.canvas.parameters.num_simulations:
             self.quit()
             return

@@ -1,9 +1,9 @@
-from math import ceil, sqrt
-from misc import fast_shuffled
 from .district import District
 from .misc import BLUE, RED, SimulationData
 from .person import Person
 from .swap_manager import SwapManager
+from math import ceil, sqrt
+from misc import fast_shuffled
 import tkinter as tk
 from time import sleep, time
 
@@ -37,6 +37,7 @@ class Canvas(tk.Canvas):
     def run(self):
         """Start running or resume from being paused"""
         self.running = True
+        self.root.control_panel.pause_resume_button.update_config()
         while True:
             if not self.running:
                 break
@@ -48,6 +49,7 @@ class Canvas(tk.Canvas):
     def pause(self):
         """Stop the simulation from doing swaps"""
         self.running = False
+        self.root.control_panel.pause_resume_button.update_config()
 
     def left_click(self, _):
         if not self.running:
@@ -56,18 +58,23 @@ class Canvas(tk.Canvas):
             self.pause()
 
     def middle_click(self, _):
-        self.running = False
+        # self.toggle_districts_visible()
+        self.root.control_panel.rerun_button.rerun()
+
+    def right_click(self, _):
+        if not self.running:
+            self.swap_manager.swap_dispatch()
+            self.root.update()
+
+    def toggle_districts_visible(self):
+        self.pause()
         state = 'hidden' if self.show_districts else 'normal'
         for row in self.people_grid:
             for person in row:
                 self.itemconfig(person.outer_id, state=state)
         self.show_districts = not self.show_districts
         [district.draw() for district in self.districts]
-
-    def right_click(self, _):
-        if not self.running:
-            self.swap_manager.swap_dispatch()
-            self.root.update()
+        self.root.control_panel.toggle_districts_button.update_config()
 
     def get_simulation_data(self):
         return SimulationData(

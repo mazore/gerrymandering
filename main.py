@@ -1,10 +1,12 @@
 from root import Root
 
 """
-TODO:
-- add buttons for control of left/middle/right click events
+TODO:s
 - parameter panel tooltips
+- add the rest of parameter adjusters
 - stats panel with changing districts per party, num swaps done, people per party,
+- update code structure diagram with ui package
+- release
 - have different system for 'invalid' parameters (red outline, empty StringVar)
 - add 'precincts' or 'neighborhoods' that represent a certain number of people that vote different ways but are swapped
   as one person
