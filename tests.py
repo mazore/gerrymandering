@@ -16,7 +16,7 @@ def get_avg_time(print_params=False, testing_parameter=None):
     parameters = Parameters(
         grid_width=24, district_size=16,
         num_swaps=1000, simulation_time=None, num_simulations=150,
-        canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
+        canvas_width=480, help_party=BLUE, favor_tie=False,
         line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     )
     if print_params:
@@ -32,7 +32,7 @@ def get_avg_score(parameters=None, num_processes=50, print_params=False, testing
     parameters = Parameters(
         grid_width=24, district_size=16,
         num_swaps=1000, simulation_time=None, num_simulations=10,
-        canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
+        canvas_width=480, help_party=BLUE, favor_tie=False,
         line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
     ) if parameters is None else parameters
     if print_params:
@@ -58,7 +58,7 @@ def black_box():
         parameters = Parameters(
             grid_width=24, district_size=16,
             num_swaps=1000, simulation_time=None, num_simulations=150,
-            canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
+            canvas_width=480, help_party=BLUE, favor_tie=False,
             line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
         )
         simulation_datas = Root(parameters=parameters, seed=1, testing_parameter=args).simulation_datas

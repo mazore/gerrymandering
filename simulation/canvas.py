@@ -14,7 +14,7 @@ class Canvas(tk.Canvas):
     def __init__(self, root):
         self.root = root
         self.parameters = root.parameters
-        super().__init__(width=root.parameters.canvas_width, height=root.parameters.canvas_height)
+        super().__init__(width=root.parameters.canvas_width, height=root.parameters.canvas_width)
 
         self.running = False
         self.swap_manager = SwapManager(self)
@@ -44,7 +44,7 @@ class Canvas(tk.Canvas):
             self.swap_manager.swap_dispatch()
             self.root.update()
             if self.parameters.sleep_between_draws != 0:
-                sleep(self.parameters.sleep_between_draws)
+                sleep(self.parameters.sleep_between_draws / 1000)
 
     def pause(self):
         """Stop the simulation from doing swaps"""

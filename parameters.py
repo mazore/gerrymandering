@@ -10,15 +10,15 @@ class ParameterDocs:
     simulation_time = 'How long (seconds) to run before rerunning simulation (or exiting), disabled for run infinitely'
     num_simulations = 'Number of simulation repeats to run before quiting, per process, use None for keep rerunning'
     # ---APPLICATION/VISUAL PARAMETERS---
-    canvas_width = 'Width of the canvas in pixels'
-    canvas_height = 'Height of the canvas in pixels'
+    canvas_width = 'Width (and height) of the canvas in pixels'
     num_districts = 'Number of districts in total (calculated automatically)'
     help_party = 'Party to give help to in the gerrymandering process'
     hinder_party = 'Party to hinder in the gerrymandering process'
     favor_tie = 'Whether or not to try to make more tied districts'
     line_width = 'District line width'
     sleep_between_draws = 'Number of ms between drawing districts. Each draw, num_swaps_per_draw swaps are done'
-    num_swaps_per_draw = 'Number of swaps done for every draw, which are done repeatedly while running'
+    num_swaps_per_draw = 'Number of swaps done for every draw, which are done repeatedly while running. Increase to ' \
+                         'make faster but more chunky'
 
 
 class Parameters:
@@ -28,7 +28,7 @@ class Parameters:
 
     def __init__(self, grid_width=24, district_size=16,
                  num_swaps=None, simulation_time=None, num_simulations=None,
-                 canvas_width=480, canvas_height=480, help_party=BLUE, favor_tie=False,
+                 canvas_width=480, help_party=BLUE, favor_tie=False,
                  line_width=3, sleep_between_draws=0, num_swaps_per_draw=1):
         self.grid_width = grid_width
         self.district_size = district_size
@@ -36,7 +36,7 @@ class Parameters:
         self.simulation_time = simulation_time
         self.num_simulations = num_simulations
 
-        self.canvas_width, self.canvas_height = canvas_width, canvas_height
+        self.canvas_width = canvas_width
         self.num_districts = (grid_width ** 2) / district_size
         assert help_party in (BLUE, RED)
         self.help_party = help_party

@@ -16,41 +16,45 @@ class CheckboxAdjusterType(ParameterAdjusterBase):
             return False
         if s in ('1', 'True'):
             return True
-        assert ValueError
+        raise ValueError
 
 
 class EntryAdjusterType(ParameterAdjusterBase):
     """Can be used to enter a value into a field"""
 
-    def __init__(self, parameter_panel, name, disabled_value, type_, width=5, **kwargs):
+    def __init__(self, parameter_panel, name, disabled_value, type_, width=5, use_checkbutton=False, **kwargs):
         self.type = type_
         super().__init__(parameter_panel, name, pad_y=3, **kwargs)
 
-        self.checkbutton_var = tk.BooleanVar(value=self.var.get() != 'None')
-        self.checkbutton_var.trace('w', self.update_disabled)
-        self.checkbutton = tk.Checkbutton(self.frame, variable=self.checkbutton_var)
-        self.checkbutton.pack(side='left')
-
         self.widget = tk.Entry(self.frame, font=self.normal_font, textvariable=self.var, width=width, relief='solid')
-        self.widget.pack(side='left')
         self.widget.bind('<Return>', lambda _: self.parameter_panel.root.focus())
-        if self.var.get() == 'None':
-            self.var.set(disabled_value)
-        self.update_disabled()
+
+        self.use_checkbutton = use_checkbutton
+        if use_checkbutton:
+            self.checkbutton_var = tk.BooleanVar(value=self.var.get() != 'None')
+            self.checkbutton_var.trace('w', self.update_disabled)
+            self.checkbutton = tk.Checkbutton(self.frame, variable=self.checkbutton_var)
+            self.checkbutton.pack(side='left')
+            if self.var.get() == 'None':
+                self.var.set(disabled_value)
+            self.update_disabled()
+
+        self.widget.pack(side='left')
 
     def get_obj_from_str(self, s):
-        if not self.checkbutton_var.get():
+        if self.use_checkbutton and not self.checkbutton_var.get():
             return None
         try:
             return self.type(s)
         except ValueError:
-            return None
+            return 'invalid'
 
     def update_disabled(self, *_):
         if self.checkbutton_var.get():
             self.widget.configure(relief='solid', state='normal')
         else:
             self.widget.configure(relief='sunken', state='disabled')
+        self.update_boldness()
 
 
 class PickerAdjusterType(ParameterAdjusterBase):

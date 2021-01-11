@@ -6,7 +6,7 @@ from ui import ControlPanel, ParameterPanel
 
 
 class Root(tk.Tk):
-    """Manages UI things, subclass of tkinter application root (represents a window)"""
+    """Manages UI objects and Canvas, subclass of tkinter application root (represents a window)"""
 
     def __init__(self, parameters=Parameters(), seed=None, testing_parameter=None):
         self.parameters = parameters

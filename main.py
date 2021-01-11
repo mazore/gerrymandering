@@ -2,11 +2,15 @@ from root import Root
 
 """
 TODO:
-- add the rest of parameter adjusters
+- order parameter adjusters
+- make adjuster classes with only super().__init__ into instances (or lambdas that return instances)
 - stats panel with changing districts per party, num swaps done, people per party,
 - update code structure diagram with ui package
-- release
 - have different system for 'invalid' parameters (red outline, empty StringVar)
+- test for valid inputs that will break it (line_width = -1 is technically valid but will crash)
+- district hover information
+- release
+- don't stall ui on sleep between draws
 - add 'precincts' or 'neighborhoods' that represent a certain number of people that vote different ways but are swapped
   as one person
 - add incrementer parameter adjuster type

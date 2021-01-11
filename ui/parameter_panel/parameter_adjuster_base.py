@@ -22,12 +22,12 @@ class ParameterAdjusterBase:
 
         self.info.pack(side='left', padx=(0, 5))
         self.label.pack(side='left')
-        self.frame.pack(side='top', pady=pad_y)
+        self.frame.pack(side='top', padx=(0, 5), pady=pad_y)
 
     def get(self):
         value = self.var.get()
-        if value in ('None', 'invalid'):
-            return None
+        if value is None or value == 'invalid':
+            return value
         return self.get_obj_from_str(value)
 
     def set(self, value):

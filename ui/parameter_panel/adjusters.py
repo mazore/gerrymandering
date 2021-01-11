@@ -11,14 +11,34 @@ class FavorTieAdjuster(CheckboxAdjusterType):
         super().__init__(parameter_panel, 'favor_tie', update_on_change=True)
 
 
+class CanvasWidthAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'canvas_width', 480, int)
+
+
+class LineWidthAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'line_width', 3, int, width=4)
+
+
 class NumSwapsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps', 1000, int)
+        super().__init__(parameter_panel, 'num_swaps', 1000, int, use_checkbutton=True)
+
+
+class NumSwapsPerDrawAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'num_swaps_per_draw', 1, int)
 
 
 class SimulationTimeAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'simulation_time', 2, float, width=4)
+        super().__init__(parameter_panel, 'simulation_time', 2, float, use_checkbutton=True, width=4)
+
+
+class SleepBetweenDrawsAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'sleep_between_draws', 0, int)
 
 
 class DistrictSizeAdjuster(PickerAdjusterType):
