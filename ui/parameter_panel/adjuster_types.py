@@ -22,7 +22,7 @@ class CheckboxAdjusterType(ParameterAdjusterBase):
 class EntryAdjusterType(ParameterAdjusterBase):
     """Can be used to enter a value into a field"""
 
-    def __init__(self, parameter_panel, name, disabled_value, type_, width=5, use_checkbutton=False, **kwargs):
+    def __init__(self, parameter_panel, name, type_, width=5, use_checkbutton=False, disabled_value=None, **kwargs):
         self.type = type_
         super().__init__(parameter_panel, name, pad_y=3, **kwargs)
 

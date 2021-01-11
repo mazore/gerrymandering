@@ -1,44 +1,30 @@
 """Contains AdjusterType subclasses that are directly used by ParameterPanel"""
 from .adjuster_types import *
-import inspect
 from math import sqrt
 from simulation import BLUE, RED
-import sys
+
+
+class HelpPartyAdjuster(PickerAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'help_party', update_on_change=True)
+
+        self.get_choices = lambda: [BLUE, RED]
+
+    def after_choice(self, choice):
+        """Set the hinder_party parameter to the opposite of help_party"""
+        hinder_party = {'red': BLUE, 'blue': RED}[choice.name]
+        if self.parameter_panel.root.parameters.hinder_party != hinder_party:  # if different
+            self.parameter_panel.set_parameter('hinder_party', hinder_party)
+            for district in self.parameter_panel.root.canvas.districts:
+                district.net_advantage *= -1
+
+    def get_obj_from_str(self, s):
+        return {'blue': BLUE, 'red': RED}[s]
 
 
 class FavorTieAdjuster(CheckboxAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'favor_tie', update_on_change=True)
-
-
-class CanvasWidthAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'canvas_width', 480, int)
-
-
-class LineWidthAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'line_width', 3, int, width=4)
-
-
-class NumSwapsAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps', 1000, int, use_checkbutton=True)
-
-
-class NumSwapsPerDrawAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps_per_draw', 1, int)
-
-
-class SimulationTimeAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'simulation_time', 2, float, use_checkbutton=True, width=4)
-
-
-class SleepBetweenDrawsAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'sleep_between_draws', 0, int)
 
 
 class DistrictSizeAdjuster(PickerAdjusterType):
@@ -67,26 +53,45 @@ class GridWidthAdjuster(PickerAdjusterType):
             self.set('invalid')
 
 
-class HelpPartyAdjuster(PickerAdjusterType):
+class NumSwapsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'help_party', update_on_change=True)
-
-        self.get_choices = lambda: [BLUE, RED]
-
-    def after_choice(self, choice):
-        """Set the hinder_party parameter to the opposite of help_party"""
-        hinder_party = {'red': BLUE, 'blue': RED}[choice.name]
-        if self.parameter_panel.root.parameters.hinder_party != hinder_party:  # if different
-            self.parameter_panel.set_parameter('hinder_party', hinder_party)
-            for district in self.parameter_panel.root.canvas.districts:
-                district.net_advantage *= -1
-
-    def get_obj_from_str(self, s):
-        return {'blue': BLUE, 'red': RED}[s]
+        super().__init__(parameter_panel, 'num_swaps', int, use_checkbutton=True, disabled_value=1000)
 
 
-def is_adjuster(obj):
-    return inspect.isclass(obj) and obj.__name__.endswith('Adjuster')
+class SimulationTimeAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'simulation_time', float, use_checkbutton=True, disabled_value=2, width=4)
 
 
-all_adjusters = [item[1] for item in inspect.getmembers(sys.modules[__name__], is_adjuster)]
+class CanvasWidthAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'canvas_width', int)
+
+
+class LineWidthAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'line_width', int, width=4)
+
+
+class SleepBetweenDrawsAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'sleep_between_draws', int)
+
+
+class NumSwapsPerDrawAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'num_swaps_per_draw', int)
+
+
+all_adjusters = [
+    HelpPartyAdjuster,
+    FavorTieAdjuster,
+    DistrictSizeAdjuster,
+    GridWidthAdjuster,
+    NumSwapsAdjuster,
+    SimulationTimeAdjuster,
+    CanvasWidthAdjuster,
+    LineWidthAdjuster,
+    SleepBetweenDrawsAdjuster,
+    NumSwapsPerDrawAdjuster,
+]

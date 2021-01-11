@@ -18,7 +18,7 @@ class HoverInfo:
         self.top_level.wm_overrideredirect(True)  # Leaves only the label and removes the app window
         self.top_level.wm_geometry("+%d+%d" % (x, y))
         label = tk.Label(self.top_level, text=self.text, justify='left', background="#ffffff", relief='solid',
-                         borderwidth=1, wraplength=self.width)
+                         borderwidth=1, wraplength=self.width, font='Consolas 9')
         label.pack(ipadx=1)
 
     def hidetip(self, _):

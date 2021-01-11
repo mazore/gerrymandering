@@ -13,12 +13,12 @@ def run_process(simulation_datas, parameters, seed, testing_parameter=None):
 
 def get_avg_time(print_params=False, testing_parameter=None):
     """Runs simulations on one process and returns how long was spent on swapping per simulation"""
-    parameters = Parameters(
-        grid_width=24, district_size=16,
-        num_swaps=1000, simulation_time=None, num_simulations=150,
-        canvas_width=480, help_party=BLUE, favor_tie=False,
-        line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
-    )
+    parameters = Parameters(num_simulations=150,
+                            help_party=BLUE, favor_tie=False,
+                            district_size=16, grid_width=24,
+                            num_swaps=1000, simulation_time=None,
+                            canvas_width=480, line_width=3,
+                            sleep_between_draws=0, num_swaps_per_draw=2000)
     if print_params:
         atexit.register(lambda: print(f'time parameters: {parameters}'))
     simulation_datas = []
@@ -29,12 +29,12 @@ def get_avg_time(print_params=False, testing_parameter=None):
 
 def get_avg_score(parameters=None, num_processes=50, print_params=False, testing_parameter=None):
     """Runs simulations on many processes and returns the average score of help_party per simulation"""
-    parameters = Parameters(
-        grid_width=24, district_size=16,
-        num_swaps=1000, simulation_time=None, num_simulations=10,
-        canvas_width=480, help_party=BLUE, favor_tie=False,
-        line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
-    ) if parameters is None else parameters
+    parameters = Parameters(num_simulations=10,
+                            help_party=BLUE, favor_tie=False,
+                            district_size=16, grid_width=24,
+                            num_swaps=1000, simulation_time=None,
+                            canvas_width=480, line_width=3,
+                            sleep_between_draws=0, num_swaps_per_draw=2000) if parameters is None else parameters
     if print_params:
         atexit.register(lambda: print(f'score parameters: {parameters} x {num_processes} processes'))
     seeds = [i + 0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
@@ -55,12 +55,13 @@ def black_box():
     from black_box import search_min
 
     def func(args):
-        parameters = Parameters(
-            grid_width=24, district_size=16,
-            num_swaps=1000, simulation_time=None, num_simulations=150,
-            canvas_width=480, help_party=BLUE, favor_tie=False,
-            line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000,
-        )
+        parameters = Parameters(num_simulations=150,
+                                help_party=BLUE, favor_tie=False,
+                                district_size=16, grid_width=24,
+                                num_swaps=1000, simulation_time=None,
+                                canvas_width=480, line_width=3,
+                                sleep_between_draws=0, num_swaps_per_draw=2000,
+                                )
         simulation_datas = Root(parameters=parameters, seed=1, testing_parameter=args).simulation_datas
         scores = [simulation_data.score for simulation_data in simulation_datas]
         avg_score = sum(scores) / len(scores)
