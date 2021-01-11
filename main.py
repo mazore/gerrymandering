@@ -1,8 +1,7 @@
 from root import Root
 
 """
-TODO:s
-- parameter panel tooltips
+TODO:
 - add the rest of parameter adjusters
 - stats panel with changing districts per party, num swaps done, people per party,
 - update code structure diagram with ui package

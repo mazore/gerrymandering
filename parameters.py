@@ -2,25 +2,26 @@ from math import sqrt
 from simulation import BLUE, RED
 
 
+class ParameterDocs:
+    # ---SIMULATION PARAMETERS---
+    grid_width = 'Width (and height) of the grid of people, must be multiple of sqrt(district_size)'
+    district_size = 'Number of people contained in a district, must be perfect square'
+    num_swaps = 'Number of swaps to perform before rerunning simulation (or exiting), disabled for run infinitely'
+    simulation_time = 'How long (seconds) to run before rerunning simulation (or exiting), disabled for run infinitely'
+    num_simulations = 'Number of simulation repeats to run before quiting, per process, use None for keep rerunning'
+    # ---APPLICATION/VISUAL PARAMETERS---
+    canvas_width = 'Width of the canvas in pixels'
+    canvas_height = 'Height of the canvas in pixels'
+    num_districts = 'Number of districts in total (calculated automatically)'
+    help_party = 'Party to give help to in the gerrymandering process'
+    hinder_party = 'Party to hinder in the gerrymandering process'
+    favor_tie = 'Whether or not to try to make more tied districts'
+    line_width = 'District line width'
+    sleep_between_draws = 'Number of ms between drawing districts. Each draw, num_swaps_per_draw swaps are done'
+    num_swaps_per_draw = 'Number of swaps done for every draw, which are done repeatedly while running'
+
+
 class Parameters:
-    """
-    ---SIMULATION PARAMETERS---
-    grid_width - width (and height) of the grid of people, must be multiple of sqrt(district_size)
-    district_size - number of people contained in a district, must be perfect square
-    num_swaps - number of swaps to perform before rerunning simulation (or exiting), None for run infinitely
-    simulation_time - how long (seconds) to run before rerunning simulation (or exiting), None for run infinitely
-    num_simulations - number of simulation repeats to run before quiting, per process, use None for keep rerunning
-
-    ---APPLICATION/VISUAL PARAMETERS---
-    canvas_width, canvas_height - size of the canvas in pixels
-    num_districts - number of districts in total (calculated automatically)
-    help_party, hinder_party - party to give help/hinder in the gerrymandering process
-    favor_tie - whether or not to try to make more tied districts
-    line_width - district line width
-    sleep_between_draws - number of ms between drawing districts. Each draw, num_swaps_per_draw swaps are done
-    num_swaps_per_draw - number of swaps done for every draw, which are done repeatedly while running
-    """
-
     def __repr__(self):
         inside = ', '.join(f'{k}={v}' for k, v in self.__dict__.items())
         return f'Parameters({inside})'

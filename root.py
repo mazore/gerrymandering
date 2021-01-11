@@ -44,13 +44,15 @@ class Root(tk.Tk):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
         self.simulation_datas.append(self.canvas.get_simulation_data())
 
-        self.canvas.pause()
+        was_running = self.canvas.running
+        self.canvas.running = False
         if self.simulation_number == self.canvas.parameters.num_simulations:
             self.quit()
             return
-        self.canvas.pack_forget()
+        self.canvas.grid_remove()
         self.simulation_number += 1
 
         self.canvas = Canvas(self)
         self.canvas.grid(column=1, row=1)
-        self.run_id = self.after(1, self.canvas.run)
+        if was_running:
+            self.run_id = self.after(1, self.canvas.run)

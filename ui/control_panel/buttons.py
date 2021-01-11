@@ -37,7 +37,8 @@ class PauseResumeButton(tk.Button):
 class ToggleDistrictsButton(tk.Button):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        super().__init__(control_panel, command=self.root.canvas.toggle_districts_visible)
+        # use lambda to make sure function changes when root.canvas changes
+        super().__init__(control_panel, command=lambda: self.root.canvas.toggle_districts_visible())
         self.update_config()
 
     def update_config(self):

@@ -12,7 +12,11 @@ class CheckboxAdjusterType(ParameterAdjusterBase):
         self.widget.pack(side='left')
 
     def get_obj_from_str(self, s):
-        return {'0': False, 'False': False, '1': True, 'True': True}[s]
+        if s in ('0', 'False'):
+            return False
+        if s in ('1', 'True'):
+            return True
+        assert ValueError
 
 
 class EntryAdjusterType(ParameterAdjusterBase):

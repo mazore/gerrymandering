@@ -71,7 +71,7 @@ class Canvas(tk.Canvas):
         state = 'hidden' if self.show_districts else 'normal'
         for row in self.people_grid:
             for person in row:
-                self.itemconfig(person.outer_id, state=state)
+                self.itemconfig(person.outer_id, state=state, stipple='gray25')
         self.show_districts = not self.show_districts
         [district.draw() for district in self.districts]
         self.root.control_panel.toggle_districts_button.update_config()

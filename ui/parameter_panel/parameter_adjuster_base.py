@@ -1,3 +1,5 @@
+from .hover_info import HoverInfo
+from parameters import ParameterDocs
 import tkinter as tk
 
 
@@ -15,6 +17,10 @@ class ParameterAdjusterBase:
 
         self.frame = tk.Frame(parameter_panel)
         self.label = tk.Label(self.frame, text=name + ':', font=self.normal_font)
+        self.info = tk.Label(self.frame, text='ⓘ')
+        HoverInfo(self.info, getattr(ParameterDocs, name))
+
+        self.info.pack(side='left', padx=(0, 5))
         self.label.pack(side='left')
         self.frame.pack(side='top', pady=pad_y)
 
