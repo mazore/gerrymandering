@@ -3,9 +3,11 @@ import tkinter as tk
 
 
 class ControlPanel(tk.Frame):
+    """A box that contains control buttons that rerun, pause/resume, show/hide districts, and does one swap"""
+
     def __init__(self, root):
         self.root = root
-        super().__init__(bd=1, relief='solid')
+        super().__init__(root.ui_frame, bd=1, relief='solid')
 
         self.rerun_button = RerunButton(self)
         self.pause_resume_button = PauseResumeButton(self)

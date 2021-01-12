@@ -2,7 +2,7 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
-from ui import ControlPanel, ParameterPanel
+from ui import ControlPanel, InfoPanel, ParameterPanel
 
 
 class Root(tk.Tk):
@@ -21,11 +21,16 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
+        self.ui_frame = tk.Frame()
         self.control_panel = ControlPanel(self)
+        self.info_panel = InfoPanel(self)
         self.parameter_panel = ParameterPanel(self)
-        self.canvas.grid(column=1, row=1)
-        self.control_panel.grid(column=2, row=1, sticky='s', pady=5)
-        self.parameter_panel.grid(column=2, row=1)
+
+        self.ui_frame.pack(side='left')
+        self.info_panel.pack(side='top')
+        self.control_panel.pack(side='top', pady=3)
+        self.parameter_panel.pack(side='top')
+        self.canvas.pack(side='left')
 
         self.run_id = self.after(1, self.canvas.run)
 
@@ -36,8 +41,8 @@ class Root(tk.Tk):
 
     def on_close(self):
         self.canvas.pause()
-        if self.run_id is not None:
-            self.after_cancel(self.run_id)
+        self.after_cancel(self.run_id)
+        self.after_cancel(self.info_panel.after_id)
         self.destroy()
 
     def rerun_simulation(self):
@@ -49,10 +54,10 @@ class Root(tk.Tk):
         if self.simulation_number == self.canvas.parameters.num_simulations:
             self.quit()
             return
-        self.canvas.grid_remove()
+        self.canvas.pack_forget()
         self.simulation_number += 1
 
         self.canvas = Canvas(self)
-        self.canvas.grid(column=1, row=1)
+        self.canvas.pack(side='left')
         if was_running:
             self.run_id = self.after(1, self.canvas.run)

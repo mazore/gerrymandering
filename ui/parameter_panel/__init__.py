@@ -9,7 +9,7 @@ class ParameterPanel(tk.Frame):
     def __init__(self, root):
         self.root = root
         self.parameters = root.parameters
-        super().__init__(bd=1, relief='solid')
+        super().__init__(root.ui_frame, bd=1, relief='solid')
 
         adjuster_instances = (adjuster_type(self) for adjuster_type in all_adjusters)
         self.adjusters = {adjuster.name: adjuster for adjuster in adjuster_instances}
