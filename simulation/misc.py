@@ -1,3 +1,14 @@
+from enum import Enum
+
+
+class DrawMode(Enum):
+    NORMAL = 'normal'
+    MARGINS = 'margins'
+
+    def __str__(self):
+        return self.value
+
+
 class SimulationData:
     def __init__(self, score, num_swaps, total_time, total_swap_time):
         self.score = score

@@ -6,11 +6,11 @@ class PeopleCountInfo(tk.Frame):
         self.root = info_panel.root
         super().__init__(info_panel)
 
-        tk.Label(self, font='Consolas 9', text='people: ').pack(side='left')
         self.blue_var = tk.StringVar()
+        self.red_var = tk.StringVar()
+        tk.Label(self, font='Consolas 9', text='people: ').pack(side='left')
         tk.Label(self, fg='#5868aa', font='Consolas 9', textvariable=self.blue_var).pack(side='left')
         tk.Label(self, font='Consolas 9', text='-').pack(side='left')
-        self.red_var = tk.StringVar()
         tk.Label(self, fg='#f95955', font='Consolas 9', textvariable=self.red_var).pack(side='left')
 
         self.update_info()
@@ -30,12 +30,12 @@ class ScoreInfo(tk.Frame):
         super().__init__(info_panel)
 
         self.blue_var = tk.StringVar()
+        self.red_var = tk.StringVar()
+        self.tie_var = tk.StringVar(value='0')
         tk.Label(self, fg='#5868aa', font='Consolas 15', textvariable=self.blue_var).pack(side='left')
         tk.Label(self, font='Consolas 15', text='-').pack(side='left')
-        self.red_var = tk.StringVar()
         tk.Label(self, fg='#f95955', font='Consolas 15', textvariable=self.red_var).pack(side='left')
         tk.Label(self, font='Consolas 15', text='-').pack(side='left')
-        self.tie_var = tk.StringVar(value='0')
         tk.Label(self, fg='gray', font='Consolas 15', textvariable=self.tie_var).pack(side='left')
 
         self.update_info()

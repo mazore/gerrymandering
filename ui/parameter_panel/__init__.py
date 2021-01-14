@@ -16,14 +16,10 @@ class ParameterPanel(tk.Frame):
 
     def get_parameters(self):
         """Get a parameter object with all parameters set in this panel"""
-        kwargs = {name: self.get_parameter(name) for name in self.adjusters.keys()}
+        kwargs = {name: adjuster.get() for name, adjuster in self.adjusters.items()}
         if any(parameter == 'invalid' for parameter in kwargs.values()):
             return None
         return Parameters(**kwargs)
-
-    def get_parameter(self, name):
-        """Returns the parameter by name, as set in this panel"""
-        return self.adjusters[name].get()
 
     def set_parameter(self, name, value):
         setattr(self.root.parameters, name, value)

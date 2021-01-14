@@ -1,5 +1,6 @@
+from .misc import TIE, DrawMode
 from collections import defaultdict
-from .misc import TIE
+from misc import hex_to_rgb, rgb_to_hex
 
 
 class District:
@@ -90,11 +91,11 @@ class District:
         # fill
 
         # show margins in shading
-        # r, g, b = hex_to_rgb(self.get_winner().color)
-        # factor = abs(self.net_advantage) / self.canvas.parameters.district_size * 3
-        # color = rgb_to_hex(int(r*factor), int(g*factor), int(b*factor))
-
         color = self.get_winner().color
+        if self.canvas.parameters.draw_mode == DrawMode.MARGINS:
+            r, g, b = hex_to_rgb(color)
+            factor = abs(self.net_advantage) / self.canvas.parameters.district_size * 3
+            color = rgb_to_hex(int(r * factor), int(g * factor), int(b * factor))
         for person in self.people:
             if person.outer_color != color:
                 self.canvas.itemconfig(person.outer_id, fill=color)

@@ -63,8 +63,8 @@ this file. Keep in mind that the avg_time varies greatly different machines.
 
 ## Test results for this version
 ```
-avg_time:  76.7792 ms (new computer)
+avg_time:  72.4168 ms
 avg_score:  29.09
-score parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=10, width=480, height=480, num_districts=36.0, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000) x 50 processes
-time parameters: Parameters(grid_width=24, district_size=16, num_swaps=1000, simulation_time=None, num_simulations=150, width=480, height=480, num_districts=36.0, help_party=blue, hinder_party=red, favor_tie=False, line_width=3, sleep_between_draws=0, num_swaps_per_draw=2000)
-```
+score parameters: Parameters(help_party=blue, favor_tie=False, district_size=16, grid_width=24, num_swaps=1000, simulation_time=None, canvas_width=600, line_width=3, draw_mode=normal, sleep_between_draws=0, num_swaps_per_draw=2000, hinder_party=red, num_simulations=10, num_districts=36.0) x 50 processes
+time parameters: Parameters(help_party=blue, favor_tie=False, district_size=16, grid_width=24, num_swaps=1000, simulation_time=None, canvas_width=600, line_width=3, draw_mode=normal, sleep_between_draws=0, num_swaps_per_draw=2000, hinder_party=red, num_simulations=150, num_districts=36.0)
+ ```

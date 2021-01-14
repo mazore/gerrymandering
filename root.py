@@ -21,11 +21,12 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
-        self.ui_frame = tk.Frame()
+        self.ui_frame = tk.Frame(width=300, height=550)
         self.control_panel = ControlPanel(self)
         self.info_panel = InfoPanel(self)
         self.parameter_panel = ParameterPanel(self)
 
+        self.ui_frame.pack_propagate(False)
         self.ui_frame.pack(side='left')
         self.info_panel.pack(side='top')
         self.control_panel.pack(side='top', pady=3)

@@ -1,7 +1,7 @@
 """Contains AdjusterType subclasses that are directly used by ParameterPanel"""
 from .adjuster_types import *
 from math import sqrt
-from simulation import BLUE, RED
+from simulation import BLUE, RED, DrawMode
 
 
 class HelpPartyAdjuster(PickerAdjusterType):
@@ -45,7 +45,7 @@ class GridWidthAdjuster(PickerAdjusterType):
 
     def get_choices(self):
         """Get choices for grid_width based on current set district_size"""
-        district_width = int(sqrt(self.parameter_panel.get_parameter('district_size')))
+        district_width = int(sqrt(self.parameter_panel.adjusters['district_size'].get()))
         return [districts_per_row * district_width for districts_per_row in range(2, 15)]
 
     def test_invalid(self):
@@ -73,6 +73,22 @@ class LineWidthAdjuster(EntryAdjusterType):
         super().__init__(parameter_panel, 'line_width', int, width=4)
 
 
+class DrawModeAdjuster(PickerAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'draw_mode', update_on_change=True)
+
+        self.get_choices = lambda: ['normal', 'margins']
+
+    def get_obj_from_str(self, s):
+        d = {}
+        for enum_obj in DrawMode.__members__.values():
+            d[enum_obj.value] = enum_obj
+        return d[s]
+
+    def after_choice(self, _):
+        [district.draw() for district in self.parameter_panel.root.canvas.districts]
+
+
 class SleepBetweenDrawsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'sleep_between_draws', int)
@@ -92,6 +108,7 @@ all_adjusters = [
     SimulationTimeAdjuster,
     CanvasWidthAdjuster,
     LineWidthAdjuster,
+    DrawModeAdjuster,
     SleepBetweenDrawsAdjuster,
     NumSwapsPerDrawAdjuster,
 ]
