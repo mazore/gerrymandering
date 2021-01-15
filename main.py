@@ -2,7 +2,7 @@ from root import Root
 
 """
 TODO:
-- update code structure diagram with ui package
+- start paused and make play/pause button detached & more obvious
 - have different system for 'invalid' parameters (red outline, empty StringVar)
 - test for valid inputs that will break it (line_width = -1 is technically valid but will crash)
 - district hover information
