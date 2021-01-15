@@ -55,27 +55,28 @@ class GridWidthAdjuster(PickerAdjusterType):
 
 class NumSwapsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps', int, use_checkbutton=True, disabled_value=1000)
+        super().__init__(parameter_panel, 'num_swaps', int, use_checkbutton=True, disabled_value=1000, advanced=True)
 
 
 class SimulationTimeAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'simulation_time', float, use_checkbutton=True, disabled_value=2, width=4)
+        super().__init__(parameter_panel, 'simulation_time', float,
+                         use_checkbutton=True, disabled_value=2, width=4, advanced=True)
 
 
 class CanvasWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'canvas_width', int)
+        super().__init__(parameter_panel, 'canvas_width', int, advanced=True)
 
 
 class LineWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'line_width', int, width=4)
+        super().__init__(parameter_panel, 'line_width', int, width=4, advanced=True)
 
 
 class DrawModeAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'draw_mode', update_on_change=True)
+        super().__init__(parameter_panel, 'draw_mode', update_on_change=True, advanced=True)
 
         self.get_choices = lambda: ['normal', 'margins']
 
@@ -91,12 +92,12 @@ class DrawModeAdjuster(PickerAdjusterType):
 
 class SleepBetweenDrawsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'sleep_between_draws', int)
+        super().__init__(parameter_panel, 'sleep_between_draws', int, advanced=True)
 
 
 class NumSwapsPerDrawAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps_per_draw', int)
+        super().__init__(parameter_panel, 'num_swaps_per_draw', int, advanced=True)
 
 
 all_adjusters = [

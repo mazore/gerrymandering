@@ -37,7 +37,7 @@ class Canvas(tk.Canvas):
     def run(self):
         """Start running or resume from being paused"""
         self.running = True
-        self.root.control_panel.pause_resume_button.update_config()
+        self.root.control_panel.play_pause_button.update_config()
         while True:
             if not self.running:
                 break
@@ -49,7 +49,7 @@ class Canvas(tk.Canvas):
     def pause(self):
         """Stop the simulation from doing swaps"""
         self.running = False
-        self.root.control_panel.pause_resume_button.update_config()
+        self.root.control_panel.play_pause_button.update_config()
 
     def left_click(self, _):
         if not self.running:
@@ -69,9 +69,8 @@ class Canvas(tk.Canvas):
     def toggle_districts_visible(self):
         self.pause()
         state = 'hidden' if self.show_districts else 'normal'
-        for row in self.people_grid:
-            for person in row:
-                self.itemconfig(person.outer_id, state=state)
+        for person in self.iter_people():
+            self.itemconfig(person.outer_id, state=state)
         self.show_districts = not self.show_districts
         [district.draw() for district in self.districts]
         self.root.control_panel.toggle_districts_button.update_config()
@@ -91,6 +90,11 @@ class Canvas(tk.Canvas):
             score[district.get_winner().name] += 1
         return score
 
+    def iter_people(self):
+        for row in self.people_grid:
+            for person in row:
+                yield person
+
     def generate_people(self):
         """Create grid of people with randomized parties"""
         # make sure peoples parties are random but same number of people for each
@@ -106,9 +110,8 @@ class Canvas(tk.Canvas):
                 party = parties[grid_x + grid_y * self.parameters.grid_width]
                 row.append(Person(self, p1, p2, grid_x, grid_y, party=party))
             self.people_grid.append(row)
-        for row in self.people_grid:
-            for person in row:
-                person.secondary_init()
+        for person in self.iter_people():
+            person.secondary_init()
 
     def generate_districts(self):
         """Generate square districts of size district_size. We know this can fit because of assertions in Parameters

@@ -12,6 +12,8 @@ class Root(tk.Tk):
         self.parameters = parameters
         self.testing_parameter = testing_parameter
         super().__init__()
+        self.font = 'Consolas 9'
+        self.option_add('*font', self.font)
 
         if seed is not None:
             random.seed(seed)
@@ -21,13 +23,12 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
-        self.ui_frame = tk.Frame(width=300, height=550)
+        self.ui_frame = tk.Frame()
         self.control_panel = ControlPanel(self)
         self.info_panel = InfoPanel(self)
         self.parameter_panel = ParameterPanel(self)
 
-        self.ui_frame.pack_propagate(False)
-        self.ui_frame.pack(side='left')
+        self.ui_frame.pack(side='left', anchor='n')
         self.info_panel.pack(side='top')
         self.control_panel.pack(side='top', pady=3)
         self.parameter_panel.pack(side='top')

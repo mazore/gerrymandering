@@ -2,7 +2,6 @@ from root import Root
 
 """
 TODO:
-- hide advanced parameter adjusters
 - update code structure diagram with ui package
 - have different system for 'invalid' parameters (red outline, empty StringVar)
 - test for valid inputs that will break it (line_width = -1 is technically valid but will crash)

@@ -8,18 +8,17 @@ class PeopleCountInfo(tk.Frame):
 
         self.blue_var = tk.StringVar()
         self.red_var = tk.StringVar()
-        tk.Label(self, font='Consolas 9', text='people: ').pack(side='left')
-        tk.Label(self, fg='#5868aa', font='Consolas 9', textvariable=self.blue_var).pack(side='left')
-        tk.Label(self, font='Consolas 9', text='-').pack(side='left')
-        tk.Label(self, fg='#f95955', font='Consolas 9', textvariable=self.red_var).pack(side='left')
+        tk.Label(self, text='people: ').pack(side='left')
+        tk.Label(self, fg='#5868aa', textvariable=self.blue_var).pack(side='left')
+        tk.Label(self, text='-').pack(side='left')
+        tk.Label(self, fg='#f95955', textvariable=self.red_var).pack(side='left')
 
         self.update_info()
 
     def update_info(self):
         score = dict(blue=0, red=0)
-        for row in self.root.canvas.people_grid:
-            for person in row:
-                score[person.party.name] += 1
+        for person in self.root.canvas.iter_people():
+            score[person.party.name] += 1
         self.blue_var.set(score['blue'])
         self.red_var.set(score['red'])
 
@@ -52,7 +51,7 @@ class SwapsDoneInfo(tk.Label):
         self.root = info_panel.root
         self.var = tk.StringVar()
         self.update_info()
-        super().__init__(info_panel, font='Consolas 9', textvariable=self.var)
+        super().__init__(info_panel, textvariable=self.var)
 
     def update_info(self):
         self.var.set(f'swaps_done: {self.root.canvas.swap_manager.swaps_done}')

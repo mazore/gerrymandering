@@ -24,9 +24,9 @@ class EntryAdjusterType(ParameterAdjusterBase):
 
     def __init__(self, parameter_panel, name, type_, width=5, use_checkbutton=False, disabled_value=None, **kwargs):
         self.type = type_
-        super().__init__(parameter_panel, name, pad_y=3, **kwargs)
+        super().__init__(parameter_panel, name, pad_y=5, **kwargs)
 
-        self.widget = tk.Entry(self.frame, font=self.normal_font, textvariable=self.var, width=width, relief='solid')
+        self.widget = tk.Entry(self.frame, textvariable=self.var, width=width, relief='solid')
         self.widget.bind('<Return>', lambda _: self.parameter_panel.root.focus())
 
         self.use_checkbutton = use_checkbutton
@@ -64,7 +64,6 @@ class PickerAdjusterType(ParameterAdjusterBase):
         super().__init__(parameter_panel, name, **kwargs)
 
         self.widget = tk.OptionMenu(self.frame, self.var, None)
-        self.widget.config(font=self.normal_font)
         self.widget.bind('<Button-1>', self.on_dropdown)
         self.widget.pack(side='left')
 
@@ -72,8 +71,7 @@ class PickerAdjusterType(ParameterAdjusterBase):
         """Refresh the choices in the list using the get_choices function"""
         self.widget['menu'].delete(0, 'end')
         for choice in self.get_choices():
-            self.widget['menu'].add_command(label=choice, font=self.normal_font,
-                                            command=lambda c=choice: self.choose(c))
+            self.widget['menu'].add_command(label=choice, command=lambda c=choice: self.choose(c))
 
     def choose(self, choice):
         self.var.set(choice)

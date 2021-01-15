@@ -1,4 +1,5 @@
 from .adjusters import all_adjusters
+from .toggle_advanced_button import ToggleAdvancedButton
 from parameters import Parameters
 import tkinter as tk
 
@@ -14,6 +15,8 @@ class ParameterPanel(tk.Frame):
         adjuster_instances = (adjuster_type(self) for adjuster_type in all_adjusters)
         self.adjusters = {adjuster.name: adjuster for adjuster in adjuster_instances}
 
+        self.toggle_advanced_button = ToggleAdvancedButton(self)
+
     def get_parameters(self):
         """Get a parameter object with all parameters set in this panel"""
         kwargs = {name: adjuster.get() for name, adjuster in self.adjusters.items()}
@@ -26,4 +29,4 @@ class ParameterPanel(tk.Frame):
 
     def on_rerun(self):
         for adjuster in self.adjusters.values():
-            adjuster.label.configure(font=adjuster.normal_font)
+            adjuster.label.configure(font=self.root.font)

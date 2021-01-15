@@ -17,13 +17,13 @@ class RerunButton(tk.Button):
         self.root.rerun_simulation()
 
 
-class PauseResumeButton(tk.Button):
+class PlayPauseButton(tk.Button):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        super().__init__(control_panel)
+        super().__init__(control_panel, width=5)
         self.update_config()
 
-    def pause_resume(self):
+    def play_pause(self):
         if self.root.canvas.running:
             self.root.canvas.pause()
         else:
@@ -31,7 +31,18 @@ class PauseResumeButton(tk.Button):
 
     def update_config(self):
         """Update the text of the button"""
-        self.configure(command=self.pause_resume, text='Pause' if self.root.canvas.running else 'Resume')
+        text = 'Pause' if self.root.canvas.running else 'Play'
+        self.configure(command=self.play_pause, text=text)
+
+
+class SwapButton(tk.Button):
+    def __init__(self, control_panel):
+        self.root = control_panel.root
+        super().__init__(control_panel, command=self.swap, text='1 Swap')
+
+    def swap(self):
+        self.root.canvas.swap_manager.swap_dispatch()
+        self.root.update()
 
 
 class ToggleDistrictsButton(tk.Button):
@@ -45,13 +56,3 @@ class ToggleDistrictsButton(tk.Button):
         """Update the text of the button"""
         show_hide = 'Hide' if self.root.canvas.show_districts else 'Show'
         self.configure(text=f'{show_hide} Districts')
-
-
-class SwapButton(tk.Button):
-    def __init__(self, control_panel):
-        self.root = control_panel.root
-        super().__init__(control_panel, command=self.swap, text='Swap')
-
-    def swap(self):
-        self.root.canvas.swap_manager.swap_dispatch()
-        self.root.update()
