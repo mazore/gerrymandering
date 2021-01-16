@@ -11,7 +11,7 @@ class ParameterDocs:
     num_swaps = 'Number of swaps to perform before resetting simulation, disabled for run infinitely'
     simulation_time = 'How long (seconds) to run before resetting simulation, disabled for run infinitely'
     canvas_width = 'Width (and height) of the canvas in pixels'
-    line_width = 'District line width'
+    line_width = 'District line width in pixels'
     draw_mode = 'Normal - transparent districts colors based on winner\n' \
                 'Margins - change saturation of colors based on how much it is won by'
     sleep_between_draws = 'Number of ms between drawing districts. Each draw, num_swaps_per_draw swaps are done'

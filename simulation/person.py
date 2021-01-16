@@ -39,6 +39,8 @@ class Person:
         self.canvas.tag_lower(self.inner_id)  # move below outer (district coloring)
         self.outer_color = 'white'
 
+        if self.canvas.parameters.line_width == 0:
+            return  # hide lines
         self.east_line_id = self.south_line_id = None
         if not self.at_east:
             self.east_line_id = self.canvas.create_line(x2, y1, x2, y2, fill='black',

@@ -22,8 +22,10 @@ class CheckboxAdjusterType(ParameterAdjusterBase):
 class EntryAdjusterType(ParameterAdjusterBase):
     """Can be used to enter a value into a field"""
 
-    def __init__(self, parameter_panel, name, type_, width=5, use_checkbutton=False, disabled_value=None, **kwargs):
+    def __init__(self, parameter_panel, name, type_,
+                 width=5, use_checkbutton=False, disabled_value=None, zero_invalid=False, **kwargs):
         self.type = type_
+        self.zero_invalid = zero_invalid
         super().__init__(parameter_panel, name, pad_y=5, **kwargs)
 
         self.widget = tk.Entry(self.frame, textvariable=self.var, width=width, relief='solid')
@@ -45,7 +47,10 @@ class EntryAdjusterType(ParameterAdjusterBase):
         if self.use_checkbutton and not self.checkbutton_var.get():
             return None
         try:
-            return self.type(s)
+            result = self.type(s)
+            if result < 0 or (self.zero_invalid and result == 0):
+                return 'invalid'
+            return result
         except ValueError:
             return 'invalid'
 

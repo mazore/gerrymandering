@@ -66,7 +66,7 @@ class SimulationTimeAdjuster(EntryAdjusterType):
 
 class CanvasWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'canvas_width', int, advanced=True)
+        super().__init__(parameter_panel, 'canvas_width', int, advanced=True, zero_invalid=True)
 
 
 class LineWidthAdjuster(EntryAdjusterType):
@@ -97,7 +97,7 @@ class SleepBetweenDrawsAdjuster(EntryAdjusterType):
 
 class NumSwapsPerDrawAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps_per_draw', int, advanced=True)
+        super().__init__(parameter_panel, 'num_swaps_per_draw', int, advanced=True, zero_invalid=True)
 
 
 all_adjusters = [

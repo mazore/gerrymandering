@@ -2,7 +2,8 @@ from root import Root
 
 """
 TODO:
-- test for valid inputs that will break it (line_width = -1 is technically valid but will crash)
+- valid range for entry adjusters
+- reset parameters button
 - district hover information
 - add more draw modes
 - release
