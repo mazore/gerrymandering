@@ -1,4 +1,5 @@
 from .parameter_adjuster_base import ParameterAdjusterBase
+from math import inf
 import tkinter as tk
 
 
@@ -23,9 +24,12 @@ class EntryAdjusterType(ParameterAdjusterBase):
     """Can be used to enter a value into a field"""
 
     def __init__(self, parameter_panel, name, type_,
-                 width=5, use_checkbutton=False, disabled_value=None, zero_invalid=False, **kwargs):
+                 width=5, use_checkbutton=False, disabled_value=None, min_=None, max_=None, **kwargs):
         self.type = type_
-        self.zero_invalid = zero_invalid
+        self.min, self.max = min_, max_
+        """min, max - both inclusive, range of values before becoming invalid"""
+        self.min = -inf if self.min is None else self.min
+        self.max = inf if self.max is None else self.max
         super().__init__(parameter_panel, name, pad_y=5, **kwargs)
 
         self.widget = tk.Entry(self.frame, textvariable=self.var, width=width, relief='solid')
@@ -48,9 +52,9 @@ class EntryAdjusterType(ParameterAdjusterBase):
             return None
         try:
             result = self.type(s)
-            if result < 0 or (self.zero_invalid and result == 0):
-                return 'invalid'
-            return result
+            if self.min <= result <= self.max:
+                return result
+            return 'invalid'
         except ValueError:
             return 'invalid'
 

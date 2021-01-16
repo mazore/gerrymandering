@@ -48,7 +48,7 @@ class Root(tk.Tk):
         self.after_cancel(self.info_panel.after_id)
         self.destroy()
 
-    def reset_simulation(self):
+    def restart_simulation(self):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
         self.simulation_datas.append(self.canvas.get_simulation_data())
 

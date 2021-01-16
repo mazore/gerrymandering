@@ -8,8 +8,8 @@ class ParameterDocs:
     favor_tie = 'Whether or not to try to make more tied districts'
     district_size = 'Number of people contained in a district, must be perfect square'
     grid_width = 'Width (and height) of the grid of people, must be multiple of sqrt(district_size)'
-    num_swaps = 'Number of swaps to perform before resetting simulation, disabled for run infinitely'
-    simulation_time = 'How long (seconds) to run before resetting simulation, disabled for run infinitely'
+    num_swaps = 'Number of swaps to perform before restarting simulation, disabled for run infinitely'
+    simulation_time = 'How long (seconds) to run before restarting simulation, disabled for run infinitely'
     canvas_width = 'Width (and height) of the canvas in pixels'
     line_width = 'District line width in pixels'
     draw_mode = 'Normal - transparent districts colors based on winner\n' \
@@ -19,7 +19,7 @@ class ParameterDocs:
                          'make faster but more chunky'
     # Hidden & convenience parameters
     hinder_party = 'Party to hinder in the gerrymandering process (calculated automatically)'
-    num_simulations = 'Number of simulation repeats to run before quiting, per process, use None for keep resetting'
+    num_simulations = 'Number of simulation repeats to run before quiting, per process, use None for keep restarting'
     num_districts = 'Number of districts in total (calculated automatically)'
 
 

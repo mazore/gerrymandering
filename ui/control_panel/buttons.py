@@ -21,21 +21,21 @@ class PlayPauseButton(tk.Button):
         self.config(font=self.root.font + font_suffix, text=text)
 
 
-class ResetButton(tk.Button):
+class RestartButton(tk.Button):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        super().__init__(control_panel, command=self.reset, text='Reset')
+        super().__init__(control_panel, command=self.restart, text='Restart')
 
-    def reset(self):
+    def restart(self):
         self.root.focus()  # remove focus from all widgets
         parameters = self.root.parameter_panel.get_parameters()
         if parameters is None:
             windll.user32.MessageBoxW(None, 'At least one parameter is invalid (red)',
-                                      "Can't reset", 0)
+                                      "Can't restart", 0)
             return  # if a parameter is invalid
-        self.root.parameter_panel.on_reset()
+        self.root.parameter_panel.on_restart()
         self.root.parameters = parameters
-        self.root.reset_simulation()
+        self.root.restart_simulation()
 
 
 class SwapButton(tk.Button):

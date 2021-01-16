@@ -27,6 +27,6 @@ class ParameterPanel(tk.Frame):
     def set_parameter(self, name, value):
         setattr(self.root.parameters, name, value)
 
-    def on_reset(self):
+    def on_restart(self):
         for adjuster in self.adjusters.values():
             adjuster.label.config(font=self.root.font)

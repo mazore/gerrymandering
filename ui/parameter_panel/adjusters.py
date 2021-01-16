@@ -55,23 +55,24 @@ class GridWidthAdjuster(PickerAdjusterType):
 
 class NumSwapsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps', int, use_checkbutton=True, disabled_value=1000, advanced=True)
+        super().__init__(parameter_panel, 'num_swaps', int,
+                         use_checkbutton=True, disabled_value=1000, min_=1, advanced=True)
 
 
 class SimulationTimeAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'simulation_time', float,
-                         use_checkbutton=True, disabled_value=2, width=4, advanced=True)
+                         use_checkbutton=True, disabled_value=2, width=4, min_=0.1, advanced=True)
 
 
 class CanvasWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'canvas_width', int, advanced=True, zero_invalid=True)
+        super().__init__(parameter_panel, 'canvas_width', int, min_=50, advanced=True)
 
 
 class LineWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'line_width', int, width=4, advanced=True)
+        super().__init__(parameter_panel, 'line_width', int, min_=0, width=4, advanced=True)
 
 
 class DrawModeAdjuster(PickerAdjusterType):
@@ -92,12 +93,12 @@ class DrawModeAdjuster(PickerAdjusterType):
 
 class SleepBetweenDrawsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'sleep_between_draws', int, advanced=True)
+        super().__init__(parameter_panel, 'sleep_between_draws', int, min_=0, advanced=True)
 
 
 class NumSwapsPerDrawAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps_per_draw', int, advanced=True, zero_invalid=True)
+        super().__init__(parameter_panel, 'num_swaps_per_draw', int, min_=1, advanced=True)
 
 
 all_adjusters = [
