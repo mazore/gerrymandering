@@ -13,6 +13,7 @@ class ParameterAdjusterBase:
         self.pad_y = pad_y
         self.advanced = advanced
         self.update_on_change = update_on_change
+        self.is_changed = False  # if is changed from current simulation parameters
 
         self.var = tk.StringVar(value=str(getattr(parameter_panel.root.parameters, name)))
         self.var.trace('w', self.on_var_change)
@@ -51,16 +52,19 @@ class ParameterAdjusterBase:
             self.parameter_panel.set_parameter(self.name, value)
         else:
             self.update_boldness()
-        if value == 'invalid':
-            self.label.config(fg='red')
-        else:
-            self.label.config(fg='black')
+        self.label.config(fg='red' if value == 'invalid' else 'black')
         self.after_choice(value)
 
     def update_boldness(self):
-        is_changed = self.get() != getattr(self.parameter_panel.root.parameters, self.name)
-        font = self.bold_font if is_changed else self.parameter_panel.root.font
+        self.is_changed = self.get() != getattr(self.parameter_panel.root.parameters, self.name)
+        font = self.bold_font if self.is_changed else self.parameter_panel.root.font
         self.label.config(font=font)
+
+        if not hasattr(self.parameter_panel, 'adjusters'):
+            return
+        any_changed = any(adjuster.is_changed for adjuster in self.parameter_panel.adjusters.values())
+        bg = 'SystemButtonFace' if not any_changed else 'yellow'
+        self.parameter_panel.root.control_panel.restart_button.config(bg=bg)
 
     def after_choice(self, choice):
         """Overridden by subclasses, called after the variable is changed. Typically used to ensure other entered

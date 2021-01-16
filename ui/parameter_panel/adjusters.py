@@ -49,8 +49,11 @@ class GridWidthAdjuster(PickerAdjusterType):
         return [districts_per_row * district_width for districts_per_row in range(2, 15)]
 
     def test_invalid(self):
-        if self.get() not in self.get_choices():
-            self.set('invalid')
+        choices = self.get_choices()
+        current = self.get()
+        if current not in choices:
+            closest = min(choices, key=lambda val: abs(val - current))
+            self.set(closest)
 
 
 class NumSwapsAdjuster(EntryAdjusterType):

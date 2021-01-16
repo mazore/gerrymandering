@@ -30,3 +30,4 @@ class ParameterPanel(tk.Frame):
     def on_restart(self):
         for adjuster in self.adjusters.values():
             adjuster.label.config(font=self.root.font)
+        self.root.control_panel.restart_button.config(bg='SystemButtonFace')

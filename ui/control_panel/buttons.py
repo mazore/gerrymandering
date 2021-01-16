@@ -5,10 +5,11 @@ import tkinter as tk
 class PlayPauseButton(tk.Button):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        super().__init__(control_panel, command=self.play_pause, width=5)
+        super().__init__(control_panel, bg='yellow', command=self.play_pause, width=5)
         self.update_config()
 
     def play_pause(self):
+        self.config(bg='SystemButtonFace')
         if self.root.canvas.running:
             self.root.canvas.pause()
         else:
@@ -16,9 +17,8 @@ class PlayPauseButton(tk.Button):
 
     def update_config(self):
         """Update the text of the button"""
-        font_suffix = '' if self.root.canvas.running else ' bold'
         text = 'Pause' if self.root.canvas.running else 'Play'
-        self.config(font=self.root.font + font_suffix, text=text)
+        self.config(text=text)
 
 
 class RestartButton(tk.Button):
