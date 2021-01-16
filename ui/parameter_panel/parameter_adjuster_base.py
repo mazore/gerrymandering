@@ -41,8 +41,8 @@ class ParameterAdjusterBase:
         self.var.set(value)
 
     def get_obj_from_str(self, s):
-        """self.var is always a string, so if it represents another, subclasses can convert it to the actual object
-        here"""
+        """self.var is always a string, so if it represents another object, subclasses can convert it to the actual \
+        object here"""
         return s
 
     def on_var_change(self, *_):
@@ -51,6 +51,10 @@ class ParameterAdjusterBase:
             self.parameter_panel.set_parameter(self.name, value)
         else:
             self.update_boldness()
+        if value == 'invalid':
+            self.label.config(fg='red')
+        else:
+            self.label.config(fg='black')
         self.after_choice(value)
 
     def update_boldness(self):

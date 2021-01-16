@@ -1,3 +1,4 @@
+from ctypes import windll
 import tkinter as tk
 
 
@@ -29,7 +30,8 @@ class ResetButton(tk.Button):
         self.root.focus()  # remove focus from all widgets
         parameters = self.root.parameter_panel.get_parameters()
         if parameters is None:
-            print('at least one parameter is invalid')
+            windll.user32.MessageBoxW(None, 'At least one parameter is invalid (red)',
+                                      "Can't reset", 0)
             return  # if a parameter is invalid
         self.root.parameter_panel.on_reset()
         self.root.parameters = parameters
