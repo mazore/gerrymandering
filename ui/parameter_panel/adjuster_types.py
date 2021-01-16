@@ -51,9 +51,9 @@ class EntryAdjusterType(ParameterAdjusterBase):
 
     def update_disabled(self, *_):
         if self.checkbutton_var.get():
-            self.widget.configure(relief='solid', state='normal')
+            self.widget.config(relief='solid', state='normal')
         else:
-            self.widget.configure(relief='sunken', state='disabled')
+            self.widget.config(relief='sunken', state='disabled')
         self.update_boldness()
 
 

@@ -2,7 +2,7 @@ from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
-from ui import ControlPanel, InfoPanel, ParameterPanel
+from ui import *
 
 
 class Root(tk.Tk):
@@ -23,18 +23,18 @@ class Root(tk.Tk):
         self.simulation_number = 1
 
         self.canvas = Canvas(self)
+        self.canvas.pack(side='right')
+        # self.run_id = self.after(1, self.canvas.run)
         self.ui_frame = tk.Frame()
-        self.control_panel = ControlPanel(self)
+        self.ui_frame.pack(side='right', anchor='n')
+
         self.info_panel = InfoPanel(self)
+        self.control_panel = ControlPanel(self)
         self.parameter_panel = ParameterPanel(self)
 
-        self.ui_frame.pack(side='left', anchor='n')
         self.info_panel.pack(side='top')
         self.control_panel.pack(side='top', pady=3)
         self.parameter_panel.pack(side='top')
-        self.canvas.pack(side='left')
-
-        self.run_id = self.after(1, self.canvas.run)
 
         self.geometry('+100+100')
         self.protocol('WM_DELETE_WINDOW', self.on_close)
@@ -43,11 +43,12 @@ class Root(tk.Tk):
 
     def on_close(self):
         self.canvas.pause()
-        self.after_cancel(self.run_id)
+        if self.run_id is not None:  # needed if not set in __init__
+            self.after_cancel(self.run_id)
         self.after_cancel(self.info_panel.after_id)
         self.destroy()
 
-    def rerun_simulation(self):
+    def reset_simulation(self):
         """Makes a new simulation by creating a new Canvas, and saves the current simulation data"""
         self.simulation_datas.append(self.canvas.get_simulation_data())
 
@@ -60,6 +61,8 @@ class Root(tk.Tk):
         self.simulation_number += 1
 
         self.canvas = Canvas(self)
-        self.canvas.pack(side='left')
+        self.canvas.pack(side='right')
+        self.ui_frame.pack_forget()
+        self.ui_frame.pack(side='right', anchor='n')
         if was_running:
             self.run_id = self.after(1, self.canvas.run)

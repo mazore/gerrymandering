@@ -1,26 +1,10 @@
 import tkinter as tk
 
 
-class RerunButton(tk.Button):
-    def __init__(self, control_panel):
-        self.root = control_panel.root
-        super().__init__(control_panel, command=self.rerun, text='Rerun')
-
-    def rerun(self):
-        self.root.focus()  # remove focus from all widgets
-        parameters = self.root.parameter_panel.get_parameters()
-        if parameters is None:
-            print('at least one parameter is invalid')
-            return  # if a parameter is invalid
-        self.root.parameter_panel.on_rerun()
-        self.root.parameters = parameters
-        self.root.rerun_simulation()
-
-
 class PlayPauseButton(tk.Button):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        super().__init__(control_panel, width=5)
+        super().__init__(control_panel, command=self.play_pause, width=5)
         self.update_config()
 
     def play_pause(self):
@@ -31,8 +15,25 @@ class PlayPauseButton(tk.Button):
 
     def update_config(self):
         """Update the text of the button"""
+        font_suffix = '' if self.root.canvas.running else ' bold'
         text = 'Pause' if self.root.canvas.running else 'Play'
-        self.configure(command=self.play_pause, text=text)
+        self.config(font=self.root.font + font_suffix, text=text)
+
+
+class ResetButton(tk.Button):
+    def __init__(self, control_panel):
+        self.root = control_panel.root
+        super().__init__(control_panel, command=self.reset, text='Reset')
+
+    def reset(self):
+        self.root.focus()  # remove focus from all widgets
+        parameters = self.root.parameter_panel.get_parameters()
+        if parameters is None:
+            print('at least one parameter is invalid')
+            return  # if a parameter is invalid
+        self.root.parameter_panel.on_reset()
+        self.root.parameters = parameters
+        self.root.reset_simulation()
 
 
 class SwapButton(tk.Button):
@@ -55,4 +56,4 @@ class ToggleDistrictsButton(tk.Button):
     def update_config(self):
         """Update the text of the button"""
         show_hide = 'Hide' if self.root.canvas.show_districts else 'Show'
-        self.configure(text=f'{show_hide} Districts')
+        self.config(text=f'{show_hide} Districts')

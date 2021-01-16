@@ -59,7 +59,7 @@ class Canvas(tk.Canvas):
 
     def middle_click(self, _):
         # self.toggle_districts_visible()
-        self.root.control_panel.rerun_button.rerun()
+        self.root.control_panel.reset_button.reset()
 
     def right_click(self, _):
         if not self.running:

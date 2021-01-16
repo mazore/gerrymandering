@@ -13,11 +13,11 @@ class ToggleAdvancedButton(tk.Button):
         self.bind('<ButtonRelease-1>', self.mouse_up)
 
     def mouse_down(self, _):
-        self.configure(fg='gray')
+        self.config(fg='gray')
         return 'break'
 
     def mouse_up(self, _):
-        self.configure(fg='black')
+        self.config(fg='black')
         self.toggle()
 
     def toggle(self):
@@ -30,4 +30,4 @@ class ToggleAdvancedButton(tk.Button):
                     adjuster.pack()
         self.pack(side='top', pady=(10, 0))
         self.shown = not self.shown
-        self.configure(text='Hide advanced ▲' if self.shown else 'Show advanced ▼')
+        self.config(text='Hide advanced ▲' if self.shown else 'Show advanced ▼')

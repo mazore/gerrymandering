@@ -16,7 +16,7 @@ class ParameterAdjusterBase:
 
         self.var = tk.StringVar(value=str(getattr(parameter_panel.root.parameters, name)))
         self.var.trace('w', self.on_var_change)
-        self.bold_font = 'Consolas 9 bold'
+        self.bold_font = self.parameter_panel.root.font + ' bold'
 
         self.frame = tk.Frame(parameter_panel)
         self.label = tk.Label(self.frame, text=name + ':')
@@ -55,10 +55,8 @@ class ParameterAdjusterBase:
 
     def update_boldness(self):
         is_changed = self.get() != getattr(self.parameter_panel.root.parameters, self.name)
-        if is_changed:
-            self.label.configure(font=self.bold_font)
-        else:
-            self.label.configure(font=self.parameter_panel.root.font)
+        font = self.bold_font if is_changed else self.parameter_panel.root.font
+        self.label.config(font=font)
 
     def after_choice(self, choice):
         """Overridden by subclasses, called after the variable is changed. Typically used to ensure other entered
