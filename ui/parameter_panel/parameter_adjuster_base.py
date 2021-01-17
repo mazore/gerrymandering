@@ -70,8 +70,10 @@ class ParameterAdjusterBase:
         if not hasattr(self.parameter_panel, 'adjusters'):
             return
         any_changed = any(adjuster.is_changed for adjuster in self.parameter_panel.adjusters.values())
-        bg = 'SystemButtonFace' if not any_changed else 'yellow'
-        self.parameter_panel.root.control_panel.restart_button.config(bg=bg)
+        if any_changed:
+            self.parameter_panel.root.control_panel.restart_button.start_flashing()
+        else:
+            self.parameter_panel.root.control_panel.restart_button.stop_flashing()
 
     def after_choice(self, choice):
         """Overridden by subclasses, called after the variable is changed. Typically used to ensure other entered

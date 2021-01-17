@@ -20,7 +20,8 @@ We can draw the district lines in such a way that gives blue 31 districts and re
 This is the **same grid** but with lines drawn so that red has 31 districts and blue only has 5.
 
 ## Usage
-Download the project and run `python main.py` in the directory. Only python3.7 standard library is required.
+Download the project and run `python main.py` in the directory. Only python3 standard library is required. Close other
+apps and turn off battery saver to get the best performance.
 
 ## How It Works
 ### Overview

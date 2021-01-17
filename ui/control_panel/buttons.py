@@ -1,16 +1,51 @@
 from ctypes import windll
+from misc import rgb_to_hex
 from ui.parameter_panel.misc import InvalidParameter
 import tkinter as tk
 
 
-class PlayPauseButton(tk.Button):
+class ButtonBase(tk.Button):
+    def __init__(self, control_panel, **kwargs):
+        self.root = control_panel.root
+        super().__init__(control_panel, **kwargs)
+
+        self.blue, self.blue_increasing = 0, True
+        self.flashing, self.flash_id = False, None
+
+    def update_color(self):
+        factor = 1 if self.blue_increasing else -1
+        self.blue += 50 * factor
+        if not 0 < self.blue < 255:
+            self.blue_increasing = not self.blue_increasing
+        self.config(bg=rgb_to_hex(255, 255, self.blue))
+        self.flash_id = self.after(50, self.update_color)
+
+    def start_flashing(self):
+        if self.flashing:
+            return
+        self.flashing = True
+        self.update_color()
+
+    def stop_flashing(self):
+        if not self.flashing:
+            return
+        self.flashing = False
+        self.config(bg='SystemButtonFace')
+        if self.flash_id is not None:
+            self.after_cancel(self.flash_id)
+            self.flash_id = None
+
+
+class PlayPauseButton(ButtonBase):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        super().__init__(control_panel, bg='yellow', command=self.play_pause, width=5)
+        super().__init__(control_panel, command=self.play_pause, width=5)
         self.update_config()
 
+        self.start_flashing()
+
     def play_pause(self):
-        self.config(bg='SystemButtonFace')
+        self.stop_flashing()
         if self.root.canvas.running:
             self.root.canvas.pause()
         else:
@@ -22,7 +57,7 @@ class PlayPauseButton(tk.Button):
         self.config(text=text)
 
 
-class RestartButton(tk.Button):
+class RestartButton(ButtonBase):
     def __init__(self, control_panel):
         self.root = control_panel.root
         super().__init__(control_panel, command=self.restart, text='Restart')
@@ -30,13 +65,13 @@ class RestartButton(tk.Button):
     def restart(self):
         self.root.focus()  # remove focus from all widgets
 
-        texts = []
+        errors = []
         for adjuster in self.root.parameter_panel.adjusters.values():
             value = adjuster.get()
             if isinstance(value, InvalidParameter):
-                texts.append(f'{adjuster.name} {value.message.lower()}')
-        if texts:  # if a parameter is invalid
-            windll.user32.MessageBoxW(None, '\n'.join(texts), "Can't restart", 0)
+                errors.append(f'{adjuster.name} {value.message.lower()}')
+        if errors:  # if a parameter is invalid
+            windll.user32.MessageBoxW(None, '\n'.join(errors), "Can't restart", 0)
             return  # if a parameter is invalid
 
         parameters = self.root.parameter_panel.get_parameters()
@@ -45,7 +80,7 @@ class RestartButton(tk.Button):
         self.root.restart_simulation()
 
 
-class SwapButton(tk.Button):
+class SwapButton(ButtonBase):
     def __init__(self, control_panel):
         self.root = control_panel.root
         super().__init__(control_panel, command=self.swap, text='1 Swap')
@@ -55,7 +90,7 @@ class SwapButton(tk.Button):
         self.root.update()
 
 
-class ToggleDistrictsButton(tk.Button):
+class ToggleDistrictsButton(ButtonBase):
     def __init__(self, control_panel):
         self.root = control_panel.root
         # use lambda to make sure function changes when root.canvas changes
