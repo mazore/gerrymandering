@@ -1,4 +1,5 @@
 from ctypes import windll
+from ui.parameter_panel.misc import InvalidParameter
 import tkinter as tk
 
 
@@ -28,11 +29,17 @@ class RestartButton(tk.Button):
 
     def restart(self):
         self.root.focus()  # remove focus from all widgets
-        parameters = self.root.parameter_panel.get_parameters()
-        if parameters is None:
-            windll.user32.MessageBoxW(None, 'At least one parameter is invalid (red)',
-                                      "Can't restart", 0)
+
+        texts = []
+        for adjuster in self.root.parameter_panel.adjusters.values():
+            value = adjuster.get()
+            if isinstance(value, InvalidParameter):
+                texts.append(f'{adjuster.name} {value.message.lower()}')
+        if texts:  # if a parameter is invalid
+            windll.user32.MessageBoxW(None, '\n'.join(texts), "Can't restart", 0)
             return  # if a parameter is invalid
+
+        parameters = self.root.parameter_panel.get_parameters()
         self.root.parameter_panel.on_restart()
         self.root.parameters = parameters
         self.root.restart_simulation()
