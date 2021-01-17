@@ -1,4 +1,4 @@
-from .hover_info import HoverInfo
+from .misc import HoverInfo, InvalidParameter
 from parameters import ParameterDocs
 import tkinter as tk
 
@@ -23,6 +23,7 @@ class ParameterAdjusterBase:
         self.label = tk.Label(self.frame, text=name + ':')
         self.info = tk.Label(self.frame, text='ⓘ')
         HoverInfo(self.info, getattr(ParameterDocs, name))
+        self.invalid_hover_info = None
 
         self.info.pack(side='left', padx=(0, 5))
         self.label.pack(side='left')
@@ -34,7 +35,7 @@ class ParameterAdjusterBase:
 
     def get(self):
         value = self.var.get()
-        if value is None or value == 'invalid':
+        if value is None or isinstance(value, InvalidParameter):
             return value
         return self.get_obj_from_str(value)
 
@@ -52,7 +53,13 @@ class ParameterAdjusterBase:
             self.parameter_panel.set_parameter(self.name, value)
         else:
             self.update_boldness()
-        self.label.config(fg='red' if value == 'invalid' else 'black')
+        if isinstance(value, InvalidParameter):
+            self.invalid_hover_info = HoverInfo(self.label, value.message)
+        else:
+            if self.invalid_hover_info is not None:
+                self.invalid_hover_info.delete()
+            self.invalid_hover_info = None
+        self.label.config(fg='red' if isinstance(value, InvalidParameter) else 'black')
         self.after_choice(value)
 
     def update_boldness(self):

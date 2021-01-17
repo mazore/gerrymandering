@@ -1,8 +1,9 @@
-"""Modified from https://stackoverflow.com/a/36221216"""
 import tkinter as tk
 
 
 class HoverInfo:
+    """Shows text when mouse is hovered on given widget"""
+
     def __init__(self, widget, text, width=180):
         self.width = width
         self.widget, self.text = widget, text
@@ -21,7 +22,17 @@ class HoverInfo:
                          borderwidth=1, wraplength=self.width)
         label.pack(ipadx=1)
 
-    def hidetip(self, _):
+    def hidetip(self, _=None):
         if self.top_level:
             self.top_level.destroy()
         self.top_level = None
+
+    def delete(self):
+        self.hidetip()
+        self.widget.unbind('<Enter>')
+        self.widget.unbind('<Leave>')
+
+
+class InvalidParameter:
+    def __init__(self, message):
+        self.message = message

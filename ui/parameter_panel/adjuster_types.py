@@ -1,3 +1,4 @@
+from .misc import InvalidParameter
 from .parameter_adjuster_base import ParameterAdjusterBase
 from math import inf
 import tkinter as tk
@@ -54,9 +55,9 @@ class EntryAdjusterType(ParameterAdjusterBase):
             result = self.type(s)
             if self.min <= result <= self.max:
                 return result
-            return 'invalid'
+            return InvalidParameter(f'Out of range [{self.min}, {self.max}]')
         except ValueError:
-            return 'invalid'
+            return InvalidParameter(f"Can't convert to number")
 
     def update_disabled(self, *_):
         if self.checkbutton_var.get():

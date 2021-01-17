@@ -2,7 +2,8 @@ from root import Root
 
 """
 TODO:
-- invalid messages
+- more descriptive 'at least one parameter is invalid' message
+- make highlighted buttons more obvious (flashing?)
 - reset parameters button
 - district hover information
 - add more draw modes

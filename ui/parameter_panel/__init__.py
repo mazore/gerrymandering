@@ -1,4 +1,5 @@
 from .adjusters import all_adjusters
+from .misc import InvalidParameter
 from .toggle_advanced_button import ToggleAdvancedButton
 from parameters import Parameters
 import tkinter as tk
@@ -20,7 +21,7 @@ class ParameterPanel(tk.Frame):
     def get_parameters(self):
         """Get a parameter object with all parameters set in this panel"""
         kwargs = {name: adjuster.get() for name, adjuster in self.adjusters.items()}
-        if any(parameter == 'invalid' for parameter in kwargs.values()):
+        if any(isinstance(parameter, InvalidParameter) for parameter in kwargs.values()):
             return None
         return Parameters(**kwargs)
 
