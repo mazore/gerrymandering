@@ -56,18 +56,6 @@ class GridWidthAdjuster(PickerAdjusterType):
             self.set(closest)
 
 
-class NumSwapsAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps', int,
-                         use_checkbutton=True, disabled_value=1000, min_=1, advanced=True)
-
-
-class SimulationTimeAdjuster(EntryAdjusterType):
-    def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'simulation_time', float,
-                         use_checkbutton=True, disabled_value=2, width=4, min_=0.1, advanced=True)
-
-
 class CanvasWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
         super().__init__(parameter_panel, 'canvas_width', int, min_=50, advanced=True)
@@ -104,16 +92,28 @@ class NumSwapsPerDrawAdjuster(EntryAdjusterType):
         super().__init__(parameter_panel, 'num_swaps_per_draw', int, min_=1, advanced=True)
 
 
+class NumSwapsAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'num_swaps', int,
+                         use_checkbutton=True, disabled_value=1000, min_=1, advanced=True)
+
+
+class SimulationTimeAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'simulation_time', float,
+                         use_checkbutton=True, disabled_value=2, width=4, min_=0.1, advanced=True)
+
+
 all_adjusters = [
     HelpPartyAdjuster,
     FavorTieAdjuster,
     DistrictSizeAdjuster,
     GridWidthAdjuster,
-    NumSwapsAdjuster,
-    SimulationTimeAdjuster,
     CanvasWidthAdjuster,
     LineWidthAdjuster,
     DrawModeAdjuster,
     SleepBetweenDrawsAdjuster,
     NumSwapsPerDrawAdjuster,
+    NumSwapsAdjuster,
+    SimulationTimeAdjuster,
 ]

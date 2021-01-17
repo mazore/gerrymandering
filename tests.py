@@ -12,7 +12,7 @@ def run_process(simulation_datas, parameters, seed, testing_parameter=None):
 
 def get_avg_time(print_params=False, testing_parameter=None):
     """Runs simulations on one process and returns how long was spent on swapping per simulation"""
-    parameters = Parameters(num_simulations=150, num_swaps=1000, num_swaps_per_draw=2000)
+    parameters = Parameters(num_swaps_per_draw=2000, num_swaps=1000, num_simulations=150)
     if print_params:
         atexit.register(lambda: print(f'time parameters: {parameters}'))
     simulation_datas = []
@@ -24,7 +24,7 @@ def get_avg_time(print_params=False, testing_parameter=None):
 def get_avg_score(parameters=None, num_processes=50, print_params=False, testing_parameter=None):
     """Runs simulations on many processes and returns the average score of help_party per simulation"""
     if parameters is None:
-        parameters = Parameters(num_simulations=10, num_swaps=1000, num_swaps_per_draw=2000)
+        parameters = Parameters(num_swaps_per_draw=2000, num_swaps=1000, num_simulations=10)
     if print_params:
         atexit.register(lambda: print(f'score parameters: {parameters} x {num_processes} processes'))
     seeds = [i + 0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
