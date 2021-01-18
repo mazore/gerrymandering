@@ -2,12 +2,12 @@ from root import Root
 
 """
 TODO:
-- reset parameters button
 - district hover information
 - add more draw modes
 - better/clearer instructions for what to do (hide advanced control panel buttons)
-- release
 - pie charts for representation vs population
+- stop at best possible
+- release
 - experiment with trying to keep big districts more cohesive/clumped/less strung out
 - don't stall ui on sleep between draws
 - add 'precincts' or 'neighborhoods' that represent a certain number of people that vote different ways but are swapped

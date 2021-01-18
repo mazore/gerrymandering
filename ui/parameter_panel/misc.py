@@ -36,3 +36,36 @@ class HoverInfo:
 class InvalidParameter:
     def __init__(self, message):
         self.message = message
+
+
+class DefaultParametersButton(tk.Button):
+    """Reset all parameters to defaults set in Parameters __init__"""
+
+    def __init__(self, button_frame):
+        self.parameter_panel = button_frame.parameter_panel
+        super().__init__(button_frame, command=self.reset, text='Default parameters')
+
+    def reset(self):
+        for adjuster in self.parameter_panel.adjusters.values():
+            adjuster.reset()
+
+
+class DiscardChangesButton(tk.Button):
+    """Reverts parameter adjusters to the last time restart button was pressed, basically sets them to current
+    parameters used by the simulation"""
+
+    def __init__(self, button_frame):
+        self.parameter_panel = button_frame.parameter_panel
+        super().__init__(button_frame, command=self.reset, text='Discard changes')
+
+    def reset(self):
+        for adjuster in self.parameter_panel.adjusters.values():
+            adjuster.revert()
+
+
+class ButtonFrame(tk.Frame):
+    def __init__(self, parameter_panel):
+        self.parameter_panel = parameter_panel
+        super().__init__(parameter_panel)
+        DefaultParametersButton(self).pack(side='left')
+        DiscardChangesButton(self).pack(side='left')

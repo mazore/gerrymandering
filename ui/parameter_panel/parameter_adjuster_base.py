@@ -15,7 +15,8 @@ class ParameterAdjusterBase:
         self.update_on_change = update_on_change
         self.is_changed = False  # if is changed from current simulation parameters
 
-        self.var = tk.StringVar(value=str(getattr(parameter_panel.root.parameters, name)))
+        self.default = str(getattr(parameter_panel.root.parameters, name))
+        self.var = tk.StringVar(value=self.default)
         self.var.trace('w', self.on_var_change)
         self.bold_font = self.parameter_panel.root.font + ' bold'
 
@@ -34,13 +35,21 @@ class ParameterAdjusterBase:
         self.frame.pack(side='top', padx=(0, 5), pady=self.pad_y)
 
     def get(self):
+        """Gets the object that this adjuster represents, not the raw string from self.var.get()"""
         value = self.var.get()
         if value is None or isinstance(value, InvalidParameter):
             return value
         return self.get_obj_from_str(value)
 
-    def set(self, value):
-        self.var.set(value)
+    def reset(self):
+        """Resets to default"""
+        self.var.set(self.default)
+
+    def revert(self):
+        """Reverts changes made since last run"""
+        if not self.is_changed:
+            return
+        self.var.set(getattr(self.parameter_panel.root.parameters, self.name))
 
     def get_obj_from_str(self, s):
         """self.var is always a string, so if it represents another object, subclasses can convert it to the actual \

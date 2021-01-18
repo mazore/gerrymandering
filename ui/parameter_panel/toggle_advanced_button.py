@@ -28,6 +28,10 @@ class ToggleAdvancedButton(tk.Button):
                     adjuster.frame.pack_forget()
                 else:
                     adjuster.pack()
-        self.pack(side='top', pady=(10, 0))
         self.shown = not self.shown
+        if self.shown:
+            self.parameter_panel.button_frame.pack(side='top')
+        else:
+            self.parameter_panel.button_frame.pack_forget()
+        self.pack(side='top', pady=(10, 0))
         self.config(text='Hide advanced ▲' if self.shown else 'Show advanced ▼')

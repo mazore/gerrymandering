@@ -53,7 +53,7 @@ class GridWidthAdjuster(PickerAdjusterType):
         current = self.get()
         if current not in choices:
             closest = min(choices, key=lambda val: abs(val - current))
-            self.set(closest)
+            self.var.set(closest)
 
 
 class CanvasWidthAdjuster(EntryAdjusterType):

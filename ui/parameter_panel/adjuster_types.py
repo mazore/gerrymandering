@@ -27,10 +27,9 @@ class EntryAdjusterType(ParameterAdjusterBase):
     def __init__(self, parameter_panel, name, type_,
                  width=5, use_checkbutton=False, disabled_value=None, min_=None, max_=None, **kwargs):
         self.type = type_
-        self.min, self.max = min_, max_
+        self.min, self.max = -inf if min_ is None else min_, inf if max_ is None else max_
         """min, max - both inclusive, range of values before becoming invalid"""
-        self.min = -inf if self.min is None else self.min
-        self.max = inf if self.max is None else self.max
+        self.disabled_value = disabled_value
         super().__init__(parameter_panel, name, pad_y=5, **kwargs)
 
         self.widget = tk.Entry(self.frame, textvariable=self.var, width=width, relief='solid')
@@ -38,7 +37,7 @@ class EntryAdjusterType(ParameterAdjusterBase):
 
         self.use_checkbutton = use_checkbutton
         if use_checkbutton:
-            self.checkbutton_var = tk.BooleanVar(value=self.var.get() != 'None')
+            self.checkbutton_var = tk.BooleanVar(value=self.default != 'None')
             self.checkbutton_var.trace('w', self.update_disabled)
             self.checkbutton = tk.Checkbutton(self.frame, variable=self.checkbutton_var)
             self.checkbutton.pack(side='left')
@@ -47,6 +46,14 @@ class EntryAdjusterType(ParameterAdjusterBase):
             self.update_disabled()
 
         self.widget.pack(side='left')
+
+    def reset(self):
+        if self.default == 'None':
+            self.var.set(self.disabled_value)
+        else:
+            self.var.set(self.default)
+        if self.use_checkbutton:
+            self.checkbutton_var.set(self.default != 'None')
 
     def get_obj_from_str(self, s):
         if self.use_checkbutton and not self.checkbutton_var.get():
@@ -60,6 +67,7 @@ class EntryAdjusterType(ParameterAdjusterBase):
             return InvalidParameter(f"Can't convert to number")
 
     def update_disabled(self, *_):
+        self.parameter_panel.root.focus()  # remove focus from all widgets
         if self.checkbutton_var.get():
             self.widget.config(relief='solid', state='normal')
         else:

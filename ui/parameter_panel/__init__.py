@@ -1,5 +1,5 @@
 from .adjusters import all_adjusters
-from .misc import InvalidParameter
+from .misc import InvalidParameter, ButtonFrame
 from .toggle_advanced_button import ToggleAdvancedButton
 from parameters import Parameters
 import tkinter as tk
@@ -16,6 +16,7 @@ class ParameterPanel(tk.Frame):
         adjuster_instances = (adjuster_type(self) for adjuster_type in all_adjusters)
         self.adjusters = {adjuster.name: adjuster for adjuster in adjuster_instances}
 
+        self.button_frame = ButtonFrame(self)
         self.toggle_advanced_button = ToggleAdvancedButton(self)
 
     def get_parameters(self):
