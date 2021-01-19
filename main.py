@@ -2,10 +2,9 @@ from root import Root
 
 """
 TODO:
+- pie charts for representation vs population
 - district hover information
 - add more draw modes
-- better/clearer instructions for what to do (hide advanced control panel buttons)
-- pie charts for representation vs population
 - stop at best possible
 - release
 - experiment with trying to keep big districts more cohesive/clumped/less strung out
