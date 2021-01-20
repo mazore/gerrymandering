@@ -2,7 +2,6 @@ from root import Root
 
 """
 TODO:
-- stop highlighting play/pause button when canvas clicked
 - optimize pie charts
 - district hover information
 - add more draw modes

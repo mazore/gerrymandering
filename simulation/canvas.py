@@ -35,7 +35,7 @@ class Canvas(tk.Canvas):
         self.bind('<Button-3>', self.right_click)
 
     def run(self):
-        """Start running or resume from being paused"""
+        """Start running or resume from being paused and update play_pause button"""
         self.running = True
         self.root.control_panel.play_pause_button.update_config()
         while True:
@@ -47,15 +47,12 @@ class Canvas(tk.Canvas):
                 sleep(self.parameters.sleep_between_draws / 1000)
 
     def pause(self):
-        """Stop the simulation from doing swaps"""
+        """Stop the simulation from doing swaps and update play_pause button"""
         self.running = False
         self.root.control_panel.play_pause_button.update_config()
 
     def left_click(self, _):
-        if not self.running:
-            self.run()
-        else:
-            self.pause()
+        self.root.control_panel.play_pause_button.play_pause()
 
     def middle_click(self, _):
         # self.toggle_districts_visible()

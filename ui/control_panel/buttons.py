@@ -45,11 +45,12 @@ class PlayPauseButton(ButtonBase):
         self.start_flashing()
 
     def play_pause(self):
+        """Toggle whether the simulation is playing or paused"""
         self.stop_flashing()
         if self.root.canvas.running:
-            self.root.canvas.pause()
+            self.root.canvas.pause()  # calls self.update_config
         else:
-            self.root.canvas.run()
+            self.root.canvas.run()  # calls self.update_config
 
     def update_config(self):
         """Update the text of the button"""

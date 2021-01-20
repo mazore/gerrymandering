@@ -42,7 +42,7 @@ class Root(tk.Tk):
         self.mainloop()
 
     def on_close(self):
-        self.canvas.pause()
+        self.canvas.running = False
         if self.run_id is not None:  # needed if not set in __init__
             self.after_cancel(self.run_id)
         self.after_cancel(self.info_panel.after_id)
