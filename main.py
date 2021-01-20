@@ -2,7 +2,8 @@ from root import Root
 
 """
 TODO:
-- pie charts for representation vs population
+- stop highlighting play/pause button when canvas clicked
+- optimize pie charts
 - district hover information
 - add more draw modes
 - stop at best possible
