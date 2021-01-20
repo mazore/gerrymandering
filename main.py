@@ -2,7 +2,6 @@ from root import Root
 
 """
 TODO:
-- optimize pie charts
 - district hover information
 - add more draw modes
 - stop at best possible

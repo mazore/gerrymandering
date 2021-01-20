@@ -76,9 +76,10 @@ class RestartButton(ButtonBase):
             return  # if a parameter is invalid
 
         parameters = self.root.parameter_panel.get_parameters()
-        self.root.parameter_panel.on_restart()
         self.root.parameters = parameters
         self.root.restart_simulation()
+        self.root.info_panel.on_restart()
+        self.root.parameter_panel.on_restart()
 
 
 class SwapButton(ButtonBase):

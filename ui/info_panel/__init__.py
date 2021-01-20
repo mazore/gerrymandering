@@ -22,6 +22,9 @@ class InfoPanel(tk.Frame):
 
         self.after_id = self.root.after(10, self.update_info)
 
+    def on_restart(self):
+        self.pie_charts.on_restart()
+
     def update_info(self):
         self.pie_charts.update_info()
         # self.score_info.update_info()
