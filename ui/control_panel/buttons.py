@@ -48,9 +48,9 @@ class PlayPauseButton(ButtonBase):
         """Toggle whether the simulation is playing or paused"""
         self.stop_flashing()
         if self.root.canvas.running:
-            self.root.canvas.pause()  # calls self.update_config
+            self.root.canvas.pause()  # Calls self.update_config as well
         else:
-            self.root.canvas.run()  # calls self.update_config
+            self.root.canvas.run()  # Calls self.update_config as well
 
     def update_config(self):
         """Update the text of the button"""
@@ -64,16 +64,16 @@ class RestartButton(ButtonBase):
         super().__init__(control_panel, command=self.restart, text='Restart')
 
     def restart(self):
-        self.root.focus()  # remove focus from all widgets
+        self.root.focus()  # Remove focus from all widgets
 
         errors = []
         for adjuster in self.root.parameter_panel.adjusters.values():
             value = adjuster.get()
             if isinstance(value, InvalidParameter):
                 errors.append(f'{adjuster.name} {value.message.lower()}')
-        if errors:  # if a parameter is invalid
+        if errors:  # If a parameter is invalid
             windll.user32.MessageBoxW(None, '\n'.join(errors), "Can't restart", 0)
-            return  # if a parameter is invalid
+            return  # If a parameter is invalid
 
         parameters = self.root.parameter_panel.get_parameters()
         self.root.parameters = parameters
@@ -95,7 +95,7 @@ class SwapButton(ButtonBase):
 class ToggleDistrictsButton(ButtonBase):
     def __init__(self, control_panel):
         self.root = control_panel.root
-        # use lambda to make sure function changes when root.canvas changes
+        # Use lambda to make sure function changes when root.canvas changes
         super().__init__(control_panel, command=lambda: self.root.canvas.toggle_districts_visible())
         self.update_config()
 

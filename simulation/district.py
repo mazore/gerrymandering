@@ -10,7 +10,7 @@ class District:
     def __init__(self, canvas, p1, p2):
         self.canvas = canvas
 
-        (self.x1, self.y1), (self.x2, self.y2) = p1, p2  # in grid coordinates
+        (self.x1, self.y1), (self.x2, self.y2) = p1, p2  # In grid coordinates
         self.net_advantage = 0  # help_party score - hinder_party score
         self.people = []
         self.get_people()
@@ -27,9 +27,9 @@ class District:
                 return None
             return self.get_winner()
 
-        if not -4 <= self.net_advantage <= 2:  # if not flippable or safe help_party, share our help_party people
+        if not -4 <= self.net_advantage <= 2:  # If not flippable or safe help_party, share our help_party people
             return self.canvas.parameters.help_party
-        return self.canvas.parameters.hinder_party  # if flippable/at risk, try to get more help_party people
+        return self.canvas.parameters.hinder_party  # If flippable/at risk, try to get more help_party people
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""
@@ -55,24 +55,24 @@ class District:
     def get_district1_weight(self):
         """Returns the weight to use for this district when picking a randomized district1. Values were determined by a
         black box optimization method"""
-        if 0 < self.net_advantage <= 2:  # if at risk
+        if 0 < self.net_advantage <= 2:  # If at risk
             return 1
         if self.tied:
             return 11
-        if -4 <= self.net_advantage <= 0:  # if flippable
+        if -4 <= self.net_advantage <= 0:  # If flippable
             return 4.35442295
-        if self.net_advantage > 2:  # if safe to help_party
+        if self.net_advantage > 2:  # If safe to help_party
             return 2.47490108
-        return 2.06497273  # if safe not flippable/safe for hinder_party
+        return 2.06497273  # If safe not flippable/safe for hinder_party
 
     @staticmethod
     def get_district2_weight(_):
         """Returns the weight to use for this district when picking a randomized district2"""
-        return 1  # to be implemented
+        return 1  # To be implemented
 
     def draw(self):
         """Draw the outline and fill of the district"""
-        # outline
+        # Outline
         line_ids = set()
         line_id_occurrence_map = defaultdict(int)
         for person in self.people:
@@ -80,7 +80,7 @@ class District:
                 line_ids.add(line_id)
                 line_id_occurrence_map[line_id] += 1
         for line_id in line_ids:
-            # hide if not on edge of district (if repeated)
+            # Hide if not on edge of district (if repeated)
             state = 'hidden' if line_id_occurrence_map[line_id] > 1 else 'normal'
             if not self.canvas.show_districts:
                 state = 'hidden'
@@ -88,9 +88,9 @@ class District:
                 self.canvas.itemconfig(line_id, state=state)
                 self.canvas.line_id_state_map[line_id] = state
 
-        # fill
+        # Fill
 
-        # show margins in shading
+        # Show margins in shading
         color = self.get_winner().color
         if self.canvas.parameters.draw_mode == DrawMode.MARGINS:
             r, g, b = hex_to_rgb(color)

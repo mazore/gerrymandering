@@ -67,7 +67,7 @@ class EntryAdjusterType(ParameterAdjusterBase):
             return InvalidParameter(f"Can't convert to number")
 
     def update_disabled(self, *_):
-        self.parameter_panel.root.focus()  # remove focus from all widgets
+        self.parameter_panel.root.focus()  # Remove focus from all widgets
         if self.checkbutton_var.get():
             self.widget.config(relief='solid', state='normal')
         else:

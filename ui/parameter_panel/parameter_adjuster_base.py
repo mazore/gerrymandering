@@ -13,7 +13,7 @@ class ParameterAdjusterBase:
         self.pad_y = pad_y
         self.advanced = advanced
         self.update_on_change = update_on_change
-        self.is_changed = False  # if is changed from current simulation parameters
+        self.is_changed = False  # If is changed from current simulation parameters
 
         self.default = str(getattr(parameter_panel.root.parameters, name))
         self.var = tk.StringVar(value=self.default)

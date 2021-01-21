@@ -9,7 +9,7 @@ class PieChart:
         self.get_score, self.get_quantity = get_score, get_quantity
         self.score, self.quantity = self.get_score(), self.get_quantity()
         pie_charts.create_text((coords[0] + coords[2]) / 2, 0, text=name, font=pie_charts.root.font, anchor='n')
-        pie_charts.create_oval(*coords, fill='gray')
+        pie_charts.create_oval(*coords, fill='gray')  # Tied part
         self.blue_id = pie_charts.create_arc(*coords, fill=BLUE.color, start=90,
                                              extent=self.score['blue'] / self.quantity * 360)
         self.red_id = pie_charts.create_arc(*coords, fill=RED.color, start=90,
@@ -26,12 +26,12 @@ class PieChart:
         return center_x + cos(mid_angle) * r / 2, center_y - sin(mid_angle) * r / 2
 
     def on_restart(self):
-        self.quantity = self.get_quantity()  # recalculate quantity
+        self.quantity = self.get_quantity()  # Recalculate quantity
 
     def update_info(self):
         current_score = self.get_score()
         if self.score == current_score:
-            return  # if no change
+            return  # If no change
         self.score = current_score
         self.pie_charts.itemconfig(self.blue_id, extent=self.score['blue'] / self.quantity * 360)
         self.pie_charts.itemconfig(self.red_id, extent=-self.score['red'] / self.quantity * 360)

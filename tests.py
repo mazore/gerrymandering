@@ -27,7 +27,7 @@ def get_avg_score(parameters=None, num_processes=50, print_params=False, testing
         parameters = Parameters(num_swaps_per_draw=2000, num_swaps=1000, num_simulations=10)
     if print_params:
         atexit.register(lambda: print(f'score parameters: {parameters} x {num_processes} processes'))
-    seeds = [i + 0 for i in range(num_processes)]  # change offset to check different seeds (shouldn't have affect)
+    seeds = [i + 0 for i in range(num_processes)]  # Change offset to check different seeds (shouldn't have affect)
     with Manager() as manager:
         simulation_datas = manager.list()
         processes = []

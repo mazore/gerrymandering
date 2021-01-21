@@ -35,12 +35,12 @@ class Person:
                                                      fill=self.party.color, width=0)
         self.outer_id = self.canvas.create_rectangle(x1, y1, x2, y2, fill='white', stipple='gray50', width=0)
         self.canvas.itemconfig(self.outer_id, state='hidden')
-        self.canvas.tag_lower(self.outer_id)  # move below outlines
-        self.canvas.tag_lower(self.inner_id)  # move below outer (district coloring)
+        self.canvas.tag_lower(self.outer_id)  # Move below outlines
+        self.canvas.tag_lower(self.inner_id)  # Move below outer (district coloring)
         self.outer_color = 'white'
 
         if self.canvas.parameters.line_width == 0:
-            return  # hide lines
+            return  # Hide lines
         self.east_line_id = self.south_line_id = None
         if not self.at_east:
             self.east_line_id = self.canvas.create_line(x2, y1, x2, y2, fill='black',
@@ -62,13 +62,13 @@ class Person:
         if not self.at_west:
             self.person_west = self.canvas.people_grid[self.y][self.x - 1]
 
-        if not self.at_north and not self.at_east:  # northeast
+        if not self.at_north and not self.at_east:  # Northeast
             self.person_ne = self.canvas.people_grid[self.y - 1][self.x + 1]
-        if not self.at_south and not self.at_east:  # southeast
+        if not self.at_south and not self.at_east:  # Southeast
             self.person_se = self.canvas.people_grid[self.y + 1][self.x + 1]
-        if not self.at_south and not self.at_west:  # southwest
+        if not self.at_south and not self.at_west:  # Southwest
             self.person_sw = self.canvas.people_grid[self.y + 1][self.x - 1]
-        if not self.at_north and not self.at_west:  # northwest
+        if not self.at_north and not self.at_west:  # Northwest
             self.person_nw = self.canvas.people_grid[self.y - 1][self.x - 1]
 
         # `filter(None.__ne__, l)` removes all occurrences of None from a list

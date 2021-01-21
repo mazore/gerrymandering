@@ -28,7 +28,7 @@ class Canvas(tk.Canvas):
         self.generate_districts()
 
         self.start_time = time()
-        self.total_swap_time = 0  # total time spent in the swap_manager.swap function in seconds
+        self.total_swap_time = 0  # Total time spent in the swap_manager.swap function in seconds
 
         self.bind('<Button-1>', self.left_click)
         self.bind('<Button-2>', self.middle_click)
@@ -94,7 +94,7 @@ class Canvas(tk.Canvas):
 
     def generate_people(self):
         """Create grid of people with randomized parties"""
-        # make sure peoples parties are random but same number of people for each
+        # Make sure peoples parties are random but same number of people for each
         parties = [RED, BLUE] * ceil(self.parameters.grid_width ** 2 / 2)
         parties = fast_shuffled(parties)
 

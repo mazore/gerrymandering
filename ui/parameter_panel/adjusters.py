@@ -13,7 +13,7 @@ class HelpPartyAdjuster(PickerAdjusterType):
     def after_choice(self, choice):
         """Set the hinder_party parameter to the opposite of help_party"""
         hinder_party = {'red': BLUE, 'blue': RED}[choice.name]
-        if self.parameter_panel.root.parameters.hinder_party != hinder_party:  # if different
+        if self.parameter_panel.root.parameters.hinder_party != hinder_party:  # If different
             self.parameter_panel.set_parameter('hinder_party', hinder_party)
             for district in self.parameter_panel.root.canvas.districts:
                 district.net_advantage *= -1

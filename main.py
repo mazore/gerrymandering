@@ -2,7 +2,6 @@ from root import Root
 
 """
 TODO:
-- district hover information
 - add more draw modes
 - stop at best possible
 - release
@@ -14,6 +13,7 @@ TODO:
 - improve favor_tie (allow a not tied district to flip to tie if a tied district flips to not tied)
 - implement get_district2_weight in District class
 - better performance by different drawing method (not tkinter.Canvas), maybe website (flask)
+- district hover information
 - custom people ratios and grids
 - line smoothing (spline, make districts look more organic) 
 - multiple parties? make red and blue into other non american colors?

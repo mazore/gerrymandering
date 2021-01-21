@@ -22,9 +22,9 @@ class Root(tk.Tk):
         self.simulation_datas = []
         self.simulation_number = 1
 
-        self.canvas = Canvas(self)  # main simulation widget
+        self.canvas = Canvas(self)  # Main simulation widget
         self.canvas.pack(side='right')
-        # self.run_id = self.after(1, self.canvas.run)
+        # Self.run_id = self.after(1, self.canvas.run)
         self.ui_frame = tk.Frame()
         self.ui_frame.pack(side='right', anchor='n')
 
@@ -43,7 +43,7 @@ class Root(tk.Tk):
 
     def on_close(self):
         self.canvas.running = False
-        if self.run_id is not None:  # needed if not set in __init__
+        if self.run_id is not None:  # Needed if not set in __init__
             self.after_cancel(self.run_id)
         self.after_cancel(self.info_panel.after_id)
         self.destroy()

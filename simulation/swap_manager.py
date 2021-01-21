@@ -57,9 +57,9 @@ class SwapManager:
 
             for self.person1 in fast_shuffled(self.district1.people):
                 if ideal_party1 is not None and self.person1.party != ideal_party1:
-                    continue  # if is not the ideal party to give away for this district
+                    continue  # If is not the ideal party to give away for this district
                 if not self.person1.get_is_removable():
-                    continue  # if removing will cause disconnection in district1
+                    continue  # If removing will cause disconnection in district1
 
                 return
 
@@ -72,15 +72,15 @@ class SwapManager:
 
             for self.person2 in sorted(self.district2.people, key=self.person2_key):
                 if self.district1 not in self.person2.get_adjacent_districts():
-                    continue  # if not touching district1
+                    continue  # If not touching district1
                 if self.person1 in self.person2.adjacent_people:
-                    continue  # swapping two adjacent people will likely cause disconnection, not always though
+                    continue  # Swapping two adjacent people will likely cause disconnection, not always though
                 if not self.person2.get_is_removable():
-                    continue  # if removing will cause disconnection in district2
+                    continue  # If removing will cause disconnection in district2
                 if favor_tie and a_district_tied and self.person1.party is not self.person2.party:
-                    continue  # if swapping will cause a district to become not tied
+                    continue  # If swapping will cause a district to become not tied
                 if not party2_can_be_help_party and self.person2.party == self.canvas.parameters.help_party:
-                    raise RestartGettingPeopleError  # better than `continue`
+                    raise RestartGettingPeopleError  # Better than `continue`
 
                 return
         raise RestartGettingPeopleError
@@ -92,15 +92,15 @@ class SwapManager:
     def party2_can_be_help_party(self):
         """Returns person2 can be help_party without having a decrease in help_party's total score"""
         if self.person1.party != self.canvas.parameters.hinder_party:
-            return True  # if net_advantages will stay the same or district2's will increase
-        # now we know that district2 net_advantage is decreasing by 2 and district1 net_advantage is increasing by 2
-        if self.district2.net_advantage == 2:  # if district2 will become tie from help_party
+            return True  # If net_advantages will stay the same or district2's will increase
+        # Now we know that district2 net_advantage is decreasing by 2 and district1 net_advantage is increasing by 2
+        if self.district2.net_advantage == 2:  # If district2 will become tie from help_party
             if self.district1.tied:  # district1 will become help_party from tie
                 return True
             else:
                 return False
-        elif 0 <= self.district2.net_advantage <= 1:  # if district2 will become hinder_party from help_party/tie
-            if -2 <= self.district1.net_advantage <= -1:  # if district1 will become help_party/tie from hinder_party
+        elif 0 <= self.district2.net_advantage <= 1:  # If district2 will become hinder_party from help_party/tie
+            if -2 <= self.district1.net_advantage <= -1:  # If district1 will become help_party/tie from hinder_party
                 return True
             else:
                 return False
