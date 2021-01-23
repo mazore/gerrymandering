@@ -59,7 +59,8 @@ class ParameterAdjusterBase:
     def on_var_change(self, *_):
         value = self.get()
         if self.update_on_change:
-            self.parameter_panel.set_parameter(self.name, value)
+            if not isinstance(value, InvalidParameter):
+                self.parameter_panel.set_parameter(self.name, value)
         else:
             self.update_boldness()
             if self.invalid_hover_info is not None:

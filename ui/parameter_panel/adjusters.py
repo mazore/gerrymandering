@@ -63,7 +63,15 @@ class CanvasWidthAdjuster(EntryAdjusterType):
 
 class LineWidthAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'line_width', int, min_=0, width=4, advanced=True)
+        super().__init__(parameter_panel, 'line_width', int, min_=0, width=4, update_on_change=True, advanced=True)
+
+    def after_choice(self, choice):
+        if isinstance(choice, InvalidParameter):
+            return
+        canvas = self.parameter_panel.root.canvas
+        for person in canvas.iter_people():
+            canvas.itemconfig(person.east_line_id, width=choice)
+            canvas.itemconfig(person.south_line_id, width=choice)
 
 
 class ShowMarginsAdjuster(CheckboxAdjusterType):
@@ -76,12 +84,12 @@ class ShowMarginsAdjuster(CheckboxAdjusterType):
 
 class SleepBetweenDrawsAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'sleep_between_draws', int, min_=0, advanced=True)
+        super().__init__(parameter_panel, 'sleep_between_draws', int, min_=0, update_on_change=True, advanced=True)
 
 
 class NumSwapsPerDrawAdjuster(EntryAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'num_swaps_per_draw', int, min_=1, advanced=True)
+        super().__init__(parameter_panel, 'num_swaps_per_draw', int, min_=1, update_on_change=True, advanced=True)
 
 
 class NumSwapsAdjuster(EntryAdjusterType):

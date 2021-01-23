@@ -2,10 +2,11 @@ from root import Root
 
 """
 TODO:
-- make more parameters not need to restart
-- stop at best possible
+- make into an exe
+- fix high dpi scaling issues
 - release
 - experiment with trying to keep big districts more cohesive/clumped/less strung out
+- stop at best possible
 - don't stall ui on sleep between draws
 - add 'precincts' or 'neighborhoods' that represent a certain number of people that vote different ways but are swapped
   as one person
