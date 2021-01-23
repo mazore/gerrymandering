@@ -23,7 +23,8 @@ class Root(tk.Tk):
 
         self.canvas = Canvas(self)  # Main simulation widget
         self.canvas.pack(side='right')
-        # self.run_id = self.after(1, self.canvas.run)
+        if parameters.start_running:
+            self.run_id = self.after(1, self.canvas.run)
         self.ui_frame = tk.Frame()
         self.ui_frame.pack(side='right', anchor='n')
 

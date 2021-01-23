@@ -18,11 +18,12 @@ class ParameterDocs:
     # Hidden & convenience parameters
     hinder_party = 'Party to hinder in the gerrymandering process (calculated automatically)'
     num_simulations = 'Number of simulation repeats to run before quiting, per process, use None for keep restarting'
+    start_running = 'Whether or not to start the simulation doing swaps'
     num_districts = 'Number of districts in total (calculated automatically)'
 
 
 class Parameters:
-    def __init__(self, num_simulations=None,
+    def __init__(self, num_simulations=None, start_running=False,
                  help_party=BLUE, favor_tie=False,
                  district_size=16, grid_width=24,
                  canvas_width=640, line_width=3, draw_mode='normal',
@@ -43,6 +44,7 @@ class Parameters:
         # Hidden & convenience parameters
         self.hinder_party = BLUE if help_party == RED else RED
         self.num_simulations = num_simulations
+        self.start_running = start_running
         self.num_districts = (grid_width ** 2) / district_size
 
         if not sqrt(district_size).is_integer():
