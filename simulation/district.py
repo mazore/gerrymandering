@@ -1,4 +1,4 @@
-from .misc import TIE, DrawMode
+from .misc import TIE
 from collections import defaultdict
 from misc import hex_to_rgb, rgb_to_hex
 
@@ -92,7 +92,7 @@ class District:
 
         # Show margins in shading
         color = self.get_winner().color
-        if self.canvas.parameters.draw_mode == DrawMode.MARGINS:
+        if self.canvas.draw_mode_manager.draw_margins:
             r, g, b = hex_to_rgb(color)
             factor = abs(self.net_advantage) / self.canvas.parameters.district_size * 3
             color = rgb_to_hex(int(r * factor), int(g * factor), int(b * factor))

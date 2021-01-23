@@ -1,4 +1,5 @@
 from .district import District
+from .draw_modes import DrawModeManager
 from .misc import BLUE, RED, SimulationData
 from .person import Person
 from .swap_manager import SwapManager
@@ -16,6 +17,7 @@ class Canvas(tk.Canvas):
         self.parameters = root.parameters
         super().__init__(width=root.parameters.canvas_width, height=root.parameters.canvas_width)
 
+        self.draw_mode_manager = DrawModeManager(self)
         self.running = False
         self.swap_manager = SwapManager(self)
 

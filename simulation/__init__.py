@@ -1,2 +1,3 @@
 from .canvas import Canvas
-from .misc import BLUE, RED, DrawMode
+from .draw_modes import DrawModeManager
+from .misc import BLUE, RED

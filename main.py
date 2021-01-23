@@ -2,7 +2,10 @@ from root import Root
 
 """
 TODO:
-- add more draw modes
+- change entry when invalid remove invalid hover info if shown
+- make simulation start running in tests
+- simplify draw modes to show_margins bool only
+- make more parameters not need to restart
 - stop at best possible
 - release
 - experiment with trying to keep big districts more cohesive/clumped/less strung out

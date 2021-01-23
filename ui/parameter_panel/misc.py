@@ -4,8 +4,7 @@ import tkinter as tk
 class HoverInfo:
     """Shows text when mouse is hovered on given widget"""
 
-    def __init__(self, widget, text, width=180):
-        self.width = width
+    def __init__(self, widget, text):
         self.widget, self.text = widget, text
         self.widget.bind('<Enter>', self.showtip)
         self.widget.bind('<Leave>', self.hidetip)
@@ -19,7 +18,7 @@ class HoverInfo:
         self.top_level.wm_overrideredirect(True)  # Leaves only the label and removes the app window
         self.top_level.wm_geometry("+%d+%d" % (x, y))
         label = tk.Label(self.top_level, text=self.text, justify='left', background="#ffffff", relief='solid',
-                         borderwidth=1, wraplength=self.width)
+                         borderwidth=1, wraplength=180)
         label.pack(ipadx=1)
 
     def hidetip(self, _=None):
@@ -43,7 +42,7 @@ class DefaultParametersButton(tk.Button):
 
     def __init__(self, button_frame):
         self.parameter_panel = button_frame.parameter_panel
-        super().__init__(button_frame, command=self.reset, text='Default parameters')
+        super().__init__(button_frame, command=self.reset, font='Consolas 8', text='Default')
 
     def reset(self):
         for adjuster in self.parameter_panel.adjusters.values():
@@ -56,7 +55,7 @@ class DiscardChangesButton(tk.Button):
 
     def __init__(self, button_frame):
         self.parameter_panel = button_frame.parameter_panel
-        super().__init__(button_frame, command=self.reset, text='Discard changes')
+        super().__init__(button_frame, command=self.reset, font='Consolas 8', text='Discard')
 
     def reset(self):
         for adjuster in self.parameter_panel.adjusters.values():

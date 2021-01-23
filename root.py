@@ -8,9 +8,8 @@ from ui import *
 class Root(tk.Tk):
     """Manages UI objects and Canvas, subclass of tkinter application root (represents a window)"""
 
-    def __init__(self, parameters=Parameters(), seed=None, testing_parameter=None):
+    def __init__(self, parameters=Parameters(), seed=None):
         self.parameters = parameters
-        self.testing_parameter = testing_parameter
         super().__init__()
         self.font = 'Consolas 9'
         self.option_add('*font', self.font)
@@ -24,7 +23,7 @@ class Root(tk.Tk):
 
         self.canvas = Canvas(self)  # Main simulation widget
         self.canvas.pack(side='right')
-        # Self.run_id = self.after(1, self.canvas.run)
+        # self.run_id = self.after(1, self.canvas.run)
         self.ui_frame = tk.Frame()
         self.ui_frame.pack(side='right', anchor='n')
 
@@ -53,6 +52,7 @@ class Root(tk.Tk):
         self.simulation_datas.append(self.canvas.get_simulation_data())
 
         was_running = self.canvas.running
+        draw_mode_manager = self.canvas.draw_mode_manager
         self.canvas.running = False
         if self.simulation_number == self.canvas.parameters.num_simulations:
             self.quit()
@@ -61,6 +61,13 @@ class Root(tk.Tk):
         self.simulation_number += 1
 
         self.canvas = Canvas(self)
+
+        self.canvas.draw_mode_manager = draw_mode_manager  # Should make draw_mode_manager an attribute of root
+        draw_mode_manager.canvas = self.canvas  # This is bad code
+        if type(self.parameters.draw_mode) is not str:  # So bad
+            self.parameters.draw_mode.switch(True)
+        [district.draw() for district in self.canvas.districts]  # Will rework soon
+
         self.canvas.pack(side='right')
         self.ui_frame.pack_forget()
         self.ui_frame.pack(side='right', anchor='n')
