@@ -1,6 +1,5 @@
 from .adjusters import all_adjusters
-from .misc import InvalidParameter, ButtonFrame
-from .toggle_advanced_button import ToggleAdvancedButton
+from .misc import InvalidParameter, ButtonFrame, ToggleAdvancedButton
 from parameters import Parameters
 import tkinter as tk
 

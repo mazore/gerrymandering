@@ -1,5 +1,4 @@
 from .district import District
-from .draw_modes import DrawModeManager
 from .misc import BLUE, RED, SimulationData
 from .person import Person
 from .swap_manager import SwapManager
@@ -17,7 +16,6 @@ class Canvas(tk.Canvas):
         self.parameters = root.parameters
         super().__init__(width=root.parameters.canvas_width, height=root.parameters.canvas_width)
 
-        self.draw_mode_manager = DrawModeManager(self)
         self.running = False
         self.swap_manager = SwapManager(self)
 
@@ -71,7 +69,7 @@ class Canvas(tk.Canvas):
         for person in self.iter_people():
             self.itemconfig(person.outer_id, state=state)
         self.show_districts = not self.show_districts
-        [district.draw() for district in self.districts]
+        self.redraw_districts()
         self.root.control_panel.toggle_districts_button.update_config()
 
     def get_simulation_data(self):
@@ -88,6 +86,9 @@ class Canvas(tk.Canvas):
         for district in self.districts:
             score[district.get_winner().name] += 1
         return score
+
+    def redraw_districts(self):
+        [district.draw() for district in self.districts]
 
     def iter_people(self):
         for row in self.people_grid:

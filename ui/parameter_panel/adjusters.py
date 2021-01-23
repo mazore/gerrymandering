@@ -66,18 +66,12 @@ class LineWidthAdjuster(EntryAdjusterType):
         super().__init__(parameter_panel, 'line_width', int, min_=0, width=4, advanced=True)
 
 
-class DrawModeAdjuster(PickerAdjusterType):
+class ShowMarginsAdjuster(CheckboxAdjusterType):
     def __init__(self, parameter_panel):
-        super().__init__(parameter_panel, 'draw_mode', update_on_change=True, advanced=True)
+        super().__init__(parameter_panel, 'show_margins', update_on_change=True, advanced=True)
 
-        canvas = parameter_panel.root.canvas
-        self.get_choices = lambda: [str(mode) for mode in canvas.draw_mode_manager.draw_modes]
-
-    def get_obj_from_str(self, s):
-        return getattr(self.parameter_panel.root.canvas.draw_mode_manager.draw_modes, s)
-
-    def after_choice(self, choice):
-        self.parameter_panel.root.canvas.draw_mode_manager.switch(choice)
+    def after_choice(self, _):
+        self.parameter_panel.root.canvas.redraw_districts()
 
 
 class SleepBetweenDrawsAdjuster(EntryAdjusterType):
@@ -109,7 +103,7 @@ all_adjusters = [
     GridWidthAdjuster,
     CanvasWidthAdjuster,
     LineWidthAdjuster,
-    DrawModeAdjuster,
+    ShowMarginsAdjuster,
     SleepBetweenDrawsAdjuster,
     NumSwapsPerDrawAdjuster,
     NumSwapsAdjuster,

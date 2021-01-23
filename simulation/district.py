@@ -92,7 +92,7 @@ class District:
 
         # Show margins in shading
         color = self.get_winner().color
-        if self.canvas.draw_mode_manager.draw_margins:
+        if self.canvas.parameters.show_margins:
             r, g, b = hex_to_rgb(color)
             factor = abs(self.net_advantage) / self.canvas.parameters.district_size * 3
             color = rgb_to_hex(int(r * factor), int(g * factor), int(b * factor))

@@ -2,7 +2,6 @@ from root import Root
 
 """
 TODO:
-- simplify draw modes to show_margins bool only
 - make more parameters not need to restart
 - stop at best possible
 - release

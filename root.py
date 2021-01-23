@@ -53,7 +53,6 @@ class Root(tk.Tk):
         self.simulation_datas.append(self.canvas.get_simulation_data())
 
         was_running = self.canvas.running
-        draw_mode_manager = self.canvas.draw_mode_manager
         self.canvas.running = False
         if self.simulation_number == self.canvas.parameters.num_simulations:
             self.quit()
@@ -62,13 +61,6 @@ class Root(tk.Tk):
         self.simulation_number += 1
 
         self.canvas = Canvas(self)
-
-        self.canvas.draw_mode_manager = draw_mode_manager  # Should make draw_mode_manager an attribute of root
-        draw_mode_manager.canvas = self.canvas  # This is bad code
-        if type(self.parameters.draw_mode) is not str:  # So bad
-            self.parameters.draw_mode.switch(True)
-        [district.draw() for district in self.canvas.districts]  # Will rework soon
-
         self.canvas.pack(side='right')
         self.ui_frame.pack_forget()
         self.ui_frame.pack(side='right', anchor='n')
