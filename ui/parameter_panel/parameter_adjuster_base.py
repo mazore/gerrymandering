@@ -62,11 +62,11 @@ class ParameterAdjusterBase:
             self.parameter_panel.set_parameter(self.name, value)
         else:
             self.update_boldness()
+            if self.invalid_hover_info is not None:
+                self.invalid_hover_info.delete()
         if isinstance(value, InvalidParameter):
             self.invalid_hover_info = HoverInfo(self.label, value.message)
         else:
-            if self.invalid_hover_info is not None:
-                self.invalid_hover_info.delete()
             self.invalid_hover_info = None
         self.label.config(fg='red' if isinstance(value, InvalidParameter) else 'black')
         self.after_choice(value)
