@@ -9,11 +9,11 @@ class PieChart:
         self.get_score, self.get_quantity = get_score, get_quantity
         self.score, self.quantity = self.get_score(), self.get_quantity()
         pie_charts.create_text((coords[0] + coords[2]) / 2, 0, text=name, font=pie_charts.root.font, anchor='n')
-        pie_charts.create_oval(*coords, fill='gray')  # Tied part
+        pie_charts.create_oval(*coords, fill='gray', outline='white')  # Tied part
         self.blue_id = pie_charts.create_arc(*coords, fill=BLUE.color, start=90,
-                                             extent=self.score['blue'] / self.quantity * 360)
+                                             extent=self.score['blue'] / self.quantity * 360, outline='white')
         self.red_id = pie_charts.create_arc(*coords, fill=RED.color, start=90,
-                                            extent=-self.score['red'] / self.quantity * 360)
+                                            extent=-self.score['red'] / self.quantity * 360, outline='white')
         self.blue_text_id = pie_charts.create_text(*self.arc_mid(self.blue_id), text=self.score['blue'], fill='white')
         self.red_text_id = pie_charts.create_text(*self.arc_mid(self.red_id), text=self.score['red'], fill='white')
 

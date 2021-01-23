@@ -2,9 +2,6 @@ from root import Root
 
 """
 TODO:
-- make into an exe
-- fix high dpi scaling issues
-- release
 - experiment with trying to keep big districts more cohesive/clumped/less strung out
 - stop at best possible
 - don't stall ui on sleep between draws

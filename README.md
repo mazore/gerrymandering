@@ -20,11 +20,17 @@ We can draw the district lines in such a way that gives blue 31 districts and re
 This is the **same grid** but with lines drawn so that red has 31 districts and blue only has 5.
 
 ## Usage
-Download the project and run `python main.py` in the directory. Only python3 standard library is required. Close other
-apps and turn off battery saver to get the best performance.
+
+You use this direct [download link](https://www.dropbox.com/s/n8uh1a8l9s8sxhx/gerrymandering.zip?dl=1), extract the zip
+file, and run the `gerrymandering.exe` file. Close other apps and turn off battery saver to get the best performance.
+
+To get the source code, just download the project off github and run `python main.py` in the directory to run the
+program. Only python3 standard library is required.
 
 ## How It Works
+
 ### Overview
+
 First, a grid of people is generated, with parties that are randomized while ensuring that there are an equal amount of
 people in each party. Districts are then drawn around those people. Districts are initially squares of size
 `district_size`, and we ensure that `grid_width` and `district_width` allow this to be possible. From there, we perform

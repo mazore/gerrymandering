@@ -1,8 +1,11 @@
+from ctypes import windll
 from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
 from ui import *
+
+windll.shcore.SetProcessDpiAwareness(1)
 
 
 class Root(tk.Tk):
