@@ -27,6 +27,11 @@ class FavorTieAdjuster(CheckboxAdjusterType):
         super().__init__(parameter_panel, 'favor_tie', update_on_change=True)
 
 
+class PercentageRedAdjuster(EntryAdjusterType):
+    def __init__(self, parameter_panel):
+        super().__init__(parameter_panel, 'percentage_red', float, width=6, min_=0, max_=100)
+
+
 class DistrictSizeAdjuster(PickerAdjusterType):
     def __init__(self, parameter_panel):
         self.get_obj_from_str = int
@@ -107,6 +112,7 @@ class SimulationTimeAdjuster(EntryAdjusterType):
 all_adjusters = [
     HelpPartyAdjuster,
     FavorTieAdjuster,
+    PercentageRedAdjuster,
     DistrictSizeAdjuster,
     GridWidthAdjuster,
     CanvasWidthAdjuster,

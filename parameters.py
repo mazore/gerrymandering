@@ -5,6 +5,7 @@ from simulation import BLUE, RED
 class ParameterDocs:
     help_party = 'Party to give help to in the gerrymandering process'
     favor_tie = 'Whether or not to try to make more tied districts'
+    percentage_red = 'Percentage of the population that supports red party'
     district_size = 'Number of people contained in a district, must be perfect square'
     grid_width = 'Width (and height) of the grid of people, must be multiple of sqrt(district_size)'
     canvas_width = 'Width (and height) of the canvas in pixels'
@@ -25,6 +26,7 @@ class ParameterDocs:
 class Parameters:
     def __init__(self, num_simulations=None, start_running=False,
                  help_party=BLUE, favor_tie=False,
+                 percentage_red=60,
                  district_size=16, grid_width=24,
                  canvas_width=640, line_width=3, show_margins=False,
                  sleep_between_draws=0, num_swaps_per_draw=1,
@@ -34,6 +36,7 @@ class Parameters:
         self.favor_tie = favor_tie
         self.district_size = district_size
         self.grid_width = grid_width
+        self.percentage_red = percentage_red
         self.canvas_width = canvas_width
         self.line_width = line_width
         self.show_margins = show_margins

@@ -97,8 +97,10 @@ class Canvas(tk.Canvas):
 
     def generate_people(self):
         """Create grid of people with randomized parties"""
-        # Make sure peoples parties are random but same number of people for each
-        parties = [RED, BLUE] * ceil(self.parameters.grid_width ** 2 / 2)
+        # Make sure peoples parties are random but percentage of red is as close to the specified number as possible
+        people_count = self.parameters.grid_width ** 2
+        red_count = round(self.parameters.percentage_red / 100 * people_count)
+        parties = [RED] * red_count + [BLUE] * (people_count - red_count)
         parties = fast_shuffled(parties)
 
         square_width = self.parameters.canvas_width / self.parameters.grid_width
