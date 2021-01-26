@@ -1,7 +1,7 @@
-from ctypes import windll
 from misc import rgb_to_hex
 from ui.parameter_panel.misc import InvalidParameter
 import tkinter as tk
+import tkinter.messagebox
 
 
 class ButtonBase(tk.Button):
@@ -11,6 +11,7 @@ class ButtonBase(tk.Button):
 
         self.blue, self.blue_increasing = 0, True
         self.flashing, self.flash_id = False, None
+        self.normal_color = self.cget('bg')
 
     def update_color(self):
         factor = 1 if self.blue_increasing else -1
@@ -30,7 +31,9 @@ class ButtonBase(tk.Button):
         if not self.flashing:
             return
         self.flashing = False
-        self.config(bg='SystemButtonFace')
+
+        self.config(bg=self.normal_color)
+
         if self.flash_id is not None:
             self.after_cancel(self.flash_id)
             self.flash_id = None
@@ -72,7 +75,7 @@ class RestartButton(ButtonBase):
             if isinstance(value, InvalidParameter):
                 errors.append(f'{adjuster.name} {value.message.lower()}')
         if errors:  # If a parameter is invalid
-            windll.user32.MessageBoxW(None, '\n'.join(errors), "Can't restart", 0)
+            tk.messagebox.showerror('Can\'t restart', '\n'.join(errors))
             return  # If a parameter is invalid
 
         parameters = self.root.parameter_panel.get_parameters()

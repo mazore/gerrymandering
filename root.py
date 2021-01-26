@@ -1,11 +1,13 @@
-from ctypes import windll
+import ctypes
+import platform
 from parameters import Parameters
 import random
 from simulation import Canvas
 import tkinter as tk
 from ui import *
 
-windll.shcore.SetProcessDpiAwareness(1)
+if platform.system() == 'Windows':
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 
 class Root(tk.Tk):
