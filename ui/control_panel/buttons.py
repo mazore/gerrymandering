@@ -1,7 +1,7 @@
-from ctypes import windll
 from misc import rgb_to_hex
 from ui.parameter_panel.misc import InvalidParameter
 import tkinter as tk
+import tkinter.messagebox
 
 
 class ButtonBase(tk.Button):
@@ -72,7 +72,7 @@ class RestartButton(ButtonBase):
             if isinstance(value, InvalidParameter):
                 errors.append(f'{adjuster.name} {value.message.lower()}')
         if errors:  # If a parameter is invalid
-            windll.user32.MessageBoxW(None, '\n'.join(errors), "Can't restart", 0)
+            tk.messagebox.showerror('Can\'t restart', '\n'.join(errors))
             return  # If a parameter is invalid
 
         parameters = self.root.parameter_panel.get_parameters()
