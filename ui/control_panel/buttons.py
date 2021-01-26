@@ -11,6 +11,7 @@ class ButtonBase(tk.Button):
 
         self.blue, self.blue_increasing = 0, True
         self.flashing, self.flash_id = False, None
+        self.normal_color = self.cget('bg')
 
     def update_color(self):
         factor = 1 if self.blue_increasing else -1
@@ -30,7 +31,9 @@ class ButtonBase(tk.Button):
         if not self.flashing:
             return
         self.flashing = False
-        self.config(bg='SystemButtonFace')
+
+        self.config(bg=self.normal_color)
+
         if self.flash_id is not None:
             self.after_cancel(self.flash_id)
             self.flash_id = None
