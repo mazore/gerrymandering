@@ -1,28 +1,34 @@
-# Gerrymandering
+# Gerrymandering*
 A program that draws district lines around a two-party grid of people (equal proportions for each party) in order to
 give an unfair advantage to one party.
 
-![Grid with no districts](images/no_districts.png)
+Try the browser version [here](https://mazore.github.io/gerrymandering-js) (repo [here](https://github.com/mazore/gerrymandering-js))
 
-Above is a grid of people, each colored by which party they vote for. There are 288 blue people and 288 red people.
+## Explanation
 
-![Grid with square districts](images/square_districts.png)
+<img src="images/no_districts.png" width=400></img>
 
-Districts are groups of people (16 people in this case) enclosed in black lines, shaded by winner (which party has more
+Above is a grid of people, each colored by which party they vote for. There are 72 blue people and 72 red people.
+
+<img src="images/square_districts.png" width=400></img>
+
+Districts are groups of people (9 people in this case) enclosed in black lines, shaded by winner (which party has more
 people in the district).
 
-![Grid after gerrymandering for blue](images/gerrymandered_for_blue.png)
+<img src="images/gerrymandered_for_blue.png" width=400></img>
 
-We can draw the district lines in such a way that gives blue 31 districts and red only 5.
+We can draw the district lines in such a way that gives blue 14 districts and red only 2.
 
-![Grid after gerrymandering for red](images/gerrymandered_for_red.png)
+<img src="images/gerrymandered_for_red.png" width=400></img>
 
-This is the **same grid** but with lines drawn so that red has 31 districts and blue only has 5.
+This is the **same people** but with lines drawn so that red has 14 districts and blue only has 2.
 
 ## Usage
 
-You use this direct [download link](https://www.dropbox.com/s/n8uh1a8l9s8sxhx/gerrymandering.zip?dl=1), extract the zip
-file, and run the `gerrymandering.exe` file. Close other apps and turn off battery saver to get the best performance.
+You should use the browser version [here](https://github.com/mazore/gerrymandering-js)
+
+For the desktop version, use this direct [download link](https://www.dropbox.com/s/n8uh1a8l9s8sxhx/gerrymandering.zip?dl=1),
+extract the zip file, and run the `gerrymandering.exe` file.
 
 To get the source code, just download the project off github and run `python main.py` in the directory to run the
 program. Only python3 standard library is required.
@@ -55,11 +61,7 @@ In this example, we have flipped one district from being tied to being blue.
 ![Structure diagram](images/code_structure.png)
 
 ## Roadmap & Contributing
-You can find a todo list at the top of the `main.py` file. I am always trying to make the program faster and better at
-gerrymandering. By doing this, we can get to the ideal gerrymandered state faster, and scale up the grids and district
-sizes. You can measure how good the program is in a given version using [testing](##testing). Other things on the
-roadmap (can be found in todo in `main.py`) are making a UI, porting to website(?), >2 parties support, making people's
-parties more clumped together to resemble reality better. PR's, feedback, and general insight are much appreciated.
+PR's, feedback, and general insight are much appreciated.
 
 ## Testing
 Run `python tests.py`. This runs two simulations, one that figures out how much time is spent doing swaps (see

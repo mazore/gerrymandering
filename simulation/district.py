@@ -4,8 +4,8 @@ from misc import hex_to_rgb, rgb_to_hex
 
 
 class District:
-    """Represents a collection of people, with a line drawn around them. The winner is determined by which party has the
-    most people contained in this district"""
+    """Represents a collection of people, with a line drawn around them. The winner is determined by which party has
+    the most people contained in this district"""
 
     def __init__(self, canvas, p1, p2):
         self.canvas = canvas
@@ -27,9 +27,9 @@ class District:
                 return None
             return self.get_winner()
 
-        if not -4 <= self.net_advantage <= 2:  # If not flippable or safe help_party, share our help_party people
-            return self.canvas.parameters.help_party
-        return self.canvas.parameters.hinder_party  # If flippable/at risk, try to get more help_party people
+        if -4 <= self.net_advantage <= 2:  # If not flippable or safe help_party, share our help_party people
+            return self.canvas.parameters.hinder_party  # If flippable/at risk, try to get more help_party people
+        return self.canvas.parameters.help_party
 
     def get_people(self):
         """Used only on initialization, for filling self.people list, setting up people, and setting score"""

@@ -42,6 +42,7 @@ class Root(tk.Tk):
         self.parameter_panel.pack(side='top')
 
         self.geometry('+100+100')
+        self.title('')
         self.protocol('WM_DELETE_WINDOW', self.on_close)
 
         self.mainloop()

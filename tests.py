@@ -42,9 +42,9 @@ def get_avg_score(parameters=None, num_processes=50, print_params=False):
 
 
 def tests():
-    """Prints out statistics of the project, like the avg score and time per simulation. Used to test if changes made to
-    the algorithm are beneficial"""
-    print(f'avg_time:  {round(get_avg_time(print_params=True) * 1000, 4)} ms')
+    """Prints out statistics of the project, like the avg score and time per simulation. Used to test if changes made
+    to the algorithm are beneficial"""
+    # print(f'avg_time:  {round(get_avg_time(print_params=True) * 1000, 4)} ms')
     print(f'avg_score:  {get_avg_score(print_params=True)}')
 
 

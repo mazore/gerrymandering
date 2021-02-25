@@ -1,5 +1,6 @@
 """Contains AdjusterType subclasses that are directly used by ParameterPanel"""
-from .adjuster_types import *
+from .adjuster_types import CheckboxAdjusterType, EntryAdjusterType, PickerAdjusterType
+from .misc import InvalidParameter
 from math import sqrt
 from simulation import BLUE, RED
 

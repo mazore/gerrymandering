@@ -30,13 +30,14 @@ class Person:
     def setup_graphics(self):
         """Used only on initialization, sets up graphics drawing"""
         (x1, y1), (x2, y2) = self.p1, self.p2
-        w, h = x2 - x1, y2 - y1
-        self.inner_id = self.canvas.create_rectangle(x1 + w / 4, y1 + w / 4, x2 - h / 4, y2 - h / 4,
-                                                     fill=self.party.color, width=0)
+        w = (x2 - x1) * 0.175
+        offset = (x2 - x1) / 2 - w
+        self.inner_id = self.canvas.create_rectangle(
+            x1 + offset, y1 + offset, x2 - w * 2, y2 - w * 2,
+            fill=self.party.color, width=0)
         self.outer_id = self.canvas.create_rectangle(x1, y1, x2, y2, fill='white', stipple='gray50', width=0)
         self.canvas.itemconfig(self.outer_id, state='hidden')
         self.canvas.tag_lower(self.outer_id)  # Move below outlines
-        self.canvas.tag_lower(self.inner_id)  # Move below outer (district coloring)
         self.outer_color = 'white'
 
         if self.canvas.parameters.line_width == 0:
@@ -100,10 +101,10 @@ class Person:
         """Returns whether the person can be removed from their district without disconnecting district
 
         Method: get a boolean list of whether each of the surrounding 8 people are in our district. If there are more
-        than 2 'streaks' of True's (including carrying over between start and end of the list), then removing the square
-        will cause a disconnected group because the surrounding squares are not connected to each other. This works on
-        the assumption that there are no holes, which there aren't because all districts are the same size, and there
-        are no people without a district.
+        than 2 'streaks' of True's (including carrying over between start and end of the list), then removing the
+        square will cause a disconnected group because the surrounding squares are not connected to each other. This
+        works on the assumption that there are no holes, which there aren't because all districts are the same size,
+        and there are no people without a district.
         """
         bool_list = [getattr(person, 'district', None) is self.district for person in self.surrounding_people]
         num_trues = bool_list.count(True)

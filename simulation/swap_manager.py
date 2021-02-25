@@ -116,7 +116,8 @@ class SwapManager:
 
     def district2_generator(self):
         """Yields district2 options back weighted by districts district2_weight"""
-        district_weight_map = {d: d.get_district2_weight(self.district1) for d in self.person1.get_adjacent_districts()}
+        possible_districts = self.person1.get_adjacent_districts()
+        district_weight_map = {d: d.get_district2_weight(self.district1) for d in possible_districts}
         while True:
             if district_weight_map == {}:
                 return

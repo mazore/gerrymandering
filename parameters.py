@@ -26,7 +26,7 @@ class ParameterDocs:
 class Parameters:
     def __init__(self, num_simulations=None, start_running=False,
                  help_party=BLUE, favor_tie=False,
-                 percentage_red=60,
+                 percentage_red=50,
                  district_size=16, grid_width=24,
                  canvas_width=640, line_width=3, show_margins=False,
                  sleep_between_draws=0, num_swaps_per_draw=1,
