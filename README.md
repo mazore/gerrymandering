@@ -1,4 +1,4 @@
-# Gerrymandering*
+# Gerrymandering
 A program that draws district lines around a two-party grid of people (equal proportions for each party) in order to
 give an unfair advantage to one party.
 
